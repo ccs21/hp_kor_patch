@@ -7,25 +7,15 @@ using UnityEngine;
 
 public static class KRHook
 {
-    // ====== 설정 ======
-    public static bool HideOriginalWhileTyping = true;
-    public static bool ShowOriginalIfNoTranslation = true;
-    public static float DebounceSeconds = 0.20f;
-    public static float StateGCSeconds = 60f;
-
-    // 폰트/표시 튜닝
-    public static string[] OSFontCandidates = new string[] {
-        "Malgun Gothic", "맑은 고딕", "Arial Unicode MS", "Segoe UI"
-    };
-    public static int FontSize = 44;
-    public static float CharacterSize = 0.07f;
-    public static float ZOffset = -0.05f;
-    public static Color TextColor = Color.white;
-
-    public static bool FollowLabelVisibility = true;
-    // ==================
-
     static bool _loaded;
+
+internal static readonly string[] OSFontCandidates = new string[] {
+    "Malgun Gothic", "맑은 고딕", "Arial Unicode MS", "Segoe UI", "Arial"
+};
+
+
+    static Dictionary<string, string> _dict = new Dictionary<string, string>();
+    static HashSet<string> _pending = new HashSet<string>();
 
     static string _root;
     static string _krDir;
@@ -33,94 +23,76 @@ public static class KRHook
     static string _pendingPath;
     static string _errLogPath;
 
-    static readonly Dictionary<string, string> _dict = new Dictionary<string, string>(4096);
-    static readonly HashSet<string> _pendingKeys = new HashSet<string>();
-    static readonly Dictionary<int, LabelState> _states = new Dictionary<int, LabelState>(512);
+    static readonly Dictionary<int, LabelEntry> _labels = new Dictionary<int, LabelEntry>(256);
 
-    // Unity 4.2 Mono 호환 null 체크(Reflection 타입 op_Inequality 문제 회피)
-    static bool IsNull(object o) { return object.ReferenceEquals(o, null); }
-    static bool NotNull(object o) { return !object.ReferenceEquals(o, null); }
+    public static float DebounceSeconds = 0.25f;
+    public static float StaleSeconds = 30.0f;
 
-    // 우리가 Apply(강제 출력) 중일 때 OnSetText 재진입 방지
-    [ThreadStatic] static bool _inApply;
+    // ---- 디버그/상태 ----
+    internal static int Debug_SetTextCalls = 0;
+    internal static int Debug_SetTextNonEmptyCalls = 0;
+    internal static string Debug_LastNonEmpty = "";
+    internal static bool Debug_ForceTopLeftMirror = true; // 라벨/좌표 계산 실패해도 좌상단에도 같이 찍기
 
-    // 캐시된 리플렉션 핸들
-    static PropertyInfo _pi_gameObj;
-    static FieldInfo _fi_gameObj;
-    static PropertyInfo _pi_transform;
-
-    static Font _font;
-    static Material _textMat;
-
-    // ====== Assembly-CSharp.LabelObject.SetText에서 호출됨 ======
+    // =========================================================
+    // patched into LabelObject.SetText(string)
+    // =========================================================
     public static string OnSetText(object labelObject, string text)
     {
         try
         {
-            if (_inApply) return ""; // 원본 텍스트는 숨김
+            Debug_SetTextCalls++;
+
             EnsureLoaded();
 
-            if (IsNull(labelObject))
-                return ""; // 원본 숨김
-
-            int id = GetStableId(labelObject);
-            LabelState st = GetState(id, labelObject);
-
-            string raw = text ?? "";
-            string key = Normalize(RemoveAllColorCodes(raw));
-            float now = Time.realtimeSinceStartup;
-
-            // 비우기
-            if (key.Length == 0)
+            if (!string.IsNullOrEmpty(text))
             {
-                st.LastSeenKey = "";
-                st.Dirty = false;
-                st.HasCommitted = false;
-                st.CommittedKey = "";
-                st.CommittedText = "";
-                st.LastTouched = now;
-                st.NeedsOverlayApply = true; // 오버레이도 비우기
+                Debug_SetTextNonEmptyCalls++;
+                if (string.IsNullOrEmpty(Debug_LastNonEmpty))
+                    Debug_LastNonEmpty = text;
+            }
+
+            if (string.IsNullOrEmpty(text))
+            {
+                UpdateLabel(labelObject, "");
                 return "";
             }
 
-            if (!string.Equals(st.LastSeenKey, key, StringComparison.Ordinal))
-            {
-                st.LastSeenKey = key;
-                st.LastChangeTime = now;
-                st.Dirty = true;
-                st.HasCommitted = false;
-                st.CommittedKey = "";
-                st.CommittedText = "";
-                st.NeedsOverlayApply = true;
-            }
+            string normalized = Normalize(RemoveAllColorCodes(text));
+            UpdateLabel(labelObject, normalized);
 
-            st.LastTouched = now;
-
-            // 타이핑 조각(Hi, Hi , Hi t...) 구간
-            if (st.Dirty && (now - st.LastChangeTime) < DebounceSeconds)
-            {
-                st.TypingText = HideOriginalWhileTyping ? "" : key;
-                st.NeedsOverlayApply = true;
-                return ""; // 원본은 항상 숨김
-            }
-
-            // 안정화되면 커밋
-            if (st.Dirty && (now - st.LastChangeTime) >= DebounceSeconds)
-            {
-                CommitState(st);
-            }
-
-            // 오버레이는 Runner에서 그림. 원본은 항상 숨김.
             return "";
         }
         catch (Exception ex)
         {
             LogError("OnSetText", ex, text);
-            return ""; // 실패해도 원본 숨김
+            return text;
         }
     }
 
-    // ====== 로딩/초기화 ======
+    static void UpdateLabel(object labelObject, string normalizedText)
+    {
+        Transform tr = TryGetTransform(labelObject);
+        int id = GetStableId(labelObject, tr);
+
+        LabelEntry e;
+        if (!_labels.TryGetValue(id, out e) || object.ReferenceEquals(e, null))
+        {
+            e = new LabelEntry();
+            _labels[id] = e;
+        }
+
+        e.Id = id;
+        e.Target = labelObject;
+        e.Transform = tr;
+        e.LastRaw = normalizedText;
+        e.LastUpdate = Time.realtimeSinceStartup;
+        e.Dirty = true;
+    }
+
+    // =========================================================
+    // Init
+    // =========================================================
     static void EnsureLoaded()
     {
         if (_loaded) return;
@@ -132,448 +104,52 @@ public static class KRHook
         _pendingPath = Path.Combine(_krDir, "pending.tsv");
         _errLogPath = Path.Combine(_krDir, "krhook_error.log");
 
-        try { if (!Directory.Exists(_krDir)) Directory.CreateDirectory(_krDir); } catch { }
-
-        try { if (File.Exists(_tsvPath)) LoadTSV(_tsvPath); }
-        catch (Exception ex) { LogError("LoadTSV", ex, _tsvPath); }
-
-        try { if (File.Exists(_pendingPath)) LoadPendingKeys(_pendingPath); }
-        catch (Exception ex) { LogError("LoadPendingKeys", ex, _pendingPath); }
-
-        try { EnsureFont(); }
-        catch (Exception ex) { LogError("EnsureFont", ex, ""); }
-
-        EnsureRunner();
-    }
-
-    static void EnsureRunner()
-    {
-        if (NotNull(KRHookRunner.Instance)) return;
-
-        GameObject go = GameObject.Find("KRHookRunner");
-        if (IsNull(go)) go = new GameObject("KRHookRunner");
-        UnityEngine.Object.DontDestroyOnLoad(go);
-        go.AddComponent<KRHookRunner>();
-    }
-
-    // ✅ Unity 4.2 참조에서 CreateDynamicFontFromOSFont가 없을 수 있으니 "리플렉션"으로 시도
-    // 1) Font.CreateDynamicFontFromOSFont(string,int) (있으면)
-    // 2) new Font(string) (있으면)
-    // 3) Builtin Arial.ttf (fallback)
-    static void EnsureFont()
-    {
-        if (NotNull(_font)) return;
-
-        // 1) CreateDynamicFontFromOSFont via reflection
-        MethodInfo miCreateFromOS = typeof(Font).GetMethod(
-            "CreateDynamicFontFromOSFont",
-            BindingFlags.Public | BindingFlags.Static,
-            null,
-            new Type[] { typeof(string), typeof(int) },
-            null
-        );
-
-        if (NotNull(miCreateFromOS))
-        {
-            for (int i = 0; i < OSFontCandidates.Length; i++)
-            {
-                string name = OSFontCandidates[i];
-                try
-                {
-                    object f = miCreateFromOS.Invoke(null, new object[] { name, FontSize });
-                    Font ff = f as Font;
-                    if (NotNull(ff))
-                    {
-                        _font = ff;
-                        break;
-                    }
-                }
-                catch { }
-            }
-        }
-
-        // 2) new Font(string) 시도 (Unity 버전에 따라 OS 폰트 이름으로 잡히기도 함)
-        if (IsNull(_font))
-        {
-            for (int i = 0; i < OSFontCandidates.Length; i++)
-            {
-                string name = OSFontCandidates[i];
-                try
-                {
-                    Font ff = new Font(name);
-                    if (NotNull(ff))
-                    {
-                        _font = ff;
-                        break;
-                    }
-                }
-                catch { }
-            }
-        }
-
-        // 3) builtin Arial fallback
-        if (IsNull(_font))
-        {
-            try
-            {
-                _font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
-            }
-            catch { }
-        }
-
-        // material 준비 (Instantiate 캐스팅 처리)
-        if (NotNull(_font))
-        {
-            try
-            {
-                UnityEngine.Object inst = UnityEngine.Object.Instantiate(_font.material);
-                _textMat = inst as Material; // ✅ 명시 캐스팅(또는 as)
-                Shader sh = Shader.Find("GUI/Text Shader");
-                if (NotNull(sh) && NotNull(_textMat)) _textMat.shader = sh;
-            }
-            catch { }
-        }
-    }
-
-    static string GetGameRoot()
-    {
-        try { return Directory.GetParent(Application.dataPath).FullName; }
-        catch { return "."; }
-    }
-
-    // ====== 라벨별 상태 ======
-    static LabelState GetState(int id, object labelObject)
-    {
-        LabelState st;
-        if (!_states.TryGetValue(id, out st))
-        {
-            st = new LabelState();
-            st.Id = id;
-            st.LabelObject = labelObject;
-            st.LastTouched = Time.realtimeSinceStartup;
-            _states[id] = st;
-        }
-        else
-        {
-            st.LabelObject = labelObject;
-        }
-        return st;
-    }
-
-    static int GetStableId(object labelObject)
-    {
         try
         {
-            Type t = labelObject.GetType();
-
-            // 캐시
-            if (IsNull(_pi_gameObj) && IsNull(_fi_gameObj) && IsNull(_pi_transform))
-            {
-                _pi_gameObj = t.GetProperty("gameObj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                _fi_gameObj = t.GetField("gameObj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                _pi_transform = t.GetProperty("transform", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            }
-
-            if (NotNull(_pi_gameObj))
-            {
-                object v = null;
-                try { v = _pi_gameObj.GetValue(labelObject, null); } catch { }
-                GameObject go = v as GameObject;
-                if (NotNull(go)) return go.GetInstanceID();
-            }
-
-            if (NotNull(_fi_gameObj))
-            {
-                object v = null;
-                try { v = _fi_gameObj.GetValue(labelObject); } catch { }
-                GameObject go = v as GameObject;
-                if (NotNull(go)) return go.GetInstanceID();
-            }
-
-            if (NotNull(_pi_transform))
-            {
-                object v = null;
-                try { v = _pi_transform.GetValue(labelObject, null); } catch { }
-                Transform tr = v as Transform;
-                if (NotNull(tr)) return tr.GetInstanceID();
-            }
+            if (!Directory.Exists(_krDir))
+                Directory.CreateDirectory(_krDir);
         }
         catch { }
 
-        return labelObject.GetHashCode();
-    }
-
-    static void CommitState(LabelState st)
-    {
-        string key = st.LastSeenKey ?? "";
-        st.Dirty = false;
-
-        string translated;
-        bool has = _dict.TryGetValue(key, out translated) && !string.IsNullOrEmpty(translated);
-
-        if (!has)
-        {
-            AddPending(key);
-            translated = ShowOriginalIfNoTranslation ? key : "";
-        }
-
-        st.CommittedKey = key;
-        st.CommittedText = translated ?? "";
-        st.HasCommitted = true;
-        st.TypingText = "";
-        st.NeedsOverlayApply = true;
-    }
-
-    // ====== Runner Tick: TextMesh 오버레이 갱신 ======
-    internal static void RunnerTick()
-    {
-        EnsureLoaded();
-        float now = Time.realtimeSinceStartup;
-
-        // 오래된 상태 정리
-        if (StateGCSeconds > 0f)
-        {
-            List<int> remove = null;
-            foreach (var kv in _states)
-            {
-                LabelState st = kv.Value;
-                if (IsNull(st)) continue;
-                if ((now - st.LastTouched) > StateGCSeconds)
-                {
-                    if (remove == null) remove = new List<int>();
-                    remove.Add(kv.Key);
-                }
-            }
-            if (remove != null)
-            {
-                for (int i = 0; i < remove.Count; i++)
-                {
-                    int id = remove[i];
-                    LabelState st;
-                    if (_states.TryGetValue(id, out st))
-                    {
-                        DestroyOverlay(st);
-                    }
-                    _states.Remove(id);
-                }
-            }
-        }
-
-        foreach (var kv in _states)
-        {
-            LabelState st = kv.Value;
-            if (IsNull(st) || IsNull(st.LabelObject)) continue;
-
-            if (st.Dirty && (now - st.LastChangeTime) >= DebounceSeconds)
-            {
-                CommitState(st);
-            }
-
-            if (!st.NeedsOverlayApply) continue;
-
-            string show = "";
-            if (st.Dirty && (now - st.LastChangeTime) < DebounceSeconds)
-                show = st.TypingText ?? "";
-            else if (st.HasCommitted)
-                show = st.CommittedText ?? "";
-
-            bool visible = true;
-            if (FollowLabelVisibility)
-                visible = IsLabelVisible(st.LabelObject);
-
-            ApplyOverlay(st, visible ? show : "");
-            st.NeedsOverlayApply = false;
-        }
-    }
-
-    static bool IsLabelVisible(object labelObject)
-    {
         try
         {
-            GameObject go = TryGetGameObject(labelObject);
-            if (NotNull(go))
-            {
-                // Unity 버전에 따라 activeSelf/activeInHierarchy가 다를 수 있어 리플렉션으로 체크
-                PropertyInfo pAIH = go.GetType().GetProperty("activeInHierarchy", BindingFlags.Public | BindingFlags.Instance);
-                if (NotNull(pAIH))
-                {
-                    object v = null; try { v = pAIH.GetValue(go, null); } catch { }
-                    if (v is bool && !((bool)v)) return false;
-                }
-
-                PropertyInfo pAS = go.GetType().GetProperty("activeSelf", BindingFlags.Public | BindingFlags.Instance);
-                if (NotNull(pAS))
-                {
-                    object v = null; try { v = pAS.GetValue(go, null); } catch { }
-                    if (v is bool && !((bool)v)) return false;
-                }
-            }
-
-            Type t = labelObject.GetType();
-
-            PropertyInfo pVis = t.GetProperty("visible", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (NotNull(pVis))
-            {
-                object v = null; try { v = pVis.GetValue(labelObject, null); } catch { }
-                if (v is bool && !((bool)v)) return false;
-            }
-
-            PropertyInfo pAlpha = t.GetProperty("alpha", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (NotNull(pAlpha))
-            {
-                object v = null; try { v = pAlpha.GetValue(labelObject, null); } catch { }
-                if (v is float && ((float)v) <= 0.001f) return false;
-            }
-
-            PropertyInfo pChildA = t.GetProperty("childrenAlpha", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (NotNull(pChildA))
-            {
-                object v = null; try { v = pChildA.GetValue(labelObject, null); } catch { }
-                if (v is float && ((float)v) <= 0.001f) return false;
-            }
-        }
-        catch { }
-
-        return true;
-    }
-
-    static GameObject TryGetGameObject(object labelObject)
-    {
-        if (IsNull(labelObject)) return null;
-
-        try
-        {
-            Type t = labelObject.GetType();
-
-            if (IsNull(_pi_gameObj) && IsNull(_fi_gameObj) && IsNull(_pi_transform))
-            {
-                _pi_gameObj = t.GetProperty("gameObj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                _fi_gameObj = t.GetField("gameObj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                _pi_transform = t.GetProperty("transform", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            }
-
-            if (NotNull(_pi_gameObj))
-            {
-                object v = null; try { v = _pi_gameObj.GetValue(labelObject, null); } catch { }
-                return v as GameObject;
-            }
-            if (NotNull(_fi_gameObj))
-            {
-                object v = null; try { v = _fi_gameObj.GetValue(labelObject); } catch { }
-                return v as GameObject;
-            }
-            if (NotNull(_pi_transform))
-            {
-                object v = null; try { v = _pi_transform.GetValue(labelObject, null); } catch { }
-                Transform tr = v as Transform;
-                if (NotNull(tr)) return tr.gameObject;
-            }
-        }
-        catch { }
-
-        return null;
-    }
-
-    static Transform TryGetTransform(object labelObject)
-    {
-        GameObject go = TryGetGameObject(labelObject);
-        if (NotNull(go)) return go.transform;
-
-        try
-        {
-            Type t = labelObject.GetType();
-            PropertyInfo pTr = t.GetProperty("transform", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (NotNull(pTr))
-            {
-                object v = null; try { v = pTr.GetValue(labelObject, null); } catch { }
-                return v as Transform;
-            }
-        }
-        catch { }
-
-        return null;
-    }
-
-    static void ApplyOverlay(LabelState st, string text)
-    {
-        try
-        {
-            if (IsNull(st)) return;
-
-            Transform parent = TryGetTransform(st.LabelObject);
-            if (IsNull(parent)) return;
-
-            EnsureFont();
-
-            if (IsNull(st.OverlayGO))
-            {
-                GameObject go = new GameObject("KRTextMesh");
-                go.transform.parent = parent; // Unity 4.2 방식
-                go.transform.localPosition = new Vector3(0f, 0f, ZOffset);
-                go.transform.localRotation = Quaternion.identity;
-                go.transform.localScale = Vector3.one;
-
-                TextMesh tm = go.AddComponent<TextMesh>();
-                tm.text = "";
-                tm.fontSize = FontSize;
-                tm.characterSize = CharacterSize;
-                tm.color = TextColor;
-                tm.anchor = TextAnchor.MiddleLeft;
-                tm.alignment = TextAlignment.Left;
-
-                if (NotNull(_font))
-                {
-                    tm.font = _font;
-                    MeshRenderer mr = go.GetComponent<MeshRenderer>();
-                    if (NotNull(mr))
-                    {
-                        try
-                        {
-                            if (NotNull(_textMat)) mr.material = _textMat;
-                            else mr.material = _font.material;
-                        }
-                        catch { }
-                    }
-                }
-
-                st.OverlayGO = go;
-                st.OverlayTM = tm;
-            }
-
-            if (IsNull(st.OverlayTM))
-                st.OverlayTM = st.OverlayGO.GetComponent<TextMesh>();
-
-            if (NotNull(st.OverlayTM))
-                st.OverlayTM.text = text ?? "";
-
-            MeshRenderer rend = null;
-            try { rend = st.OverlayGO.GetComponent<MeshRenderer>(); } catch { }
-
-            bool on = !string.IsNullOrEmpty(text);
-            if (NotNull(rend)) rend.enabled = on;
-            else st.OverlayGO.SetActive(on);
+            if (File.Exists(_tsvPath))
+                LoadTSV(_tsvPath);
         }
         catch (Exception ex)
         {
-            LogError("ApplyOverlay", ex, text);
+            LogError("LoadTSV", ex, _tsvPath);
         }
-    }
 
-    static void DestroyOverlay(LabelState st)
-    {
         try
         {
-            if (IsNull(st)) return;
-            if (NotNull(st.OverlayGO))
-                UnityEngine.Object.Destroy(st.OverlayGO);
-
-            st.OverlayGO = null;
-            st.OverlayTM = null;
+            if (File.Exists(_pendingPath))
+                LoadPendingKeys(_pendingPath);
         }
-        catch { }
+        catch (Exception ex)
+        {
+            LogError("LoadPendingKeys", ex, _pendingPath);
+        }
+
+        // Runner 생성
+        try
+        {
+            if (object.ReferenceEquals(KRHookRunner.Instance, null))
+            {
+                GameObject go = new GameObject("KRHookRunner");
+                UnityEngine.Object.DontDestroyOnLoad(go);
+                go.AddComponent<KRHookRunner>();
+            }
+        }
+        catch (Exception ex)
+        {
+            LogError("CreateRunner", ex, "");
+        }
     }
 
-    // ====== TSV/Pending ======
+    // =========================================================
+    // TSV Load / Pending
+    // =========================================================
     static void LoadTSV(string path)
     {
         string[] lines = File.ReadAllLines(path, Encoding.UTF8);
@@ -586,8 +162,11 @@ public static class KRHook
             int tab = line.IndexOf('\t');
             if (tab <= 0) continue;
 
-            string k = Normalize(Unescape(line.Substring(0, tab)));
-            string v = Unescape(line.Substring(tab + 1));
+            string k = line.Substring(0, tab);
+            string v = line.Substring(tab + 1);
+
+            k = Normalize(Unescape(k));
+            v = Unescape(v);
 
             if (k.Length == 0) continue;
             _dict[k] = v;
@@ -605,28 +184,39 @@ public static class KRHook
 
             int tab = line.IndexOf('\t');
             string k = (tab >= 0) ? line.Substring(0, tab) : line;
+
             k = Normalize(Unescape(k));
             if (k.Length == 0) continue;
-            _pendingKeys.Add(k);
+            _pending.Add(k);
         }
     }
 
     static void AddPending(string key)
     {
         if (string.IsNullOrEmpty(key)) return;
-        if (_pendingKeys.Contains(key)) return;
+        if (_pending.Contains(key)) return;
 
-        _pendingKeys.Add(key);
-        try { File.AppendAllText(_pendingPath, Escape(key) + "\t\n", Encoding.UTF8); }
-        catch (Exception ex) { LogError("AddPending", ex, key); }
+        _pending.Add(key);
+
+        string safe = Escape(key);
+        try
+        {
+            File.AppendAllText(_pendingPath, safe + "\t\n", Encoding.UTF8);
+        }
+        catch (Exception ex)
+        {
+            LogError("AddPending", ex, safe);
+        }
     }
 
-    // ====== 유틸 ======
+    // =========================================================
+    // Helpers: normalize / color codes
+    // =========================================================
     static string RemoveAllColorCodes(string s)
     {
-        if (s == null) return "";
-        StringBuilder sb = null;
+        if (object.ReferenceEquals(s, null)) return "";
 
+        StringBuilder sb = null;
         int i = 0;
         while (i < s.Length)
         {
@@ -638,9 +228,12 @@ public static class KRHook
                     char c = s[i + 2 + k];
                     if (!IsHex(c)) { ok = false; break; }
                 }
+
                 if (ok)
                 {
-                    if (sb == null) sb = new StringBuilder(s.Length);
+                    if (sb == null)
+                        sb = new StringBuilder(s.Length);
+
                     i += 10;
                     continue;
                 }
@@ -650,7 +243,8 @@ public static class KRHook
             i++;
         }
 
-        return sb == null ? s : sb.ToString();
+        if (sb == null) return s;
+        return sb.ToString();
     }
 
     static bool IsHex(char c)
@@ -662,24 +256,141 @@ public static class KRHook
 
     static string Normalize(string s)
     {
-        if (s == null) return "";
-        if (s.Length > 0 && s[0] == '\uFEFF') s = s.Substring(1);
+        if (object.ReferenceEquals(s, null)) return "";
+
+        if (s.Length > 0 && s[0] == '\uFEFF')
+            s = s.Substring(1);
+
         s = s.Replace("\r\n", "\n").Replace("\r", "\n");
-        return s.Trim();
+        s = s.Trim();
+        return s;
     }
 
     static string Escape(string s)
     {
-        if (s == null) return "";
+        if (object.ReferenceEquals(s, null)) return "";
         return s.Replace("\\", "\\\\").Replace("\n", "\\n");
     }
 
     static string Unescape(string s)
     {
-        if (s == null) return "";
+        if (object.ReferenceEquals(s, null)) return "";
         s = s.Replace("\\n", "\n");
         s = s.Replace("\\\\", "\\");
         return s;
+    }
+
+    static string GetGameRoot()
+    {
+        try { return Directory.GetParent(Application.dataPath).FullName; }
+        catch { return "."; }
+    }
+
+    // =========================================================
+    // Reflection: get transform / stable id
+    // =========================================================
+    static int GetStableId(object labelObject, Transform tr)
+    {
+        if (!object.ReferenceEquals(tr, null))
+            return tr.GetInstanceID();
+        if (!object.ReferenceEquals(labelObject, null))
+            return labelObject.GetHashCode();
+        return 0;
+    }
+
+    static Transform TryGetTransform(object labelObject)
+    {
+        if (object.ReferenceEquals(labelObject, null)) return null;
+
+        try
+        {
+            Type t = labelObject.GetType();
+
+            PropertyInfo pTr = t.GetProperty("transform");
+            if (!object.ReferenceEquals(pTr, null))
+            {
+                object v = null;
+                try { v = pTr.GetValue(labelObject, null); } catch { }
+                Transform tr = v as Transform;
+                if (!object.ReferenceEquals(tr, null))
+                    return tr;
+            }
+
+            FieldInfo fTr = t.GetField("transform");
+            if (!object.ReferenceEquals(fTr, null))
+            {
+                object v = null;
+                try { v = fTr.GetValue(labelObject); } catch { }
+                Transform tr = v as Transform;
+                if (!object.ReferenceEquals(tr, null))
+                    return tr;
+            }
+
+            PropertyInfo pGo = t.GetProperty("gameObj");
+            if (!object.ReferenceEquals(pGo, null))
+            {
+                object v = null;
+                try { v = pGo.GetValue(labelObject, null); } catch { }
+                GameObject go = v as GameObject;
+                if (!object.ReferenceEquals(go, null))
+                    return go.transform;
+            }
+
+            FieldInfo fGo = t.GetField("gameObj");
+            if (!object.ReferenceEquals(fGo, null))
+            {
+                object v = null;
+                try { v = fGo.GetValue(labelObject); } catch { }
+                GameObject go = v as GameObject;
+                if (!object.ReferenceEquals(go, null))
+                    return go.transform;
+            }
+        }
+        catch (Exception ex)
+        {
+            LogError("TryGetTransform", ex, "");
+        }
+
+        return null;
+    }
+
+    // =========================================================
+    // Runner uses these
+    // =========================================================
+    internal static Dictionary<int, LabelEntry> GetLabelMap() { return _labels; }
+
+    internal static string TranslateOrRaw(string key)
+    {
+        string v;
+        if (_dict.TryGetValue(key, out v) && !string.IsNullOrEmpty(v))
+            return v;
+
+        AddPending(key);
+        return key;
+    }
+
+    internal static void CleanupStale()
+    {
+        float now = Time.realtimeSinceStartup;
+        List<int> toRemove = null;
+
+        foreach (var kv in _labels)
+        {
+            LabelEntry e = kv.Value;
+            if (object.ReferenceEquals(e, null)) continue;
+
+            if (now - e.LastUpdate > StaleSeconds)
+            {
+                if (toRemove == null) toRemove = new List<int>();
+                toRemove.Add(kv.Key);
+            }
+        }
+
+        if (toRemove != null)
+        {
+            for (int i = 0; i < toRemove.Count; i++)
+                _labels.Remove(toRemove[i]);
+        }
     }
 
     static void LogError(string where, Exception ex, string sample)
@@ -713,26 +424,20 @@ public static class KRHook
         catch { }
     }
 
-    internal class LabelState
+    internal class LabelEntry
     {
         public int Id;
-        public object LabelObject;
+        public object Target;
+        public Transform Transform;
 
-        public string LastSeenKey = "";
-        public float LastChangeTime;
-        public float LastTouched;
-
-        public bool Dirty;
-        public bool HasCommitted;
+        public string LastRaw = "";
+        public float LastUpdate;
 
         public string CommittedKey = "";
         public string CommittedText = "";
-        public string TypingText = "";
+        public float LastCommit;
 
-        public bool NeedsOverlayApply;
-
-        public GameObject OverlayGO;
-        public TextMesh OverlayTM;
+        public bool Dirty;
     }
 }
 
@@ -740,14 +445,166 @@ public class KRHookRunner : MonoBehaviour
 {
     public static KRHookRunner Instance;
 
+    // GUI는 OnGUI에서만 만들기(유니티 4 안전)
+    static bool _guiReady;
+    static GUIStyle _style;
+    static GUIStyle _outline;
+    static Font _font;
+
     void Awake()
     {
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void Update()
+    void EnsureGUI()
     {
-        KRHook.RunnerTick();
+        if (_guiReady) return;
+        _guiReady = true;
+
+        _font = TryCreateFont(28);
+
+        _style = new GUIStyle(GUI.skin.label);
+        _style.font = _font;
+        _style.fontSize = 28;
+        _style.normal.textColor = Color.white;
+        _style.wordWrap = true;
+        _style.richText = false;
+
+        _outline = new GUIStyle(_style);
+        _outline.normal.textColor = Color.black;
+    }
+
+    Font TryCreateFont(int size)
+    {
+        try
+        {
+            MethodInfo mi = typeof(Font).GetMethod(
+                "CreateDynamicFontFromOSFont",
+                BindingFlags.Public | BindingFlags.Static,
+                null,
+                new Type[] { typeof(string), typeof(int) },
+                null
+            );
+
+            if (!object.ReferenceEquals(mi, null))
+            {
+                string[] names = KRHook.OSFontCandidates;
+                for (int i = 0; i < names.Length; i++)
+                {
+                    try
+                    {
+                        object f = mi.Invoke(null, new object[] { names[i], size });
+                        Font ff = f as Font;
+                        if (!object.ReferenceEquals(ff, null)) return ff;
+                    }
+                    catch { }
+                }
+            }
+        }
+        catch { }
+
+        try { return Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font; }
+        catch { return null; }
+    }
+
+    void DrawOutlined(Rect r, string text)
+    {
+        if (object.ReferenceEquals(_style, null))
+            return;
+
+        int o = 2;
+        if (!object.ReferenceEquals(_outline, null))
+        {
+            GUI.Label(new Rect(r.x - o, r.y, r.width, r.height), text, _outline);
+            GUI.Label(new Rect(r.x + o, r.y, r.width, r.height), text, _outline);
+            GUI.Label(new Rect(r.x, r.y - o, r.width, r.height), text, _outline);
+            GUI.Label(new Rect(r.x, r.y + o, r.width, r.height), text, _outline);
+        }
+        GUI.Label(r, text, _style);
+    }
+
+    void OnGUI()
+    {
+        EnsureGUI();
+
+        // ✅ 이건 labels 없어도 무조건 떠야 한다
+        DrawOutlined(new Rect(10, 10, 1800, 60),
+            "KRHookRunner ONGUI  calls=" + KRHook.Debug_SetTextCalls +
+            "  nonEmpty=" + KRHook.Debug_SetTextNonEmptyCalls);
+
+        KRHook.CleanupStale();
+
+        var map = KRHook.GetLabelMap();
+        float now = Time.realtimeSinceStartup;
+
+        Camera cam = Camera.main;
+        if (object.ReferenceEquals(cam, null))
+        {
+            Camera[] all = Camera.allCameras;
+            if (!object.ReferenceEquals(all, null) && all.Length > 0)
+                cam = all[0];
+        }
+
+        foreach (var kv in map)
+        {
+            var e = kv.Value;
+            if (object.ReferenceEquals(e, null)) continue;
+
+            if (e.Dirty && (now - e.LastUpdate) >= KRHook.DebounceSeconds)
+            {
+                e.Dirty = false;
+
+                string key = e.LastRaw ?? "";
+                if (key.Length > 0)
+                {
+                    e.CommittedKey = key;
+                    e.CommittedText = KRHook.TranslateOrRaw(key);
+                    e.LastCommit = now;
+                }
+                else
+                {
+                    e.CommittedKey = "";
+                    e.CommittedText = "";
+                }
+            }
+
+            if (string.IsNullOrEmpty(e.CommittedText))
+                continue;
+
+            // 위치 계산 실패해도 좌상단 미러로 찍기
+            if (KRHook.Debug_ForceTopLeftMirror)
+            {
+                DrawOutlined(new Rect(10, 70, 1800, 200), e.CommittedText);
+            }
+
+            Vector2 screenPos = new Vector2(20, 250);
+            bool hasPos = false;
+
+            if (!object.ReferenceEquals(e.Transform, null) && !object.ReferenceEquals(cam, null))
+            {
+                Vector3 wp = e.Transform.position;
+                Vector3 sp = cam.WorldToScreenPoint(wp);
+                if (sp.z > 0.01f)
+                {
+                    screenPos = new Vector2(sp.x, Screen.height - sp.y);
+                    hasPos = true;
+                }
+            }
+
+            float w = 900f;
+            float h = 140f;
+
+            Rect r = hasPos
+                ? new Rect(screenPos.x, screenPos.y, w, h)
+                : new Rect(20, 250, w, h);
+
+            if (r.x < 0) r.x = 0;
+            if (r.y < 0) r.y = 0;
+            if (r.x + r.width > Screen.width) r.x = Screen.width - r.width;
+            if (r.y + r.height > Screen.height) r.y = Screen.height - r.height;
+
+            DrawOutlined(r, e.CommittedText);
+        }
     }
 }
