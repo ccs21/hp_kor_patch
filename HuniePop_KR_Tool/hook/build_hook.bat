@@ -11,23 +11,31 @@ if not exist "%GAME_MANAGED%\UnityEngine.dll" (
   exit /b 1
 )
 
-REM ==== 3) csc 찾기 (.NET Framework csc 우선) ====
+REM ==== 3) csc 찾기 (where 우선, 없으면 VS BuildTools Roslyn 경로) ====
 set CSC=
+
+for /f "delims=" %%P in ('where csc 2^>nul') do (
+  set CSC=%%P
+  goto :FOUND_CSC
+)
+
 for %%P in (
-  "%WINDIR%\Microsoft.NET\Framework\v4.0.30319\csc.exe"
-  "%WINDIR%\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+  "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
+  "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe"
 ) do (
   if exist "%%~P" set CSC=%%~P
 )
 
+:FOUND_CSC
 if "%CSC%"=="" (
-  echo [ERROR] csc.exe not found. (Need .NET Framework installed)
-  echo - Usually Windows has it, but if missing, install .NET Framework 4.x.
+  echo [ERROR] csc.exe not found.
+  echo - In Build Tools installer, select ".NET desktop build tools"
   pause
   exit /b 1
 )
 
 echo [OK] Using CSC: %CSC%
+
 
 REM ==== 4) 빌드 출력 ====
 if not exist "..\output" mkdir "..\output"
