@@ -6,38 +6,6 @@ using Mono.Cecil.Cil;
 
 class Patcher
 {
-    static bool HasNotifyCall(MethodDefinition m, MethodReference notify, string evt)
-    {
-        if (m == null || !m.HasBody) return false;
-        var ins = m.Body.Instructions;
-        for (int i = 0; i + 1 < ins.Count; i++)
-        {
-            if (ins[i].OpCode == OpCodes.Ldstr && (string)ins[i].Operand == evt)
-            {
-                if ((ins[i + 1].OpCode == OpCodes.Call || ins[i + 1].OpCode == OpCodes.Callvirt) &&
-                    ins[i + 1].Operand is MethodReference mr && mr.FullName == notify.FullName)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    static bool TryPatchNotify(ModuleDefinition mod, MethodReference notifyImported, string typeName, string methodName, string evt)
-    {
-        var t = mod.GetType(typeName);
-        if (t == null) return false;
-        var m = t.Methods.FirstOrDefault(x => x.Name == methodName && x.HasBody);
-        if (m == null) return false;
-        if (HasNotifyCall(m, notifyImported, evt)) return true; // already patched
-
-        var il = m.Body.GetILProcessor();
-        var first = m.Body.Instructions.First();
-        il.InsertBefore(first, il.Create(OpCodes.Ldstr, evt));
-        il.InsertBefore(first, il.Create(OpCodes.Call, notifyImported));
-        Console.WriteLine($"[OK] Hooked {typeName}::{methodName} => NotifyUI(\"{evt}\")");
-        return true;
-    }
-
     static int Main(string[] args)
     {
         if (args.Length < 1)
@@ -143,20 +111,6 @@ class Patcher
 
         var hookImported = mod.ImportReference(hookMethod);
 
-        // Load KRHook.NotifyUI(string) (optional but recommended)
-        var notifyMethod = hookType.Methods.FirstOrDefault(m =>
-            m.Name == "NotifyUI" &&
-            m.Parameters.Count == 1 &&
-            m.Parameters[0].ParameterType.FullName == "System.String" &&
-            m.ReturnType.FullName == "System.Void"
-        );
-
-        MethodReference notifyImported = null;
-        if (notifyMethod != null)
-            notifyImported = mod.ImportReference(notifyMethod);
-        else
-            Console.WriteLine("[WARN] KRHook.NotifyUI(string) not found. UI-state hooks will be skipped.");
-
         // ---------------------------
         // SAFE PATCH:
         // Find callvirt tk2dTextMesh::set_text(string)
@@ -202,32 +156,6 @@ class Patcher
         {
             Console.WriteLine("[ERR] Could not find tk2dTextMesh.set_text(string) call pattern in LabelObject.SetText.");
             return 1;
-        }
-
-        // ---------------------------
-        // UI STATE HOOKS (optional)
-        // These prevent overlap/ghosting by sending state signals to KRHook.NotifyUI(...)
-        // ---------------------------
-        if (notifyImported != null)
-        {
-            // Cell phone / apps
-            TryPatchNotify(mod, notifyImported, "UICellPhone", "OpenCellPhone", "POPUP_OPEN:CellPhone");
-            TryPatchNotify(mod, notifyImported, "UICellPhone", "CloseCellPhone", "POPUP_CLOSE:CellPhone");
-
-            // Tooltip
-            TryPatchNotify(mod, notifyImported, "UITooltip", "AddTooltip", "POPUP_OPEN:Tooltip");
-            TryPatchNotify(mod, notifyImported, "UITooltip", "HideTooltip", "POPUP_CLOSE:Tooltip");
-            TryPatchNotify(mod, notifyImported, "UITooltip", "OnTooltipHidden", "POPUP_CLOSE:Tooltip");
-
-            // Puzzle mode
-            TryPatchNotify(mod, notifyImported, "UIPuzzleGrid", "ShowPuzzleGrid", "MODE_ENTER:Puzzle");
-            TryPatchNotify(mod, notifyImported, "UIPuzzleGrid", "HidePuzzleGrid", "MODE_EXIT:Puzzle");
-
-            // Dialog mode (best-effort)
-            TryPatchNotify(mod, notifyImported, "Girl", "ReadDialogLine", "MODE_ENTER:Dialog");
-            TryPatchNotify(mod, notifyImported, "Dialog", "ClearDialog", "MODE_EXIT:Dialog");
-            TryPatchNotify(mod, notifyImported, "Dialog", "DialogSequenceComplete", "MODE_EXIT:Dialog");
-            TryPatchNotify(mod, notifyImported, "Dialog", "OnDialogSceneSequenceComplete", "MODE_EXIT:Dialog");
         }
 
         asm.Write(asmPath);
