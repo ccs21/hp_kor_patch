@@ -23,7 +23,7 @@ public static class KRHook
     // =========================
     // USER SETTINGS
     // =========================
-    public static bool HideOriginalWhileTyping = true;
+    public static bool HideOriginalWhileTyping = false;
     public static bool ShowOriginalIfNoTranslation = false;
     // If true, when translation is missing we render the original text in the overlay (useful for finding missing lines).
     public static bool OverlayFallbackToOriginalIfNoTranslation = true;
@@ -55,6 +55,18 @@ public static class KRHook
     public static bool DebugShowGoName = true;
 
     // =========================
+    // EVENT LOG (NotifyUI)
+    // =========================
+    // 이벤트 로그를 켜면 HuniePop_Data\Managed\event_log.tsv 에 기록됨.
+    // 너무 자주 호출되면 게임이 멈출 수 있으니 강한 스팸 가드를 적용함.
+    public static bool EnableEventLog = true;     // 필요 없으면 false
+    public static int EventLogEveryN = 20;        // 20번 호출당 1번 기록
+    public static bool EventLogOnlyPopupAndMode = true;
+
+    static int _evtSpamGuard = 0;
+    static string _lastEvt = null;
+
+    // =========================
     // INTERNAL
     // =========================
     static bool _loaded;
@@ -77,10 +89,7 @@ public static class KRHook
     static FieldInfo _fi_gameObj;
     static PropertyInfo _pi_transform;
 
-    
-    // Dynamic GameObject accessor (fallback when name-based reflection fails)
-    static Func<object, GameObject> _goGetter;
-// GUI styles
+    // GUI styles
     static GUIStyle _dbgStyle;
     static GUIStyle _wmStyle;
 
@@ -90,87 +99,51 @@ public static class KRHook
     static int _dbgDirty;
 
     // =========================
-    // UI STATE SIGNALS (from Assembly-CSharp hooks)
-    // =========================
-    // 팝업/메뉴가 열리면, 그 이전에 떠 있던 오버레이 텍스트를 잠시 숨겨서 겹침을 방지.
-    static int _popupDepth = 0;
-    static float _popupSince = 0f;
-
-    // 대화 세션 중 업데이트된 라벨을 추적해서, 대화 종료 시 잔상을 제거.
-    static bool _dialogActive = false;
-
-    // =========================
     // HOOK ENTRY
     // =========================
     /// <summary>
-    /// Assembly-CSharp 쪽 추가 훅에서 호출하는 UI 상태 신호.
-    /// 예) POPUP_OPEN:CellPhone / POPUP_CLOSE:Tooltip / MODE_ENTER:Dialog / MODE_EXIT:Dialog
+    /// UI state signal from Assembly-CSharp hooks.
+    /// Example: POPUP_OPEN:Inventory, POPUP_CLOSE:Inventory, MODE_EXIT:Dialog
     /// </summary>
     public static void NotifyUI(string evt)
     {
+        // 절대 무거운 작업(빈번한 File.AppendAllText)을 그대로 하면 진행이 멈출 수 있음.
+        // 그래서:
+        // - N번 중 1번만 기록
+        // - 같은 이벤트 연속이면 스킵
+        // - POPUP_/MODE_만 기록(옵션)
         try
         {
-            EnsureLoaded();
-            string e = (evt ?? "").Trim();
-            if (e.Length == 0) return;
+            if (!EnableEventLog) return;
+            if (string.IsNullOrEmpty(evt)) return;
 
-            float now = Time.realtimeSinceStartup;
+            _evtSpamGuard++;
+            int n = Mathf.Max(1, EventLogEveryN);
+            if ((_evtSpamGuard % n) != 0) return;
 
-            if (StartsWith(e, "POPUP_OPEN:"))
+            if (evt == _lastEvt) return;
+            _lastEvt = evt;
+
+            if (EventLogOnlyPopupAndMode)
             {
-                _popupDepth++;
-                if (_popupDepth == 1)
-                    _popupSince = now;
-                return;
-            }
-            if (StartsWith(e, "POPUP_CLOSE:"))
-            {
-                _popupDepth--;
-                if (_popupDepth < 0) _popupDepth = 0;
-                if (_popupDepth == 0)
-                    _popupSince = 0f;
-                return;
+                if (!(evt.StartsWith("POPUP_", StringComparison.Ordinal) ||
+                      evt.StartsWith("MODE_", StringComparison.Ordinal)))
+                    return;
             }
 
-            if (StartsWith(e, "MODE_ENTER:Dialog"))
-            {
-                _dialogActive = true;
-                return;
-            }
-            if (StartsWith(e, "MODE_EXIT:Dialog"))
-            {
-                _dialogActive = false;
-                // 대화 세션에서 만진 라벨만 잔상 제거 (HUD 등은 건드리지 않음)
-                foreach (var kv in _states)
-                {
-                    var st = kv.Value;
-                    if (st == null) continue;
-                    if (!st.SeenDuringDialog) continue;
-                    st.SeenDuringDialog = false;
-                    st.CommittedKey = "";
-                    st.CommittedText = "";
-                    st.TypingText = "";
-                    st.HasCommitted = false;
-                    st.Dirty = false;
-                }
-                return;
-            }
-
-            if (StartsWith(e, "MODE_ENTER:Puzzle"))
-            {
-                // 퍼즐 진입은 사실상 대화 잔상 제거 타이밍
-                NotifyUI("MODE_EXIT:Dialog");
-                return;
-            }
+            // Managed 폴더에 기록 (HuniePop_Data\Managed)
+            string path = Path.Combine(Application.dataPath, "Managed", "event_log.tsv");
+            File.AppendAllText(path, DateTime.Now.ToString("HH:mm:ss.fff") + "\t" + evt + "\n", Encoding.UTF8);
         }
-        catch (Exception ex)
+        catch
         {
-            LogError("NotifyUI", ex, evt ?? "");
+            // 절대 여기서 예외로 게임을 죽이지 않음
         }
     }
 
     public static string OnSetText(object labelObject, string text)
     {
+return text ?? "";
         try
         {
             EnsureLoaded();
@@ -178,10 +151,6 @@ public static class KRHook
 
             int id = GetStableId(labelObject);
             LabelState st = GetState(id, labelObject);
-
-            // 대화 모드에서 업데이트된 라벨은 대화 종료 시 잔상 제거 대상
-            if (_dialogActive)
-                st.SeenDuringDialog = true;
 
             string raw = text ?? "";
             bool hasCaretColor = ContainsCaretColorCode(raw);
@@ -342,14 +311,6 @@ public static class KRHook
 
             string show = GetShowText(st);
             if (string.IsNullOrEmpty(show)) continue;
-
-            // 팝업이 열린 동안에는, 팝업 열기 이전에 화면에 있던 텍스트를 잠시 숨김
-            // (팝업/인벤/툴팁 위로 기존 텍스트가 남아 겹치는 문제 해결)
-            if (_popupDepth > 0 && _popupSince > 0f)
-            {
-                if (st.LastTouched > 0f && st.LastTouched < _popupSince)
-                    continue;
-            }
 
             // (핵심) 실제로 보이는 UI만 그림
             if (!IsVisibleLabel(st.LabelObject))
@@ -702,13 +663,6 @@ public static class KRHook
         baseStyle.richText = false;
         baseStyle.alignment = TextAnchor.MiddleCenter; // ★가운데 정렬
 
-        // Unity 4.x IMGUI는 한/중/일에서 "공백 없는" 자동 줄바꿈이 잘 안 되는 경우가 많아서
-        // 오버레이 쪽에서 폭 기반 강제 줄바꿈을 한 번 더 적용.
-        if (!string.IsNullOrEmpty(text) && r.width > 80f)
-        {
-            text = WrapByWidth(text, baseStyle, r.width);
-        }
-
         if (!Bold || OutlinePx <= 0)
         {
             GUI.Label(r, text, baseStyle);
@@ -732,54 +686,6 @@ public static class KRHook
         GUI.Label(new Rect(r.x + p, r.y + p, r.width, r.height), text, outStyle);
 
         GUI.Label(r, text, baseStyle);
-    }
-
-    static string WrapByWidth(string s, GUIStyle style, float maxWidth)
-    {
-        if (string.IsNullOrEmpty(s)) return "";
-        if (s.IndexOf('\n') >= 0) return s; // 이미 수동 줄바꿈이 있으면 그대로
-
-        // 너무 짧으면 스킵
-        if (s.Length < 8) return s;
-
-        // 폭 여유(윤곽선, 패딩) 반영
-        float w = Mathf.Max(20f, maxWidth - (OutlinePx * 4) - 12f);
-
-        var sb = new StringBuilder(s.Length + 8);
-        var line = new StringBuilder(64);
-
-        for (int i = 0; i < s.Length; i++)
-        {
-            char c = s[i];
-
-            // 기존 공백은 유지 (단, 연속 공백 폭 계산은 가볍게)
-            line.Append(c);
-
-            // 줄 폭 체크 (너무 자주 계산하지 않게, 몇 글자마다 또는 공백/구두점에서 체크)
-            bool shouldCheck = (i % 2 == 0) || c == ' ' || c == '。' || c == '.' || c == '!' || c == '?' || c == '…' || c == '、' || c == ',';
-            if (!shouldCheck) continue;
-
-            float cur = style.CalcSize(new GUIContent(line.ToString())).x;
-            if (cur <= w) continue;
-
-            // 마지막 글자를 다음 줄로 넘김
-            if (line.Length > 1)
-            {
-                char last = line[line.Length - 1];
-                line.Length -= 1;
-                sb.Append(line.ToString().TrimEnd());
-                sb.Append('\n');
-                line.Length = 0;
-                // 다음 줄 시작
-                if (last != ' ')
-                    line.Append(last);
-            }
-        }
-
-        if (line.Length > 0)
-            sb.Append(line.ToString().TrimEnd());
-
-        return sb.ToString();
     }
 
     // =========================
@@ -830,20 +736,8 @@ public static class KRHook
 
         try
         {
-            // Fast path: use cached getter if available
-            if (_goGetter != null)
-            {
-                try
-                {
-                    GameObject got = _goGetter(labelObject);
-                    if (!ReferenceEquals(got, null)) return got;
-                }
-                catch { /* fallthrough to rebuild getter */ }
-            }
-
             Type t = labelObject.GetType();
 
-            // 1) Name-based quick checks (backward compatible)
             if (ReferenceEquals(_pi_gameObj, null) && ReferenceEquals(_fi_gameObj, null) && ReferenceEquals(_pi_transform, null))
             {
                 _pi_gameObj = t.GetProperty("gameObj", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -854,103 +748,18 @@ public static class KRHook
             if (!ReferenceEquals(_pi_gameObj, null))
             {
                 object v = null; try { v = _pi_gameObj.GetValue(labelObject, null); } catch { }
-                GameObject go = v as GameObject;
-                if (!ReferenceEquals(go, null)) return go;
+                return v as GameObject;
             }
             if (!ReferenceEquals(_fi_gameObj, null))
             {
                 object v = null; try { v = _fi_gameObj.GetValue(labelObject); } catch { }
-                GameObject go = v as GameObject;
-                if (!ReferenceEquals(go, null)) return go;
+                return v as GameObject;
             }
             if (!ReferenceEquals(_pi_transform, null))
             {
                 object v = null; try { v = _pi_transform.GetValue(labelObject, null); } catch { }
                 Transform tr = v as Transform;
                 if (!ReferenceEquals(tr, null)) return tr.gameObject;
-            }
-
-            // 2) Fallback: scan for ANY field/property that is (or contains) GameObject/Transform
-            // Cache a getter to avoid repeated reflection.
-            _goGetter = BuildGoGetter(t);
-
-            if (_goGetter != null)
-            {
-                GameObject go = null;
-                try { go = _goGetter(labelObject); } catch { }
-                if (!ReferenceEquals(go, null)) return go;
-            }
-        }
-        catch { }
-
-        return null;
-    }
-
-    static Func<object, GameObject> BuildGoGetter(Type t)
-    {
-        // Look for GameObject first
-        try
-        {
-            const BindingFlags BF = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-
-            // Properties
-            foreach (var p in t.GetProperties(BF))
-            {
-                if (p == null) continue;
-                if (!p.CanRead) continue;
-                Type pt = p.PropertyType;
-                if (pt == typeof(GameObject))
-                {
-                    return (obj) =>
-                    {
-                        object v = null; try { v = p.GetValue(obj, null); } catch { }
-                        return v as GameObject;
-                    };
-                }
-                if (pt == typeof(Transform))
-                {
-                    return (obj) =>
-                    {
-                        object v = null; try { v = p.GetValue(obj, null); } catch { }
-                        Transform tr = v as Transform;
-                        return ReferenceEquals(tr, null) ? null : tr.gameObject;
-                    };
-                }
-            }
-
-            // Fields
-            foreach (var f in t.GetFields(BF))
-            {
-                if (f == null) continue;
-                Type ft = f.FieldType;
-                if (ft == typeof(GameObject))
-                {
-                    return (obj) =>
-                    {
-                        object v = null; try { v = f.GetValue(obj); } catch { }
-                        return v as GameObject;
-                    };
-                }
-                if (ft == typeof(Transform))
-                {
-                    return (obj) =>
-                    {
-                        object v = null; try { v = f.GetValue(obj); } catch { }
-                        Transform tr = v as Transform;
-                        return ReferenceEquals(tr, null) ? null : tr.gameObject;
-                    };
-                }
-            }
-
-            // Last resort: common Unity pattern "gameObject" property (if labelObject is a Component/MonoBehaviour)
-            var goProp = t.GetProperty("gameObject", BF);
-            if (goProp != null && goProp.CanRead && goProp.PropertyType == typeof(GameObject))
-            {
-                return (obj) =>
-                {
-                    object v = null; try { v = goProp.GetValue(obj, null); } catch { }
-                    return v as GameObject;
-                };
             }
         }
         catch { }
@@ -1081,12 +890,6 @@ public static class KRHook
         return s.Trim();
     }
 
-    static bool StartsWith(string s, string prefix)
-    {
-        if (s == null || prefix == null) return false;
-        return s.StartsWith(prefix, StringComparison.Ordinal);
-    }
-
     static string Escape(string s)
     {
         if (s == null) return "";
@@ -1160,9 +963,6 @@ public static class KRHook
         public string CommittedText = "";
         public string TypingText = "";
 
-        // 대화 모드에서 업데이트된 적이 있는지 (대화 종료 시 잔상 제거용)
-        public bool SeenDuringDialog;
-
         public void Reset(float now)
         {
             LastSeenKey = "";
@@ -1171,7 +971,6 @@ public static class KRHook
             CommittedKey = "";
             CommittedText = "";
             TypingText = "";
-            SeenDuringDialog = false;
             LastTouched = now;
             LastSeenFrame = Time.frameCount;
         }
