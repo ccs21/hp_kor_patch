@@ -7,6 +7,25 @@ using UnityEngine;
 
 /// <summary>
 /// HuniePop Unity 4.2.x OnGUI overlay hook.
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+/// - translations.ko : KRHook.dll과 같은 폴더
+/// - pending.tsv / logs : HuniePop_KR 폴더
+///
+/// 개선 사항:
+/// 1) 타이틀에서 로드/설정 텍스트 미리 보이는 문제 완화:
+///    - 카메라 cullingMask 레이어 체크
+///    - tk2d color alpha(알파) 체크 (tk2dTextMesh/tk2dBaseSprite 등)
+///    - 기존 active/scale/renderer/viewport 체크 유지
+///
+/// 2) 일부 UI 항목 좌측으로 밀림 개선:
+///    - rect 위치(화면 좌/우) 기반으로 alignment 자동 선택 (Left/Center/Right)
+///
+/// 3) 대사 줄바꿈(한글) 문제 해결:
+///    - GUI.wordWrap만 의존하지 않고 문자 단위 줄바꿈을 강제 생성
+=======
+>>>>>>> Stashed changes
 /// 적용 사항:
 /// 1) 숨겨진 UI(타이틀에서 설정/로드 문구 미리 뜸) 필터 강화
 ///    - activeInHierarchy / renderer.enabled 뿐 아니라
@@ -17,18 +36,43 @@ using UnityEngine;
 ///    - Pivot fallback rect를 "컨테이너" 개념으로 확장(폭/높이 넉넉하게)
 /// 3) Unity 4.2 / .NET 3.5의 PropertyInfo op_Equality 문제 회피(ReferenceEquals)
 /// 4) 번역 파일: KRHook.dll 옆 translations.ko
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
 /// </summary>
 public static class KRHook
 {
     // =========================
     // USER SETTINGS
     // =========================
+<<<<<<< Updated upstream
     public static bool HideOriginalWhileTyping = false;
     public static bool ShowOriginalIfNoTranslation = false;
     // If true, when translation is missing we render the original text in the overlay (useful for finding missing lines).
     public static bool OverlayFallbackToOriginalIfNoTranslation = true;
     public static float DebounceSeconds = 0.15f;
 
+=======
+<<<<<<< HEAD
+    public static bool HideOriginalWhileTyping = true;
+    public static bool ShowOriginalIfNoTranslation = false;
+
+    // 텍스트 안정화(타자기 아닌 UI)
+    public static float DebounceSeconds = 0.15f;
+
+    // “SetText가 더 이상 안 들어오는 텍스트”를 일정 시간 후 자동 숨김(겹침 방지)
+    public static float StaleHideSeconds = 0.75f;
+
+=======
+    public static bool HideOriginalWhileTyping = false;
+    public static bool ShowOriginalIfNoTranslation = false;
+    // If true, when translation is missing we render the original text in the overlay (useful for finding missing lines).
+    public static bool OverlayFallbackToOriginalIfNoTranslation = true;
+    public static float DebounceSeconds = 0.15f;
+
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
     public static int FontSize = 26;
     public static bool Bold = true;
     public static Color TextColor = Color.white;
@@ -42,14 +86,36 @@ public static class KRHook
 
     // fallback 컨테이너 크기
     public static float FallbackMaxWidthPx = 1100f;
+<<<<<<< Updated upstream
     public static float FallbackWidthScreenRatio = 0.75f; // 중앙 UI는 넉넉하게
     public static float FallbackMinHeightPx = 90f;        // 선택지/대사 대비
+=======
+<<<<<<< HEAD
+    public static float FallbackWidthScreenRatio = 0.75f;
+    public static float FallbackMinHeightPx = 90f;
+
+    // 좌/우 정렬 자동판단 기준
+    public static float LeftAlignThreshold = 0.22f;   // 화면 너비 비율
+    public static float RightAlignThreshold = 0.78f;  // 화면 너비 비율
+
+    // tk2d 알파 컷오프(이 값 미만이면 숨김으로 판단)
+    public static float Tk2dAlphaCutoff = 0.05f;
+=======
+    public static float FallbackWidthScreenRatio = 0.75f; // 중앙 UI는 넉넉하게
+    public static float FallbackMinHeightPx = 90f;        // 선택지/대사 대비
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
 
     // =========================
     // DEBUG
     // =========================
     public static bool DebugWatermark = true;
     public static bool DebugCounters = true;
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
     public static bool DebugTopLeftList = false; // 이제 실제 배치 테스트가 목적이면 false 권장
     public static int DebugTopLeftLines = 12;
     public static bool DebugShowGoName = true;
@@ -65,6 +131,10 @@ public static class KRHook
 
     static int _evtSpamGuard = 0;
     static string _lastEvt = null;
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
 
     // =========================
     // INTERNAL
@@ -76,7 +146,14 @@ public static class KRHook
     static string _tsvPath;     // KRHook.dll 옆 translations.ko
     static string _pendingPath; // HuniePop_KR\pending.tsv
     static string _errLogPath;  // HuniePop_KR\krhook_error.log
+<<<<<<< Updated upstream
     static string _dbgLogPath;  // HuniePop_KR\krhook_debug.log
+=======
+<<<<<<< HEAD
+=======
+    static string _dbgLogPath;  // HuniePop_KR\krhook_debug.log
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
 
     static readonly Dictionary<string, string> _dict = new Dictionary<string, string>(4096);
     static readonly HashSet<string> _pendingKeys = new HashSet<string>();
@@ -98,6 +175,19 @@ public static class KRHook
     static int _dbgCommitted;
     static int _dbgDirty;
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    // Wrap cache(대사 줄바꿈 비용 절감)
+    static readonly Dictionary<string, string> _wrapCache = new Dictionary<string, string>(256);
+    static int _wrapCacheFrame = -1;
+
+    // =========================
+    // HOOK ENTRY
+    // =========================
+    public static string OnSetText(object labelObject, string text)
+=======
+>>>>>>> Stashed changes
     // =========================
     // HOOK ENTRY
     // =========================
@@ -106,6 +196,10 @@ public static class KRHook
     /// Example: POPUP_OPEN:Inventory, POPUP_CLOSE:Inventory, MODE_EXIT:Dialog
     /// </summary>
     public static void NotifyUI(string evt)
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
     {
         // 절대 무거운 작업(빈번한 File.AppendAllText)을 그대로 하면 진행이 멈출 수 있음.
         // 그래서:
@@ -114,6 +208,11 @@ public static class KRHook
         // - POPUP_/MODE_만 기록(옵션)
         try
         {
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
             if (!EnableEventLog) return;
             if (string.IsNullOrEmpty(evt)) return;
 
@@ -146,6 +245,10 @@ public static class KRHook
 return text ?? "";
         try
         {
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
             EnsureLoaded();
             if (IsNull(labelObject)) return "";
 
@@ -170,6 +273,7 @@ return text ?? "";
                 st.LastSeenKey = key;
                 st.LastChangeTime = now;
                 st.Dirty = true;
+
                 st.HasCommitted = false;
                 st.CommittedKey = "";
                 st.CommittedText = "";
@@ -182,7 +286,14 @@ return text ?? "";
             // 타자기(^C...)는 즉시 커밋(대사 늦게 뜨는 문제 완화)
             if (hasCaretColor)
             {
+<<<<<<< Updated upstream
                 // (핵심) 숨겨진 UI면 커밋/펜딩 생성 자체를 막음
+=======
+<<<<<<< HEAD
+=======
+                // (핵심) 숨겨진 UI면 커밋/펜딩 생성 자체를 막음
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
                 if (!IsVisibleLabel(st.LabelObject))
                     return "";
 
@@ -229,6 +340,13 @@ return text ?? "";
         if (level != _lastLoadedLevel)
         {
             _states.Clear();
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            _wrapCache.Clear();
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
             _lastLoadedLevel = level;
         }
     }
@@ -259,6 +377,20 @@ return text ?? "";
             if (st.HasCommitted) _dbgCommitted++;
         }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        float now = Time.realtimeSinceStartup;
+
+        // Wrap 캐시는 프레임마다 한번만 비움(대사 변화가 잦을 때)
+        if (_wrapCacheFrame != Time.frameCount)
+        {
+            _wrapCacheFrame = Time.frameCount;
+            if (_wrapCache.Count > 512) _wrapCache.Clear();
+        }
+
+=======
+>>>>>>> Stashed changes
         // 진단용: 위치 무시 리스트
         if (DebugTopLeftList)
         {
@@ -286,6 +418,10 @@ return text ?? "";
         }
 
         float now = Time.realtimeSinceStartup;
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
         Camera cam = FindBestUICamera();
         if (cam == null)
         {
@@ -301,6 +437,16 @@ return text ?? "";
             LabelState st = kv.Value;
             if (st == null || IsNull(st.LabelObject)) continue;
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            // 오래된 텍스트는 숨김(겹침 방지: 설정창 열 때 로드 텍스트가 남는 문제 완화)
+            if ((now - st.LastTouched) > StaleHideSeconds)
+                continue;
+
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
             if (st.Dirty && (now - st.LastChangeTime) >= DebounceSeconds)
             {
                 if (!IsVisibleLabel(st.LabelObject))
@@ -322,11 +468,34 @@ return text ?? "";
             Rect r;
             bool ok = TryGetScreenRectFromBounds(go, cam, out r);
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            if (!ok || !IsReasonableRect(r))
+                r = MakePivotRect(go, cam);
+
+            // 정렬 힌트(좌측/우측 UI는 center 고정이 오히려 밀릴 수 있음)
+            TextAnchor anchor = ChooseAnchorByRect(r);
+
+            // 대사/긴 텍스트는 줄바꿈 강제(문자 단위)
+            // 폭이 너무 작으면 wrap 비용이 의미 없으니 최소 폭 이상일 때만
+            if (r.width >= 200f)
+            {
+                show = WrapTextToWidthCached(show, r.width, FontSize, anchor);
+            }
+
+            DrawOutlinedLabel(r, show, anchor);
+=======
+>>>>>>> Stashed changes
             // bounds가 이상하면 pivot 기반 컨테이너로 fallback
             if (!ok || !IsReasonableRect(r))
                 r = MakePivotRect(go, cam);
 
             DrawOutlinedLabel(r, show);
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
             _dbgDrawn++;
         }
 
@@ -422,14 +591,44 @@ return text ?? "";
         Vector3 ls = go.transform.lossyScale;
         if (ls.x < 0.01f || ls.y < 0.01f) return false;
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        Camera cam = FindBestUICamera();
+        if (cam == null) return true;
+
+        // 카메라가 이 레이어를 렌더하지 않으면 숨김
+        int layerMask = 1 << go.layer;
+        if ((cam.cullingMask & layerMask) == 0)
+            return false;
+
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
         // Renderer가 꺼져 있으면 숨김
         Renderer r = go.GetComponent<Renderer>();
         if (r == null) r = go.GetComponentInChildren<Renderer>();
         if (r != null && !r.enabled) return false;
 
+<<<<<<< Updated upstream
         // 카메라 viewport에 실제 걸리는지 체크 (타이틀에서 숨겨진 패널 텍스트 제거에 효과적)
         Camera cam = FindBestUICamera();
         if (cam != null && r != null)
+=======
+<<<<<<< HEAD
+        // tk2d 알파(숨김 패널에서 alpha=0으로 두는 경우) 체크
+        float a = TryGetTk2dAlpha(go);
+        if (a >= 0f && a < Tk2dAlphaCutoff)
+            return false;
+
+        // 카메라 viewport에 실제 걸리는지 체크
+        if (r != null)
+=======
+        // 카메라 viewport에 실제 걸리는지 체크 (타이틀에서 숨겨진 패널 텍스트 제거에 효과적)
+        Camera cam = FindBestUICamera();
+        if (cam != null && r != null)
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
         {
             Bounds b = r.bounds;
             Vector3 v = cam.WorldToViewportPoint(b.center);
@@ -440,6 +639,84 @@ return text ?? "";
         return true;
     }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    // tk2d 계열 컴포넌트의 color.a를 reflection으로 읽는다.
+    // 읽으면 [0..1], 못 찾으면 -1.
+    static float TryGetTk2dAlpha(GameObject go)
+    {
+        try
+        {
+            Component[] comps = go.GetComponents<Component>();
+            if (comps != null)
+            {
+                for (int i = 0; i < comps.Length; i++)
+                {
+                    Component c = comps[i];
+                    if (c == null) continue;
+
+                    string tn = c.GetType().Name;
+                    // 자주 쓰는 tk2d 계열만 타겟
+                    if (tn.StartsWith("tk2d", StringComparison.OrdinalIgnoreCase))
+                    {
+                        float a = TryReadColorAlpha(c);
+                        if (a >= 0f) return a;
+                    }
+                }
+            }
+
+            // 자식에도 tk2d가 달리는 케이스가 있어서 한번 더
+            Component[] child = go.GetComponentsInChildren<Component>(true);
+            if (child != null)
+            {
+                for (int i = 0; i < child.Length; i++)
+                {
+                    Component c = child[i];
+                    if (c == null) continue;
+
+                    string tn = c.GetType().Name;
+                    if (tn.StartsWith("tk2d", StringComparison.OrdinalIgnoreCase))
+                    {
+                        float a = TryReadColorAlpha(c);
+                        if (a >= 0f) return a;
+                    }
+                }
+            }
+        }
+        catch { }
+        return -1f;
+    }
+
+    static float TryReadColorAlpha(Component c)
+    {
+        try
+        {
+            Type t = c.GetType();
+
+            // property "color"
+            PropertyInfo p = t.GetProperty("color", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (p != null && p.PropertyType == typeof(Color))
+            {
+                Color col = (Color)p.GetValue(c, null);
+                return col.a;
+            }
+
+            // field "color"
+            FieldInfo f = t.GetField("color", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (f != null && f.FieldType == typeof(Color))
+            {
+                Color col = (Color)f.GetValue(c);
+                return col.a;
+            }
+        }
+        catch { }
+        return -1f;
+    }
+
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
     // =========================
     // STATE / COMMIT
     // =========================
@@ -610,8 +887,18 @@ return text ?? "";
     static bool IsReasonableRect(Rect r)
     {
         if (r.width < 40 || r.height < 18) return false;
+<<<<<<< Updated upstream
         if (r.width > Screen.width * 0.95f) return false;
         if (r.height > Screen.height * 0.80f) return false;
+=======
+<<<<<<< HEAD
+        if (r.width > Screen.width * 0.97f) return false;
+        if (r.height > Screen.height * 0.85f) return false;
+=======
+        if (r.width > Screen.width * 0.95f) return false;
+        if (r.height > Screen.height * 0.80f) return false;
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
 
         if (r.x > Screen.width || r.y > Screen.height) return false;
         if (r.x + r.width < 0 || r.y + r.height < 0) return false;
@@ -625,16 +912,49 @@ return text ?? "";
         float x = sp.x + GlobalOffsetPx.x;
         float y = (Screen.height - sp.y) + GlobalOffsetPx.y;
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        float w = Mathf.Min(Screen.width * FallbackWidthScreenRatio, FallbackMaxWidthPx);
+        float h = Mathf.Max(FontSize * 3.0f, FallbackMinHeightPx);
+
+=======
+>>>>>>> Stashed changes
         // 중앙 UI가 많으므로 컨테이너를 넉넉하게
         float w = Mathf.Min(Screen.width * FallbackWidthScreenRatio, FallbackMaxWidthPx);
         float h = Mathf.Max(FontSize * 3.0f, FallbackMinHeightPx);
 
         // 가운데 정렬이므로 rect 중심을 피벗에 맞추는게 안정적
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
         return new Rect(x - (w * 0.5f), y - (h * 0.5f), w, h);
     }
 
     // =========================
+<<<<<<< Updated upstream
     // DRAWING (가운데 정렬)
+=======
+<<<<<<< HEAD
+    // ALIGNMENT
+    // =========================
+    static TextAnchor ChooseAnchorByRect(Rect r)
+    {
+        float cx = r.x + (r.width * 0.5f);
+        float t = cx / Mathf.Max(1f, (float)Screen.width);
+
+        if (t < LeftAlignThreshold) return TextAnchor.MiddleLeft;
+        if (t > RightAlignThreshold) return TextAnchor.MiddleRight;
+        return TextAnchor.MiddleCenter;
+    }
+
+    // =========================
+    // DRAWING
+=======
+    // DRAWING (가운데 정렬)
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
     // =========================
     static void EnsureGUIStyle()
     {
@@ -654,14 +974,30 @@ return text ?? "";
         _wmStyle.wordWrap = false;
     }
 
+<<<<<<< Updated upstream
     static void DrawOutlinedLabel(Rect r, string text)
+=======
+<<<<<<< HEAD
+    static void DrawOutlinedLabel(Rect r, string text, TextAnchor anchor)
+=======
+    static void DrawOutlinedLabel(Rect r, string text)
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
     {
         GUIStyle baseStyle = new GUIStyle(GUI.skin.label);
         baseStyle.fontSize = FontSize;
         baseStyle.normal.textColor = TextColor;
         baseStyle.wordWrap = true;
         baseStyle.richText = false;
+<<<<<<< Updated upstream
         baseStyle.alignment = TextAnchor.MiddleCenter; // ★가운데 정렬
+=======
+<<<<<<< HEAD
+        baseStyle.alignment = anchor;
+=======
+        baseStyle.alignment = TextAnchor.MiddleCenter; // ★가운데 정렬
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
 
         if (!Bold || OutlinePx <= 0)
         {
@@ -671,7 +1007,15 @@ return text ?? "";
 
         GUIStyle outStyle = new GUIStyle(baseStyle);
         outStyle.normal.textColor = OutlineColor;
+<<<<<<< Updated upstream
         outStyle.alignment = TextAnchor.MiddleCenter; // ★가운데 정렬
+=======
+<<<<<<< HEAD
+        outStyle.alignment = anchor;
+=======
+        outStyle.alignment = TextAnchor.MiddleCenter; // ★가운데 정렬
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
 
         int p = OutlinePx;
 
@@ -689,7 +1033,101 @@ return text ?? "";
     }
 
     // =========================
+<<<<<<< Updated upstream
     // LabelObject -> GameObject  (op_Equality 회피)
+=======
+<<<<<<< HEAD
+    // TEXT WRAP (한글용 문자 단위 줄바꿈)
+    // =========================
+    static string WrapTextToWidthCached(string text, float maxWidth, int fontSize, TextAnchor anchor)
+    {
+        if (string.IsNullOrEmpty(text)) return text;
+
+        // 너무 긴 텍스트는 캐시 키 폭발 방지
+        string key = text;
+        if (key.Length > 300) key = key.Substring(0, 300);
+
+        string cacheKey = fontSize.ToString() + "|" + ((int)maxWidth).ToString() + "|" + ((int)anchor).ToString() + "|" + key;
+        string cached;
+        if (_wrapCache.TryGetValue(cacheKey, out cached))
+            return cached;
+
+        GUIStyle s = new GUIStyle(GUI.skin.label);
+        s.fontSize = fontSize;
+        s.wordWrap = false;       // 우리가 직접 줄바꿈
+        s.richText = false;
+        s.alignment = anchor;
+
+        string wrapped = WrapTextToWidth(text, maxWidth, s);
+        _wrapCache[cacheKey] = wrapped;
+        return wrapped;
+    }
+
+    static string WrapTextToWidth(string text, float maxWidth, GUIStyle style)
+    {
+        // 기존 줄바꿈은 유지
+        string[] lines = text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        StringBuilder outSb = new StringBuilder(text.Length + 16);
+
+        for (int li = 0; li < lines.Length; li++)
+        {
+            string line = lines[li];
+            if (line.Length == 0)
+            {
+                outSb.Append('\n');
+                continue;
+            }
+
+            StringBuilder cur = new StringBuilder(line.Length + 8);
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                char ch = line[i];
+
+                // 스페이스는 우선 넣되, 폭 초과 시 앞에서 줄바꿈
+                cur.Append(ch);
+
+                float w = style.CalcSize(new GUIContent(cur.ToString())).x;
+                if (w > maxWidth)
+                {
+                    // 한 글자만으로도 넘는 경우(매우 큰 폰트/매우 좁은 폭)엔 그냥 넘김
+                    if (cur.Length <= 1)
+                        continue;
+
+                    // 마지막 글자는 다음 줄로
+                    char last = cur[cur.Length - 1];
+                    cur.Length -= 1;
+
+                    if (outSb.Length > 0 && outSb[outSb.Length - 1] != '\n')
+                        outSb.Append('\n');
+                    outSb.Append(cur.ToString());
+                    outSb.Append('\n');
+
+                    cur.Length = 0;
+                    cur.Append(last);
+                }
+            }
+
+            if (cur.Length > 0)
+            {
+                if (outSb.Length > 0 && outSb[outSb.Length - 1] != '\n')
+                    outSb.Append('\n');
+                outSb.Append(cur.ToString());
+            }
+
+            if (li != lines.Length - 1)
+                outSb.Append('\n');
+        }
+
+        return outSb.ToString();
+    }
+
+    // =========================
+    // LabelObject -> GameObject
+=======
+    // LabelObject -> GameObject  (op_Equality 회피)
+>>>>>>> 1bbd7900e546805ed5cdb50722f7f1165c13d563
+>>>>>>> Stashed changes
     // =========================
     static int GetStableId(object labelObject)
     {
