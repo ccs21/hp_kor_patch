@@ -94,6 +94,9 @@ class Patcher
         // 1) Inject translation hook into LabelObject.SetText(string)
         patched += PatchMethodStart(mod, "LabelObject", "SetText", hookImported);
 
+        // 1-EXTRA) Inject FontHook trigger (reflection) into LabelObject.SetText(string)
+        patched += PatchFontHookTrigger(mod, "LabelObject", "SetText");
+
         // 2) Disable typewriter effect by forcing dialogReadPercent=1 before _dialogSequence.Play()
         patched += PatchDisableTypewriter(mod);
 
@@ -142,6 +145,152 @@ class Patcher
         il.InsertBefore(first, il.Create(OpCodes.Starg_S, m.Parameters[0]));
 
         Console.WriteLine("[OK] Patched: " + typeName + "." + methodName);
+        return 1;
+    }
+
+    // NEW: FontHook trigger (reflection) - called only once per process using a static bool field.
+    //
+    // Pseudocode:
+    // if (LabelObject.__KR_FontHookInstalled) return;
+    // LabelObject.__KR_FontHookInstalled = true;
+    // try {
+    //   var t = Type.GetType("FontHook.Entry, FontHook");
+    //   var m = t?.GetMethod("Install", BindingFlags.Public | BindingFlags.Static);
+    //   m?.Invoke(null, null);
+    // } catch {}
+    static int PatchFontHookTrigger(ModuleDefinition mod, string typeName, string methodName)
+    {
+        var t = mod.GetType(typeName);
+        if (t == null)
+        {
+            Console.WriteLine("[WARN] Type not found for FontHook trigger: " + typeName);
+            return 0;
+        }
+
+        var m = t.Methods.FirstOrDefault(x =>
+            x.Name == methodName &&
+            x.HasBody &&
+            x.Parameters.Count == 1 &&
+            x.Parameters[0].ParameterType.FullName == "System.String"
+        );
+
+        if (m == null)
+        {
+            Console.WriteLine("[WARN] Method not found for FontHook trigger: " + typeName + "." + methodName + "(string)");
+            return 0;
+        }
+
+        if (AlreadyFontHookPatched(m))
+        {
+            Console.WriteLine("[OK] FontHook trigger already patched: " + typeName + "." + methodName);
+            return 0;
+        }
+
+        // Add static field to the declaring type (once)
+        var flagField = t.Fields.FirstOrDefault(f => f.Name == "__KR_FontHookInstalled" && f.IsStatic && f.FieldType.FullName == "System.Boolean");
+        if (flagField == null)
+        {
+            flagField = new FieldDefinition(
+                "__KR_FontHookInstalled",
+                FieldAttributes.Private | FieldAttributes.Static,
+                mod.TypeSystem.Boolean
+            );
+            t.Fields.Add(flagField);
+            Console.WriteLine("[OK] Added static flag field: " + typeName + ".__KR_FontHookInstalled");
+        }
+
+        // Import needed methods:
+        // System.Type.GetType(string)
+        var typeGetType = mod.ImportReference(typeof(Type).GetMethod("GetType", new[] { typeof(string) }));
+
+        // System.Type.GetMethod(string, BindingFlags)
+        var typeGetMethod = mod.ImportReference(typeof(Type).GetMethod("GetMethod", new[] { typeof(string), typeof(System.Reflection.BindingFlags) }));
+
+        // System.Reflection.MethodBase.Invoke(object, object[])
+        var methodBaseInvoke = mod.ImportReference(typeof(System.Reflection.MethodBase).GetMethod("Invoke", new[] { typeof(object), typeof(object[]) }));
+
+        // Prepare locals: Type, MethodInfo
+        m.Body.InitLocals = true;
+        var typeLocal = new VariableDefinition(mod.ImportReference(typeof(Type)));
+        var miLocal = new VariableDefinition(mod.ImportReference(typeof(System.Reflection.MethodInfo)));
+        m.Body.Variables.Add(typeLocal);
+        m.Body.Variables.Add(miLocal);
+
+        var il = m.Body.GetILProcessor();
+        var first = m.Body.Instructions.FirstOrDefault(i => i.OpCode != OpCodes.Nop) ?? m.Body.Instructions.First();
+
+        // We'll build:
+        // if (flag) goto END;
+        // flag = true;
+        // try { ...reflection... } catch {}
+        // END:
+
+        var end = il.Create(OpCodes.Nop);
+        var tryStart = il.Create(OpCodes.Nop);
+        var tryEnd = il.Create(OpCodes.Nop);
+        var handlerStart = il.Create(OpCodes.Pop); // pop exception
+        var handlerEnd = il.Create(OpCodes.Leave_S, end);
+
+        // Flag check
+        il.InsertBefore(first, il.Create(OpCodes.Ldsfld, flagField));
+        il.InsertBefore(first, il.Create(OpCodes.Brtrue_S, end));
+        il.InsertBefore(first, il.Create(OpCodes.Ldc_I4_1));
+        il.InsertBefore(first, il.Create(OpCodes.Stsfld, flagField));
+
+        // try block start
+        il.InsertBefore(first, tryStart);
+
+        // t = Type.GetType("FontHook.Entry, FontHook")
+        il.InsertBefore(first, il.Create(OpCodes.Ldstr, "FontHook.Entry, FontHook"));
+        il.InsertBefore(first, il.Create(OpCodes.Call, typeGetType));
+        il.InsertBefore(first, il.Create(OpCodes.Stloc, typeLocal));
+
+        // if (t == null) goto TRY_END
+        il.InsertBefore(first, il.Create(OpCodes.Ldloc, typeLocal));
+        il.InsertBefore(first, il.Create(OpCodes.Brfalse_S, tryEnd));
+
+        // mi = t.GetMethod("Install", BindingFlags.Public | BindingFlags.Static)
+        il.InsertBefore(first, il.Create(OpCodes.Ldloc, typeLocal));
+        il.InsertBefore(first, il.Create(OpCodes.Ldstr, "Install"));
+        int flags = (int)(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+        il.InsertBefore(first, il.Create(OpCodes.Ldc_I4, flags));
+        il.InsertBefore(first, il.Create(OpCodes.Callvirt, typeGetMethod));
+        il.InsertBefore(first, il.Create(OpCodes.Stloc, miLocal));
+
+        // if (mi == null) goto TRY_END
+        il.InsertBefore(first, il.Create(OpCodes.Ldloc, miLocal));
+        il.InsertBefore(first, il.Create(OpCodes.Brfalse_S, tryEnd));
+
+        // mi.Invoke(null, null); pop result
+        il.InsertBefore(first, il.Create(OpCodes.Ldloc, miLocal));
+        il.InsertBefore(first, il.Create(OpCodes.Ldnull));
+        il.InsertBefore(first, il.Create(OpCodes.Ldnull));
+        il.InsertBefore(first, il.Create(OpCodes.Callvirt, methodBaseInvoke));
+        il.InsertBefore(first, il.Create(OpCodes.Pop));
+
+        // try block end
+        il.InsertBefore(first, tryEnd);
+        il.InsertBefore(first, il.Create(OpCodes.Leave_S, end));
+
+        // exception handler (catch (object))
+        il.InsertBefore(first, handlerStart);
+        il.InsertBefore(first, handlerEnd);
+
+        // END
+        il.InsertBefore(first, end);
+
+        // Add exception handler metadata
+        var eh = new ExceptionHandler(ExceptionHandlerType.Catch)
+        {
+            CatchType = mod.TypeSystem.Object, // catch (object)
+            TryStart = tryStart,
+            TryEnd = tryEnd,                   // end is exclusive; tryEnd is our marker
+            HandlerStart = handlerStart,
+            HandlerEnd = end                   // end is exclusive; handler ends before end
+        };
+        m.Body.ExceptionHandlers.Add(eh);
+
+        Console.WriteLine("[OK] Patched FontHook trigger into: " + typeName + "." + methodName);
         return 1;
     }
 
@@ -248,6 +397,23 @@ class Patcher
                 mr.Name == "OnSetText" &&
                 mr.DeclaringType != null &&
                 mr.DeclaringType.Name == "KRHook"
+            );
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    static bool AlreadyFontHookPatched(MethodDefinition m)
+    {
+        try
+        {
+            // 가장 확실한 시그니처: "FontHook.Entry, FontHook" 문자열이 이미 들어가 있으면 중복 패치로 간주
+            return m.Body.Instructions.Any(ins =>
+                ins.OpCode == OpCodes.Ldstr &&
+                ins.Operand is string s &&
+                s == "FontHook.Entry, FontHook"
             );
         }
         catch
