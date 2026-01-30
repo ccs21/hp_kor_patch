@@ -3,251 +3,415 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 
-/// <summary>
-/// HuniePop Font Hook bootstrap.
-/// - Assembly-CSharp.dll patched trigger should call one of the public entrypoints below.
-/// - This DLL is x86 and references only UnityEngine.dll (same as KRHook build).
-/// </summary>
-public static class FontHook
+namespace FontHook
 {
-static FontHook()
-{
-    try
+    public static class Entry
     {
-        Directory.CreateDirectory(BaseDir);
-        File.AppendAllText(Path.Combine(BaseDir, "fonthook_loaded.txt"),
-            DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "FontHook assembly loaded\r\n");
-    }
-    catch { }
-}
- 
+        static bool _installed;
 
-
-   static bool _installed = false;
-
-    // ===== Entry points (여러 개 제공: 트리거가 뭘 호출하든 걸리게) =====
-    public static void Install()     { InstallOnce(); }
-    public static void Init()        { InstallOnce(); }
-    public static void TryInstall()  { InstallOnce(); }
-    public static void Boot()        { InstallOnce(); }
-
-    static void InstallOnce()
-    {
-Log("[FontHook] InstallOnce ENTER");
-
-        if (_installed) return;
-        _installed = true;
-
-        try
+        // Assembly-CSharp.dll 트리거가 호출하는 진입점
+        public static void Install()
         {
-            // 로거 준비
-            Log("[FontHook] InstallOnce()");
+            if (_installed) return;
+            _installed = true;
 
-            // 런너 GameObject
-            var go = new GameObject("__FontHook");
-            UnityEngine.Object.DontDestroyOnLoad(go);
-            go.hideFlags = HideFlags.HideAndDontSave;
+            Log("[FontHook] InstallOnce ENTER");
 
-            go.AddComponent<FontHookRunner>();
-            Log("[FontHook] Runner created.");
+            try
+            {
+                GameObject go = new GameObject("__FontHook");
+                UnityEngine.Object.DontDestroyOnLoad(go);
+                go.hideFlags = HideFlags.HideAndDontSave;
+                go.AddComponent<FontHookRunner>();
+
+                Log("[FontHook] Runner created. waiting for scan...");
+            }
+            catch (Exception ex)
+            {
+                Log("[FontHook] InstallOnce EX: " + ex);
+            }
         }
-        catch (Exception e)
+
+        // 로그 위치: 문서\HuniePop_KR\fonthook_log.txt (원하는대로 유지)
+        static string BaseDir
         {
-            Log("[FontHook] InstallOnce EX: " + e);
+            get
+            {
+                try
+                {
+                    string doc = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    return Path.Combine(doc, "HuniePop_KR");
+                }
+                catch { return "."; }
+            }
         }
-    }
 
-    static string BaseDir
-    {
-        get
+        static string LogPath
+        {
+            get { return Path.Combine(BaseDir, "fonthook_log.txt"); }
+        }
+
+        public static void Log(string s)
         {
             try
             {
-                string doc = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                return Path.Combine(doc, "HuniePop_KR");
+                Directory.CreateDirectory(BaseDir);
+                File.AppendAllText(LogPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + s + "\r\n");
             }
-            catch { return "."; }
+            catch { }
         }
     }
 
-    static string LogPath
+    public class FontHookRunner : MonoBehaviour
     {
-        get { return Path.Combine(BaseDir, "fonthook_log.txt"); }
-    }
+        bool _dump1Done;
+        bool _dump2Done;
 
-public static void Log(string s)
-{
-    try { Debug.Log(s); } catch { }
+        string _lastLevelKey = "";
+        int _lastFontDataCount = -1;
 
-    try
-    {
-        Directory.CreateDirectory(BaseDir);
-        File.AppendAllText(LogPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + s + "\r\n");
-    }
-    catch { }
-}
+        float _nextPollAt = 0f;
+        const float POLL_INTERVAL = 1.0f;
 
+        const float DUMP1_AT = 1.0f;      // 1초 후 1차 덤프
+        const float DUMP2_FALLBACK_AT = 180.0f; // 3분 후 강제 2차 덤프(보험)
 
-
-}
-
-public class FontHookRunner : MonoBehaviour
-{
-    float _nextScan = 0f;
-    bool _didFirstScan = false;
-
-    void Start()
-    {
-        FontHook.Log("[FontHookRunner] Start()");
-        // 첫 프레임 이후 스캔 (오브젝트들이 생성된 뒤)
-        _nextScan = Time.realtimeSinceStartup + 0.5f;
-    }
-
-    void Update()
-    {
-        // 너무 자주 돌리면 부담이니까 1회/또는 원하면 주기적으로
-        if (!_didFirstScan && Time.realtimeSinceStartup >= _nextScan)
+        void Start()
         {
-            _didFirstScan = true;
-            DumpFontsInMemory();
-        }
-    }
-
-    /// <summary>
-    /// 지금 단계의 목표:
-    /// 1) 게임이 실제로 어떤 tk2d 폰트/머티리얼/텍스쳐를 들고 있는지 "자동 덤프"해서
-    /// 2) 40개를 진짜 다 바꿔야 하는지, 아니면 소수만 쓰는지 확정.
-    /// </summary>
-    void DumpFontsInMemory()
-    {
-        try
-        {
-            FontHook.Log("[Dump] ===== Scan Begin =====");
-
-            // tk2dTextMesh / tk2dTextMesh(또는 LabelObject 내부 참조) 등을 reflection으로 훑기
-            DumpByTypeName("tk2dTextMesh");
-            DumpByTypeName("tk2dTextMeshData");
-            DumpByTypeName("tk2dFontData");
-            DumpByTypeName("tk2dFont");
-
-            FontHook.Log("[Dump] ===== Scan End =====");
-        }
-        catch (Exception e)
-        {
-            FontHook.Log("[Dump] EX: " + e);
-        }
-    }
-
-    void DumpByTypeName(string typeName)
-    {
-        var t = FindType(typeName);
-        if (t == null)
-        {
-            FontHook.Log("[Dump] Type not found: " + typeName);
-            return;
+            Entry.Log("[Runner] Start()");
+            _lastLevelKey = GetLevelKeySafe();
         }
 
-        // Unity 전체 리소스에서 해당 타입 전부 찾기
-        UnityEngine.Object[] objs = Resources.FindObjectsOfTypeAll(t);
-        FontHook.Log("[Dump] " + typeName + " count=" + (objs != null ? objs.Length : 0));
-
-        if (objs == null) return;
-
-        int limit = 200; // 로그 폭발 방지
-        for (int i = 0; i < objs.Length && i < limit; i++)
+        void Update()
         {
-            var o = objs[i];
-            if (o == null) continue;
+            float t = Time.realtimeSinceStartup;
 
-            string name = "";
-            try { name = o.name; } catch { }
-
-            FontHook.Log("  [" + i + "] " + typeName + " name=" + name + " inst=" + o.GetInstanceID());
-
-            // 흔히 폰트/머티리얼/텍스쳐가 들어가는 필드 후보를 몇 개 찍어본다
-            DumpFieldIfExists(o, t, "material");
-            DumpFieldIfExists(o, t, "data");
-            DumpFieldIfExists(o, t, "fontData");
-            DumpFieldIfExists(o, t, "font");
-            DumpFieldIfExists(o, t, "texture");
-            DumpFieldIfExists(o, t, "mainTexture");
-        }
-
-        if (objs.Length > limit)
-            FontHook.Log("  ... truncated (" + objs.Length + " total)");
-    }
-
-    void DumpFieldIfExists(object obj, Type t, string fieldName)
-    {
-        try
-        {
-            var f = t.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (f == null) return;
-            var v = f.GetValue(obj);
-            if (v == null) return;
-
-            string vStr = v.ToString();
-            var uo = v as UnityEngine.Object;
-            if (uo != null)
-                vStr = uo.GetType().Name + "(" + uo.name + ")#" + uo.GetInstanceID();
-
-            FontHook.Log("     ." + fieldName + " = " + vStr);
-        }
-        catch { }
-    }
-
-Type FindType(string shortName)
-{
-    try
-    {
-        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-        {
-            // 1) FullName 정확히
-            var t = asm.GetType(shortName, false);
-            if (t != null) return t;
-
-            // 2) 네임스페이스 포함 대비: Name/FullName 끝부분 매칭
-            Type[] types = null;
-            try { types = asm.GetTypes(); } catch { continue; }
-            if (types == null) continue;
-
-            for (int i = 0; i < types.Length; i++)
+            // 1차 덤프: 시작 직후 UI 로드 상태
+            if (!_dump1Done && t >= DUMP1_AT)
             {
-                var tt = types[i];
-                if (tt == null) continue;
-                if (tt.Name == shortName) return tt;
-                if (tt.FullName != null && tt.FullName.EndsWith("." + shortName)) return tt;
+                _dump1Done = true;
+                DumpAll("DUMP#1 initial t=" + t.ToString("0.00"));
+            }
+
+            // 폴링(무거운 FindObjectsOfTypeAll을 자주 안 돌리기)
+            if (t < _nextPollAt) return;
+            _nextPollAt = t + POLL_INTERVAL;
+
+            // 씬/레벨 변화 감지 → 2차 덤프
+            if (!_dump2Done)
+            {
+                string curKey = GetLevelKeySafe();
+                if (!object.ReferenceEquals(curKey, null) &&
+                    !object.ReferenceEquals(_lastLevelKey, null) &&
+                    curKey != _lastLevelKey)
+                {
+                    Entry.Log("[Runner] Level changed: '" + SafeStr(_lastLevelKey) + "' -> '" + SafeStr(curKey) + "'");
+                    _dump2Done = true;
+                    DumpAll("DUMP#2 level_change key=" + SafeStr(curKey) + " t=" + t.ToString("0.00"));
+                    _lastLevelKey = curKey;
+                    return;
+                }
+                _lastLevelKey = curKey;
+            }
+
+            // tk2dFontData 개수 변화 감지 → 2차 덤프
+            if (!_dump2Done)
+            {
+                int c = GetFontDataCountSafe();
+                if (_lastFontDataCount < 0) _lastFontDataCount = c;
+
+                if (c != _lastFontDataCount)
+                {
+                    Entry.Log("[Runner] tk2dFontData count changed: " + _lastFontDataCount + " -> " + c);
+                    _dump2Done = true;
+                    DumpAll("DUMP#2 fontdata_count_change " + _lastFontDataCount + "->" + c + " t=" + t.ToString("0.00"));
+                    _lastFontDataCount = c;
+                    return;
+                }
+
+                _lastFontDataCount = c;
+            }
+
+            // 최후 보험: 아무 변화가 없어도 일정 시간 지나면 2차 덤프
+            if (!_dump2Done && t >= DUMP2_FALLBACK_AT)
+            {
+                _dump2Done = true;
+                DumpAll("DUMP#2 fallback t=" + t.ToString("0.00"));
             }
         }
-    }
-    catch { }
-    return null;
-}
 
-}
-public static class KRFontHook
-{
-    public static void Install() => FontHook.Install();
-    public static void Init() => FontHook.Install();
-    public static void Boot() => FontHook.Install();
-    public static void TryInstall() => FontHook.Install();
-}
+        // "현재 레벨 상태"를 문자열 키로 만들기 (씬명 없을 때도 대비)
+        string GetLevelKeySafe()
+        {
+            try
+            {
+                // Unity 4.x에서 대개 존재
+                string name = Application.loadedLevelName;
+                if (!object.ReferenceEquals(name, null) && name.Length > 0)
+                    return "name:" + name;
+            }
+            catch { }
 
-public static class FontHookBootstrap
-{
-    public static void Install() => FontHook.Install();
-    public static void Init() => FontHook.Install();
-    public static void Boot() => FontHook.Install();
-    public static void TryInstall() => FontHook.Install();
-}
+            try
+            {
+                // 없으면 인덱스라도
+                int idx = Application.loadedLevel;
+                return "idx:" + idx.ToString();
+            }
+            catch { }
 
-namespace HuniePopKR
-{
-    public static class FontHook
-    {
-        public static void Install() => global::FontHook.Install();
-        public static void Init() => global::FontHook.Install();
-        public static void Boot() => global::FontHook.Install();
-        public static void TryInstall() => global::FontHook.Install();
+            return "unknown";
+        }
+
+        int GetFontDataCountSafe()
+        {
+            try
+            {
+                Type t = FindTypeByShortName("tk2dFontData");
+                if (object.ReferenceEquals(t, null)) return 0;
+
+                UnityEngine.Object[] objs = Resources.FindObjectsOfTypeAll(t);
+                if (object.ReferenceEquals(objs, null)) return 0;
+
+                return objs.Length;
+            }
+            catch { return 0; }
+        }
+
+        void DumpAll(string tag)
+        {
+            try
+            {
+                Entry.Log("[Dump] ===== " + tag + " Begin =====");
+
+                DumpFontDatas();
+                DumpTextMeshHead(); // 너무 많으니 앞부분만
+
+                Entry.Log("[Dump] ===== " + tag + " End =====");
+            }
+            catch (Exception ex)
+            {
+                Entry.Log("[Dump] EX: " + ex);
+            }
+        }
+
+        void DumpFontDatas()
+        {
+            Type t = FindTypeByShortName("tk2dFontData");
+            if (object.ReferenceEquals(t, null))
+            {
+                Entry.Log("[Dump] Type not found: tk2dFontData");
+                return;
+            }
+
+            UnityEngine.Object[] objs = null;
+            try { objs = Resources.FindObjectsOfTypeAll(t); }
+            catch (Exception ex)
+            {
+                Entry.Log("[Dump] FindObjectsOfTypeAll failed for tk2dFontData : " + ex);
+                return;
+            }
+
+            int count = (object.ReferenceEquals(objs, null)) ? 0 : objs.Length;
+            Entry.Log("[Dump] tk2dFontData count=" + count);
+
+            if (object.ReferenceEquals(objs, null)) return;
+
+            int limit = 300; // 폰트는 다 보는 게 낫다
+            for (int i = 0; i < objs.Length && i < limit; i++)
+            {
+                UnityEngine.Object o = objs[i];
+                if (object.ReferenceEquals(o, null)) continue;
+
+                Entry.Log("  [" + i + "] tk2dFontData name='" + SafeStr(SafeName(o)) + "' id=" + o.GetInstanceID());
+
+                // material
+                object matObj = GetFieldValue(o, t, "material");
+                Material mat = matObj as Material;
+                if (!object.ReferenceEquals(mat, null))
+                {
+                    Entry.Log("     .material = Material('" + SafeStr(SafeName(mat)) + "')#" + mat.GetInstanceID());
+
+                    // shader
+                    try
+                    {
+                        Shader sh = mat.shader;
+                        if (!object.ReferenceEquals(sh, null))
+                            Entry.Log("     .material.shader = Shader('" + SafeStr(sh.name) + "')");
+                    }
+                    catch { }
+
+                    // mainTexture
+                    try
+                    {
+                        Texture tex = mat.mainTexture;
+                        if (!object.ReferenceEquals(tex, null))
+                        {
+                            Entry.Log("     .material.mainTexture = " + tex.GetType().Name +
+                                      "('" + SafeStr(SafeName(tex)) + "')#" + tex.GetInstanceID());
+                            DumpTextureDetails(tex);
+                        }
+                        else
+                        {
+                            Entry.Log("     .material.mainTexture = <null>");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Entry.Log("     .material.mainTexture = <EX> " + ex.GetType().Name + " " + ex.Message);
+                    }
+                }
+                else
+                {
+                    if (!object.ReferenceEquals(matObj, null))
+                        Entry.Log("     .material = <non-Material> " + matObj.GetType().FullName);
+                    else
+                        Entry.Log("     .material = <null>");
+                }
+
+                // chars length
+                try
+                {
+                    object charsObj = GetFieldValue(o, t, "chars");
+                    if (!object.ReferenceEquals(charsObj, null))
+                    {
+                        Array arr = charsObj as Array;
+                        if (!object.ReferenceEquals(arr, null))
+                            Entry.Log("     .chars.Length = " + arr.Length);
+                        else
+                            Entry.Log("     .chars = " + charsObj.GetType().FullName);
+                    }
+                    else
+                    {
+                        Entry.Log("     .chars = <null>");
+                    }
+                }
+                catch { }
+            }
+
+            if (objs.Length > limit)
+                Entry.Log("  ... truncated (" + objs.Length + " total)");
+        }
+
+        void DumpTextureDetails(Texture tex)
+        {
+            try
+            {
+                Texture2D t2d = tex as Texture2D;
+                if (!object.ReferenceEquals(t2d, null))
+                {
+                    int w = 0, h = 0;
+                    try { w = t2d.width; h = t2d.height; } catch { }
+
+                    Entry.Log("        [Tex2D] size=" + w + "x" + h);
+
+                    try
+                    {
+                        // Unity 4.x: Texture2D.format 존재
+                        TextureFormat fmt = t2d.format;
+                        Entry.Log("        [Tex2D] format=" + fmt.ToString());
+                    }
+                    catch { }
+
+                    try
+                    {
+                        int mc = t2d.mipmapCount;
+                        Entry.Log("        [Tex2D] mipmapCount=" + mc);
+                    }
+                    catch { }
+                }
+                else
+                {
+                    int w2 = 0, h2 = 0;
+                    try { w2 = tex.width; h2 = tex.height; } catch { }
+                    Entry.Log("        [Tex] size=" + w2 + "x" + h2);
+                }
+            }
+            catch { }
+        }
+
+        void DumpTextMeshHead()
+        {
+            Type t = FindTypeByShortName("tk2dTextMesh");
+            if (object.ReferenceEquals(t, null))
+            {
+                Entry.Log("[Dump] Type not found: tk2dTextMesh");
+                return;
+            }
+
+            UnityEngine.Object[] objs = null;
+            try { objs = Resources.FindObjectsOfTypeAll(t); }
+            catch { return; }
+
+            int count = (object.ReferenceEquals(objs, null)) ? 0 : objs.Length;
+            Entry.Log("[Dump] tk2dTextMesh count=" + count);
+
+            if (object.ReferenceEquals(objs, null)) return;
+
+            int limit = 30;
+            for (int i = 0; i < objs.Length && i < limit; i++)
+            {
+                UnityEngine.Object o = objs[i];
+                if (object.ReferenceEquals(o, null)) continue;
+
+                Entry.Log("  [" + i + "] tk2dTextMesh name='" + SafeStr(SafeName(o)) + "' id=" + o.GetInstanceID());
+            }
+
+            if (objs.Length > limit)
+                Entry.Log("  ... truncated (" + objs.Length + " total)");
+        }
+
+        object GetFieldValue(object obj, Type t, string fieldName)
+        {
+            try
+            {
+                FieldInfo f = t.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                if (object.ReferenceEquals(f, null)) return null;
+                return f.GetValue(obj);
+            }
+            catch { return null; }
+        }
+
+        Type FindTypeByShortName(string shortName)
+        {
+            try
+            {
+                Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
+                if (object.ReferenceEquals(asms, null)) return null;
+
+                for (int a = 0; a < asms.Length; a++)
+                {
+                    Assembly asm = asms[a];
+                    if (object.ReferenceEquals(asm, null)) continue;
+
+                    Type[] types = null;
+                    try { types = asm.GetTypes(); } catch { continue; }
+                    if (object.ReferenceEquals(types, null)) continue;
+
+                    for (int i = 0; i < types.Length; i++)
+                    {
+                        Type tt = types[i];
+                        if (object.ReferenceEquals(tt, null)) continue;
+
+                        string n = tt.Name;
+                        if (!object.ReferenceEquals(n, null) && n == shortName)
+                            return tt;
+                    }
+                }
+            }
+            catch { }
+
+            return null;
+        }
+
+        static string SafeName(UnityEngine.Object o)
+        {
+            try { return o.name; } catch { return ""; }
+        }
+
+        static string SafeStr(string s)
+        {
+            return object.ReferenceEquals(s, null) ? "" : s;
+        }
     }
 }
