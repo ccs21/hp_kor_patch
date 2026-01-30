@@ -6,44 +6,11 @@ using Mono.Cecil.Cil;
 
 class Patcher
 {
-    static bool HasNotifyCall(MethodDefinition m, MethodReference notify, string evt)
-    {
-        if (m == null || !m.HasBody) return false;
-        var ins = m.Body.Instructions;
-        for (int i = 0; i + 1 < ins.Count; i++)
-        {
-            if (ins[i].OpCode == OpCodes.Ldstr && (string)ins[i].Operand == evt)
-            {
-                if ((ins[i + 1].OpCode == OpCodes.Call || ins[i + 1].OpCode == OpCodes.Callvirt) &&
-                    ins[i + 1].Operand is MethodReference mr && mr.FullName == notify.FullName)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    static bool TryPatchNotify(ModuleDefinition mod, MethodReference notifyImported, string typeName, string methodName, string evt)
-    {
-        var t = mod.GetType(typeName);
-        if (t == null) return false;
-        var m = t.Methods.FirstOrDefault(x => x.Name == methodName && x.HasBody);
-        if (m == null) return false;
-        if (HasNotifyCall(m, notifyImported, evt)) return true; // already patched
-
-        var il = m.Body.GetILProcessor();
-        var first = m.Body.Instructions.First();
-        il.InsertBefore(first, il.Create(OpCodes.Ldstr, evt));
-        il.InsertBefore(first, il.Create(OpCodes.Call, notifyImported));
-        Console.WriteLine($"[OK] Hooked {typeName}::{methodName} => NotifyUI(\"{evt}\")");
-        return true;
-    }
-
     static int Main(string[] args)
     {
         if (args.Length < 1)
         {
             Console.WriteLine("Usage: Patcher.exe <HuniePop game folder>");
-            Console.WriteLine("Example: Patcher.exe \"D:\\SteamLibrary\\steamapps\\common\\HuniePop\"");
             return 1;
         }
 
@@ -64,8 +31,7 @@ class Patcher
         }
         if (!File.Exists(hookPath))
         {
-            Console.WriteLine("[ERR] KRHook.dll not found in Managed. Copy it here first:");
-            Console.WriteLine("      " + hookPath);
+            Console.WriteLine("[ERR] KRHook.dll not found in Managed: " + hookPath);
             return 1;
         }
 
@@ -75,6 +41,10 @@ class Patcher
         {
             File.Copy(asmPath, backup, overwrite: false);
             Console.WriteLine("[OK] Backup created: " + backup);
+        }
+        else
+        {
+            Console.WriteLine("[OK] Backup exists: " + backup);
         }
 
         var resolver = new DefaultAssemblyResolver();
@@ -90,40 +60,16 @@ class Patcher
         var asm = AssemblyDefinition.ReadAssembly(asmPath, rp);
         var mod = asm.MainModule;
 
-        // Add KRHook assembly reference if missing
+        // Ensure KRHook reference exists
         if (!mod.AssemblyReferences.Any(r => r.Name == "KRHook"))
-        {
             mod.AssemblyReferences.Add(new AssemblyNameReference("KRHook", new Version(1, 0, 0, 0)));
-            Console.WriteLine("[OK] Added assembly reference: KRHook");
-        }
 
-        // Find LabelObject.SetText(string)
-        var labelType = mod.GetType("LabelObject");
-        if (labelType == null)
-        {
-            Console.WriteLine("[ERR] Type not found: LabelObject");
-            return 1;
-        }
-
-        var setText = labelType.Methods.FirstOrDefault(m =>
-            m.Name == "SetText" &&
-            m.HasParameters &&
-            m.Parameters.Count == 1 &&
-            m.Parameters[0].ParameterType.FullName == "System.String"
-        );
-
-        if (setText == null)
-        {
-            Console.WriteLine("[ERR] Method not found: LabelObject.SetText(string)");
-            return 1;
-        }
-
-        // Load KRHook.dll to import KRHook.OnSetText(object, string)
+        // Import KRHook.OnSetText(object,string)
         var hookAsm = AssemblyDefinition.ReadAssembly(hookPath, new ReaderParameters { AssemblyResolver = resolver });
         var hookType = hookAsm.MainModule.GetType("KRHook");
         if (hookType == null)
         {
-            Console.WriteLine("[ERR] KRHook type not found inside KRHook.dll");
+            Console.WriteLine("[ERR] Type KRHook not found inside KRHook.dll");
             return 1;
         }
 
@@ -137,101 +83,176 @@ class Patcher
 
         if (hookMethod == null)
         {
-            Console.WriteLine("[ERR] KRHook.OnSetText(object, string) not found or signature mismatch");
+            Console.WriteLine("[ERR] KRHook.OnSetText(object,string) not found or signature mismatch");
             return 1;
         }
 
         var hookImported = mod.ImportReference(hookMethod);
 
-        // Load KRHook.NotifyUI(string) (optional but recommended)
-        var notifyMethod = hookType.Methods.FirstOrDefault(m =>
-            m.Name == "NotifyUI" &&
-            m.Parameters.Count == 1 &&
-            m.Parameters[0].ParameterType.FullName == "System.String" &&
-            m.ReturnType.FullName == "System.Void"
+        int patched = 0;
+
+        // 1) Inject translation hook into LabelObject.SetText(string)
+        patched += PatchMethodStart(mod, "LabelObject", "SetText", hookImported);
+
+        // 2) Disable typewriter effect by forcing dialogReadPercent=1 before _dialogSequence.Play()
+        patched += PatchDisableTypewriter(mod);
+
+        asm.Write(asmPath);
+
+        Console.WriteLine("[SUCCESS] Patched Assembly-CSharp.dll. patched_items=" + patched);
+        return 0;
+    }
+
+    // Patch: at method start, rewrite arg1 string:
+    // arg1 = KRHook.OnSetText(this, arg1)
+    static int PatchMethodStart(ModuleDefinition mod, string typeName, string methodName, MethodReference hookImported)
+    {
+        var t = mod.GetType(typeName);
+        if (t == null)
+        {
+            Console.WriteLine("[WARN] Type not found: " + typeName);
+            return 0;
+        }
+
+        var m = t.Methods.FirstOrDefault(x =>
+            x.Name == methodName &&
+            x.HasBody &&
+            x.Parameters.Count == 1 &&
+            x.Parameters[0].ParameterType.FullName == "System.String"
         );
 
-        MethodReference notifyImported = null;
-        if (notifyMethod != null)
-            notifyImported = mod.ImportReference(notifyMethod);
-        else
-            Console.WriteLine("[WARN] KRHook.NotifyUI(string) not found. UI-state hooks will be skipped.");
-
-        // ---------------------------
-        // SAFE PATCH:
-        // Find callvirt tk2dTextMesh::set_text(string)
-        // Replace the argument right before it (expect ldarg.1) with:
-        //   ldarg.0
-        //   ldarg.1
-        //   call string KRHook::OnSetText(object, string)
-        // ---------------------------
-        var il = setText.Body.GetILProcessor();
-        var ins = setText.Body.Instructions;
-
-        bool patched = false;
-
-        for (int i = 0; i < ins.Count; i++)
+        if (m == null)
         {
-            if (ins[i].OpCode == OpCodes.Callvirt && ins[i].Operand is MethodReference mr)
+            Console.WriteLine("[WARN] Method not found: " + typeName + "." + methodName + "(string)");
+            return 0;
+        }
+
+        if (AlreadyPatched(m))
+        {
+            Console.WriteLine("[OK] Already patched: " + typeName + "." + methodName);
+            return 0;
+        }
+
+        var il = m.Body.GetILProcessor();
+        var first = m.Body.Instructions.FirstOrDefault(i => i.OpCode != OpCodes.Nop) ?? m.Body.Instructions.First();
+
+        il.InsertBefore(first, il.Create(OpCodes.Ldarg_0));
+        il.InsertBefore(first, il.Create(OpCodes.Ldarg_1));
+        il.InsertBefore(first, il.Create(OpCodes.Call, hookImported));
+        il.InsertBefore(first, il.Create(OpCodes.Starg_S, m.Parameters[0]));
+
+        Console.WriteLine("[OK] Patched: " + typeName + "." + methodName);
+        return 1;
+    }
+
+    // Disable typewriter:
+    // In Girl.ReadDialogLine(...), before Sequence.Play():
+    // this.dialogReadPercent = 1f;
+    static int PatchDisableTypewriter(ModuleDefinition mod)
+    {
+        var girl = mod.GetType("Girl");
+        if (girl == null)
+        {
+            Console.WriteLine("[WARN] Girl type not found");
+            return 0;
+        }
+
+        var m = girl.Methods.FirstOrDefault(x =>
+            x.Name == "ReadDialogLine" &&
+            x.HasBody &&
+            x.Parameters.Count >= 1 &&
+            x.Parameters[0].ParameterType.Name == "DialogLine"
+        );
+
+        if (m == null)
+        {
+            Console.WriteLine("[WARN] Girl.ReadDialogLine not found");
+            return 0;
+        }
+
+        // setter 찾기: set_dialogReadPercent(float) (대소문자/네이밍 차이 대비)
+        var setter = girl.Methods.FirstOrDefault(x =>
+            (x.Name == "set_dialogReadPercent" || x.Name == "set_DialogReadPercent") &&
+            x.Parameters.Count == 1 &&
+            x.Parameters[0].ParameterType.FullName == "System.Single"
+        );
+
+        if (setter == null)
+        {
+            Console.WriteLine("[WARN] dialogReadPercent setter not found on Girl");
+            return 0;
+        }
+
+        var il = m.Body.GetILProcessor();
+        var ins = m.Body.Instructions;
+
+        // Sequence.Play() 호출 찾기
+        var playCall = ins.FirstOrDefault(i =>
+            (i.OpCode == OpCodes.Callvirt || i.OpCode == OpCodes.Call) &&
+            i.Operand is MethodReference mr &&
+            mr.Name == "Play" &&
+            mr.DeclaringType != null &&
+            mr.DeclaringType.FullName != null &&
+            mr.DeclaringType.FullName.Contains("Holoville.HOTween.Core.Sequence")
+        );
+
+        if (playCall == null)
+        {
+            Console.WriteLine("[WARN] Sequence.Play() call not found in Girl.ReadDialogLine");
+            return 0;
+        }
+
+        // 중복 주입 방지: Play() 앞쪽 근처에 set_dialogReadPercent가 이미 있으면 skip
+        int playIndex = ins.IndexOf(playCall);
+        bool already = false;
+        for (int back = 1; back <= 20; back++)
+        {
+            int idx = playIndex - back;
+            if (idx < 0) break;
+
+            var prev = ins[idx];
+            if ((prev.OpCode == OpCodes.Call || prev.OpCode == OpCodes.Callvirt) &&
+                prev.Operand is MethodReference mr2 &&
+                (mr2.Name == "set_dialogReadPercent" || mr2.Name == "set_DialogReadPercent"))
             {
-                if (mr.Name == "set_text" &&
-                    mr.Parameters.Count == 1 &&
-                    mr.Parameters[0].ParameterType.FullName == "System.String")
-                {
-                    if (i > 0 && ins[i - 1].OpCode == OpCodes.Ldarg_1)
-                    {
-                        var target = ins[i];
-
-                        // remove the original argument load
-                        il.Remove(ins[i - 1]);
-
-                        // push (this, originalText), call hook => string
-                        il.InsertBefore(target, il.Create(OpCodes.Ldarg_0));
-                        il.InsertBefore(target, il.Create(OpCodes.Ldarg_1));
-                        il.InsertBefore(target, il.Create(OpCodes.Call, hookImported));
-
-                        patched = true;
-                        Console.WriteLine("[OK] Patched argument of tk2dTextMesh.set_text(string)");
-                    }
-                    break;
-                }
+                already = true;
+                break;
             }
         }
 
-        if (!patched)
+        if (already)
         {
-            Console.WriteLine("[ERR] Could not find tk2dTextMesh.set_text(string) call pattern in LabelObject.SetText.");
-            return 1;
+            Console.WriteLine("[OK] Typewriter already disabled (setter found near Play)");
+            return 0;
         }
 
-        // ---------------------------
-        // UI STATE HOOKS (optional)
-        // These prevent overlap/ghosting by sending state signals to KRHook.NotifyUI(...)
-        // ---------------------------
-        if (notifyImported != null)
+        // Inject right before Play():
+        // ldarg.0
+        // ldc.r4 1.0
+        // callvirt instance void Girl::set_dialogReadPercent(float32)
+        il.InsertBefore(playCall, il.Create(OpCodes.Ldarg_0));
+        il.InsertBefore(playCall, il.Create(OpCodes.Ldc_R4, 1.0f));
+        il.InsertBefore(playCall, il.Create(OpCodes.Callvirt, mod.ImportReference(setter)));
+
+        Console.WriteLine("[OK] Patched Girl.ReadDialogLine: force dialogReadPercent=1 before Play()");
+        return 1;
+    }
+
+    static bool AlreadyPatched(MethodDefinition m)
+    {
+        try
         {
-            // Cell phone / apps
-            TryPatchNotify(mod, notifyImported, "UICellPhone", "OpenCellPhone", "POPUP_OPEN:CellPhone");
-            TryPatchNotify(mod, notifyImported, "UICellPhone", "CloseCellPhone", "POPUP_CLOSE:CellPhone");
-
-            // Tooltip
-            TryPatchNotify(mod, notifyImported, "UITooltip", "AddTooltip", "POPUP_OPEN:Tooltip");
-            TryPatchNotify(mod, notifyImported, "UITooltip", "HideTooltip", "POPUP_CLOSE:Tooltip");
-            TryPatchNotify(mod, notifyImported, "UITooltip", "OnTooltipHidden", "POPUP_CLOSE:Tooltip");
-
-            // Puzzle mode
-            TryPatchNotify(mod, notifyImported, "UIPuzzleGrid", "ShowPuzzleGrid", "MODE_ENTER:Puzzle");
-            TryPatchNotify(mod, notifyImported, "UIPuzzleGrid", "HidePuzzleGrid", "MODE_EXIT:Puzzle");
-
-            // Dialog mode (best-effort)
-            TryPatchNotify(mod, notifyImported, "Girl", "ReadDialogLine", "MODE_ENTER:Dialog");
-            TryPatchNotify(mod, notifyImported, "Dialog", "ClearDialog", "MODE_EXIT:Dialog");
-            TryPatchNotify(mod, notifyImported, "Dialog", "DialogSequenceComplete", "MODE_EXIT:Dialog");
-            TryPatchNotify(mod, notifyImported, "Dialog", "OnDialogSceneSequenceComplete", "MODE_EXIT:Dialog");
+            return m.Body.Instructions.Take(16).Any(ins =>
+                (ins.OpCode == OpCodes.Call || ins.OpCode == OpCodes.Callvirt) &&
+                ins.Operand is MethodReference mr &&
+                mr.Name == "OnSetText" &&
+                mr.DeclaringType != null &&
+                mr.DeclaringType.Name == "KRHook"
+            );
         }
-
-        asm.Write(asmPath);
-        Console.WriteLine("[SUCCESS] Patched Assembly-CSharp.dll");
-        return 0;
+        catch
+        {
+            return false;
+        }
     }
 }
