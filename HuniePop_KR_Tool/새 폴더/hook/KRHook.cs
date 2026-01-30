@@ -24,7 +24,7 @@ public static class KRHook
     // USER SETTINGS
     // =========================
     public static bool HideOriginalWhileTyping = true;
-    public static bool ShowOriginalIfNoTranslation = false;
+    public static bool ShowOriginalIfNoTranslation = true;
     public static float DebounceSeconds = 0.15f;
 
     public static int FontSize = 26;
