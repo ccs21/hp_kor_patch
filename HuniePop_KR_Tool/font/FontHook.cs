@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FontHook
@@ -9,13 +10,13 @@ namespace FontHook
     {
         static bool _installed;
 
-        // Assembly-CSharp.dll 트리거가 호출하는 진입점
         public static void Install()
         {
             if (_installed) return;
             _installed = true;
 
             Log("[FontHook] InstallOnce ENTER");
+            Log("[GPU] SystemInfo.maxTextureSize=" + SystemInfo.maxTextureSize);
 
             try
             {
@@ -24,7 +25,7 @@ namespace FontHook
                 go.hideFlags = HideFlags.HideAndDontSave;
                 go.AddComponent<FontHookRunner>();
 
-                Log("[FontHook] Runner created. waiting for scan...");
+                Log("[FontHook] Runner created.");
             }
             catch (Exception ex)
             {
@@ -32,7 +33,6 @@ namespace FontHook
             }
         }
 
-        // 로그 위치: 문서\HuniePop_KR\fonthook_log.txt (원하는대로 유지)
         static string BaseDir
         {
             get
@@ -73,8 +73,15 @@ namespace FontHook
         float _nextPollAt = 0f;
         const float POLL_INTERVAL = 1.0f;
 
-        const float DUMP1_AT = 1.0f;      // 1초 후 1차 덤프
-        const float DUMP2_FALLBACK_AT = 180.0f; // 3분 후 강제 2차 덤프(보험)
+        const float DUMP1_AT = 1.0f;
+        const float DUMP2_FALLBACK_AT = 180.0f;
+
+        // ===== 자동 추적(핵심) =====
+        float _nextTrackScanAt = 0f;
+        const float TRACK_SCAN_INTERVAL = 0.5f;  // 0.5초마다 “활성 텍스트의 폰트”를 스캔
+        HashSet<int> _seenFontDataInstanceIds = new HashSet<int>(); // “한 번이라도 등장한 fontData” (instanceID 기준)
+        HashSet<string> _seenFontDataNames = new HashSet<string>(); // instanceID 못 잡을 때 fallback
+        Dictionary<int, string> _fontDataIdToName = new Dictionary<int, string>(); // 디버깅 편의용
 
         void Start()
         {
@@ -86,14 +93,31 @@ namespace FontHook
         {
             float t = Time.realtimeSinceStartup;
 
-            // 1차 덤프: 시작 직후 UI 로드 상태
+            // (선택) 수동 덤프는 남겨둠.
+            try
+            {
+                if (Input.GetKeyDown(KeyCode.F8))
+                {
+                    DumpAll("DUMP#HOTKEY F8 t=" + t.ToString("0.00"));
+                }
+            }
+            catch { }
+
+            // 1차 덤프
             if (!_dump1Done && t >= DUMP1_AT)
             {
                 _dump1Done = true;
                 DumpAll("DUMP#1 initial t=" + t.ToString("0.00"));
             }
 
-            // 폴링(무거운 FindObjectsOfTypeAll을 자주 안 돌리기)
+            // ===== 자동: 새 폰트 등장 감지 =====
+            if (t >= _nextTrackScanAt)
+            {
+                _nextTrackScanAt = t + TRACK_SCAN_INTERVAL;
+                TrackNewFontsInActiveTextMeshes(t);
+            }
+
+            // 폴링(씬/레벨 변화 감지용)
             if (t < _nextPollAt) return;
             _nextPollAt = t + POLL_INTERVAL;
 
@@ -101,9 +125,7 @@ namespace FontHook
             if (!_dump2Done)
             {
                 string curKey = GetLevelKeySafe();
-                if (!object.ReferenceEquals(curKey, null) &&
-                    !object.ReferenceEquals(_lastLevelKey, null) &&
-                    curKey != _lastLevelKey)
+                if (curKey != _lastLevelKey)
                 {
                     Entry.Log("[Runner] Level changed: '" + SafeStr(_lastLevelKey) + "' -> '" + SafeStr(curKey) + "'");
                     _dump2Done = true;
@@ -132,7 +154,7 @@ namespace FontHook
                 _lastFontDataCount = c;
             }
 
-            // 최후 보험: 아무 변화가 없어도 일정 시간 지나면 2차 덤프
+            // 최후 보험
             if (!_dump2Done && t >= DUMP2_FALLBACK_AT)
             {
                 _dump2Done = true;
@@ -140,12 +162,87 @@ namespace FontHook
             }
         }
 
-        // "현재 레벨 상태"를 문자열 키로 만들기 (씬명 없을 때도 대비)
+        // ===== 자동 추적 로직 =====
+        void TrackNewFontsInActiveTextMeshes(float now)
+        {
+            Type textMeshType = FindTypeByShortName("tk2dTextMesh");
+            if (object.ReferenceEquals(textMeshType, null)) return;
+
+            Type fontDataType = FindTypeByShortName("tk2dFontData"); // 있을 수도
+            UnityEngine.Object[] meshes = null;
+
+            try { meshes = Resources.FindObjectsOfTypeAll(textMeshType); }
+            catch { return; }
+
+            if (object.ReferenceEquals(meshes, null)) return;
+
+            for (int i = 0; i < meshes.Length; i++)
+            {
+                UnityEngine.Object o = meshes[i];
+                if (object.ReferenceEquals(o, null)) continue;
+
+                Component comp = o as Component;
+                if (object.ReferenceEquals(comp, null)) continue;
+
+                GameObject go = comp.gameObject;
+                if (object.ReferenceEquals(go, null)) continue;
+
+                bool active = false;
+                try { active = go.activeInHierarchy; } catch { active = false; }
+                if (!active) continue;
+
+                object fontDataObj = TryGetFirstMemberValue(o, textMeshType,
+                    "fontData", "FontData", "font", "Font", "data", "Data", "m_fontData", "m_font");
+
+                if (object.ReferenceEquals(fontDataObj, null)) continue;
+
+                UnityEngine.Object fontUo = fontDataObj as UnityEngine.Object;
+
+                int fid = 0;
+                string fname = "";
+
+                try { fid = (!object.ReferenceEquals(fontUo, null)) ? fontUo.GetInstanceID() : 0; } catch { fid = 0; }
+                try { fname = (!object.ReferenceEquals(fontUo, null)) ? fontUo.name : fontDataObj.GetType().Name; } catch { fname = fontDataObj.GetType().Name; }
+
+                bool isNew = false;
+
+                if (fid != 0)
+                {
+                    if (!_seenFontDataInstanceIds.Contains(fid))
+                    {
+                        _seenFontDataInstanceIds.Add(fid);
+                        _fontDataIdToName[fid] = fname;
+                        isNew = true;
+                    }
+                }
+                else
+                {
+                    if (!_seenFontDataNames.Contains(fname))
+                    {
+                        _seenFontDataNames.Add(fname);
+                        isNew = true;
+                    }
+                }
+
+                if (!isNew) continue;
+
+                string path = GetHierarchyPath(go);
+                string textDesc = DescribeTextValue(o, textMeshType);
+                string fontDesc = DescribeFontData(fontDataObj, fontDataType);
+
+                Entry.Log("[NEW_FONT] t=" + now.ToString("0.00") +
+                          " font=" + fontDesc +
+                          " used_by='" + SafeStr(path) + "'" +
+                          " text=" + textDesc);
+            }
+        }
+
+        // ===== 기존 덤프들 =====
+
         string GetLevelKeySafe()
         {
             try
             {
-                // Unity 4.x에서 대개 존재
                 string name = Application.loadedLevelName;
                 if (!object.ReferenceEquals(name, null) && name.Length > 0)
                     return "name:" + name;
@@ -154,7 +251,6 @@ namespace FontHook
 
             try
             {
-                // 없으면 인덱스라도
                 int idx = Application.loadedLevel;
                 return "idx:" + idx.ToString();
             }
@@ -172,7 +268,6 @@ namespace FontHook
 
                 UnityEngine.Object[] objs = Resources.FindObjectsOfTypeAll(t);
                 if (object.ReferenceEquals(objs, null)) return 0;
-
                 return objs.Length;
             }
             catch { return 0; }
@@ -183,10 +278,8 @@ namespace FontHook
             try
             {
                 Entry.Log("[Dump] ===== " + tag + " Begin =====");
-
                 DumpFontDatas();
-                DumpTextMeshHead(); // 너무 많으니 앞부분만
-
+                DumpTextMeshesUsageSummary();
                 Entry.Log("[Dump] ===== " + tag + " End =====");
             }
             catch (Exception ex)
@@ -217,7 +310,7 @@ namespace FontHook
 
             if (object.ReferenceEquals(objs, null)) return;
 
-            int limit = 300; // 폰트는 다 보는 게 낫다
+            int limit = 400;
             for (int i = 0; i < objs.Length && i < limit; i++)
             {
                 UnityEngine.Object o = objs[i];
@@ -225,183 +318,361 @@ namespace FontHook
 
                 Entry.Log("  [" + i + "] tk2dFontData name='" + SafeStr(SafeName(o)) + "' id=" + o.GetInstanceID());
 
-                // material
                 object matObj = GetFieldValue(o, t, "material");
                 Material mat = matObj as Material;
                 if (!object.ReferenceEquals(mat, null))
                 {
                     Entry.Log("     .material = Material('" + SafeStr(SafeName(mat)) + "')#" + mat.GetInstanceID());
 
-                    // shader
+                    // Shader 정보
                     try
                     {
                         Shader sh = mat.shader;
-                        if (!object.ReferenceEquals(sh, null))
-                            Entry.Log("     .material.shader = Shader('" + SafeStr(sh.name) + "')");
+                        Entry.Log("     .material.shader = " + (!object.ReferenceEquals(sh, null) ? ("Shader('" + sh.name + "')") : "<null>"));
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        Entry.Log("     .material.shader = <EX> " + ex.GetType().Name + " " + ex.Message);
+                    }
 
-                    // mainTexture
+                    // Texture 정보
                     try
                     {
                         Texture tex = mat.mainTexture;
                         if (!object.ReferenceEquals(tex, null))
                         {
                             Entry.Log("     .material.mainTexture = " + tex.GetType().Name +
-                                      "('" + SafeStr(SafeName(tex)) + "')#" + tex.GetInstanceID());
-                            DumpTextureDetails(tex);
+                                      "('" + SafeStr(SafeName(tex)) + "')#" + tex.GetInstanceID() +
+                                      " " + SafeTexSize(tex));
+
+                            Texture2D t2d = tex as Texture2D;
+                            if (!object.ReferenceEquals(t2d, null))
+                            {
+                                Entry.Log("       .tex2d.format=" + t2d.format + " mipmap=" + t2d.mipmapCount);
+                            }
                         }
-                        else
-                        {
-                            Entry.Log("     .material.mainTexture = <null>");
-                        }
+                        else Entry.Log("     .material.mainTexture = <null>");
                     }
                     catch (Exception ex)
                     {
                         Entry.Log("     .material.mainTexture = <EX> " + ex.GetType().Name + " " + ex.Message);
                     }
-                }
-                else
-                {
-                    if (!object.ReferenceEquals(matObj, null))
-                        Entry.Log("     .material = <non-Material> " + matObj.GetType().FullName);
-                    else
-                        Entry.Log("     .material = <null>");
-                }
 
-                // chars length
-                try
-                {
-                    object charsObj = GetFieldValue(o, t, "chars");
-                    if (!object.ReferenceEquals(charsObj, null))
-                    {
-                        Array arr = charsObj as Array;
-                        if (!object.ReferenceEquals(arr, null))
-                            Entry.Log("     .chars.Length = " + arr.Length);
-                        else
-                            Entry.Log("     .chars = " + charsObj.GetType().FullName);
-                    }
-                    else
-                    {
-                        Entry.Log("     .chars = <null>");
-                    }
+                    // tk2dFontData 내부 구조(문자/글리프/커닝 등) 덤프
+                    try
+{
+    DumpFontDataStructure(o, t);
+}
+catch (Exception ex)
+{
+    Entry.Log("     [STRUCT] EX(outer): " + ex.GetType().Name + " " + ex.Message);
+}
+
                 }
-                catch { }
             }
 
             if (objs.Length > limit)
                 Entry.Log("  ... truncated (" + objs.Length + " total)");
         }
 
-        void DumpTextureDetails(Texture tex)
+        // tk2dFontData 내부에서 “문자 → 글리프” 매핑이 어떤 필드로 존재하는지 확인하기 위한 구조 덤프
+        void DumpFontDataStructure(object fontDataObj, Type fontDataType)
         {
+            if (object.ReferenceEquals(fontDataObj, null) || object.ReferenceEquals(fontDataType, null))
+                return;
+
             try
             {
-                Texture2D t2d = tex as Texture2D;
-                if (!object.ReferenceEquals(t2d, null))
+                BindingFlags BF = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+                FieldInfo[] fields = fontDataType.GetFields(BF);
+                Entry.Log("     [STRUCT] fields=" + (fields != null ? fields.Length.ToString() : "0"));
+
+                if (object.ReferenceEquals(fields, null)) return;
+
+                for (int i = 0; i < fields.Length; i++)
                 {
-                    int w = 0, h = 0;
-                    try { w = t2d.width; h = t2d.height; } catch { }
+                    FieldInfo f = fields[i];
+                    if (object.ReferenceEquals(f, null)) continue;
 
-                    Entry.Log("        [Tex2D] size=" + w + "x" + h);
+                    string fn = f.Name ?? "";
+                    Type ft = f.FieldType;
 
-                    try
+                    string low = fn.ToLowerInvariant();
+
+                    // 관심 필드만: 문자/글리프/커닝/라인/스페이싱/데이터/딕셔너리/맵/텍스처 계열
+                    bool interesting =
+                        low.Contains("char") || low.Contains("glyph") || low.Contains("kern") ||
+                        low.Contains("line") || low.Contains("space") || low.Contains("advance") ||
+                        low.Contains("tex") || low.Contains("data") || low.Contains("dict") || low.Contains("map");
+
+                    if (!interesting) continue;
+
+                    object v = null;
+                    try { v = f.GetValue(fontDataObj); } catch { v = null; }
+
+                    string extra = "";
+
+                    if (!object.ReferenceEquals(v, null))
                     {
-                        // Unity 4.x: Texture2D.format 존재
-                        TextureFormat fmt = t2d.format;
-                        Entry.Log("        [Tex2D] format=" + fmt.ToString());
+                        // 배열 길이
+                        Array arr = v as Array;
+                        if (!object.ReferenceEquals(arr, null))
+                        {
+                            extra = " len=" + arr.Length;
+                        }
+                        else
+                        {
+                            // Count 프로퍼티가 있으면(딕셔너리/리스트 등)
+                            try
+                            {
+                                PropertyInfo pCount = v.GetType().GetProperty("Count", BindingFlags.Instance | BindingFlags.Public);
+                                if (!object.ReferenceEquals(pCount, null))
+                                {
+                                    object c = pCount.GetValue(v, null);
+                                    if (!object.ReferenceEquals(c, null)) extra = " count=" + c.ToString();
+                                }
+                            }
+                            catch { }
+                        }
                     }
-                    catch { }
 
-                    try
-                    {
-                        int mc = t2d.mipmapCount;
-                        Entry.Log("        [Tex2D] mipmapCount=" + mc);
-                    }
-                    catch { }
-                }
-                else
-                {
-                    int w2 = 0, h2 = 0;
-                    try { w2 = tex.width; h2 = tex.height; } catch { }
-                    Entry.Log("        [Tex] size=" + w2 + "x" + h2);
+                    string ftName = "<null>";
+try
+{
+    if (!object.ReferenceEquals(ft, null))
+        ftName = ft.FullName;
+}
+catch
+{
+    ftName = "<ex>";
+}
+
+Entry.Log("       - " + fn + " : " + ftName +
+          (object.ReferenceEquals(v, null) ? " = <null>" : "") + extra);
+
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Entry.Log("     [STRUCT] EX: " + ex.GetType().Name + " " + ex.Message);
+            }
         }
 
-        void DumpTextMeshHead()
+        // “요약용” 사용량 통계 (덤프에서만)
+        void DumpTextMeshesUsageSummary()
         {
-            Type t = FindTypeByShortName("tk2dTextMesh");
-            if (object.ReferenceEquals(t, null))
+            Type textMeshType = FindTypeByShortName("tk2dTextMesh");
+            if (object.ReferenceEquals(textMeshType, null))
             {
                 Entry.Log("[Dump] Type not found: tk2dTextMesh");
                 return;
             }
 
             UnityEngine.Object[] objs = null;
-            try { objs = Resources.FindObjectsOfTypeAll(t); }
-            catch { return; }
+            try { objs = Resources.FindObjectsOfTypeAll(textMeshType); }
+            catch (Exception ex)
+            {
+                Entry.Log("[Dump] FindObjectsOfTypeAll failed for tk2dTextMesh : " + ex);
+                return;
+            }
 
-            int count = (object.ReferenceEquals(objs, null)) ? 0 : objs.Length;
-            Entry.Log("[Dump] tk2dTextMesh count=" + count);
+            int total = (object.ReferenceEquals(objs, null)) ? 0 : objs.Length;
+            Entry.Log("[Dump] tk2dTextMesh count=" + total);
 
-            if (object.ReferenceEquals(objs, null)) return;
+            Dictionary<string, int> usageActive = new Dictionary<string, int>();
+            int activeCount = 0;
 
-            int limit = 30;
-            for (int i = 0; i < objs.Length && i < limit; i++)
+            for (int i = 0; i < total; i++)
             {
                 UnityEngine.Object o = objs[i];
                 if (object.ReferenceEquals(o, null)) continue;
 
-                Entry.Log("  [" + i + "] tk2dTextMesh name='" + SafeStr(SafeName(o)) + "' id=" + o.GetInstanceID());
+                Component comp = o as Component;
+                if (object.ReferenceEquals(comp, null)) continue;
+
+                GameObject go = comp.gameObject;
+                if (object.ReferenceEquals(go, null)) continue;
+
+                bool active = false;
+                try { active = go.activeInHierarchy; } catch { active = false; }
+                if (!active) continue;
+
+                activeCount++;
+
+                object fontDataObj = TryGetFirstMemberValue(o, textMeshType,
+                    "fontData", "FontData", "font", "Font", "data", "Data", "m_fontData", "m_font");
+
+                string fontName = "<null>";
+                try
+                {
+                    UnityEngine.Object fuo = fontDataObj as UnityEngine.Object;
+                    if (!object.ReferenceEquals(fuo, null))
+                        fontName = SafeStr(SafeName(fuo));
+                    else if (!object.ReferenceEquals(fontDataObj, null))
+                        fontName = fontDataObj.GetType().Name;
+                }
+                catch { }
+
+                if (!usageActive.ContainsKey(fontName)) usageActive[fontName] = 0;
+                usageActive[fontName]++;
             }
 
-            if (objs.Length > limit)
-                Entry.Log("  ... truncated (" + objs.Length + " total)");
-        }
+            Entry.Log("[Dump] tk2dTextMesh activeInHierarchy=" + activeCount);
 
-        object GetFieldValue(object obj, Type t, string fieldName)
-        {
-            try
+            // 정렬 출력
+            List<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>(usageActive);
+            list.Sort((a, b) => b.Value.CompareTo(a.Value));
+
+            int top = Math.Min(80, list.Count);
+            for (int i = 0; i < top; i++)
             {
-                FieldInfo f = t.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                if (object.ReferenceEquals(f, null)) return null;
-                return f.GetValue(obj);
+                Entry.Log("  [ActiveUsage] " + list[i].Value + "x  font='" + SafeStr(list[i].Key) + "'");
             }
-            catch { return null; }
+
+            if (list.Count > top)
+                Entry.Log("  ... usage truncated (" + list.Count + " fonts)");
         }
+
+        // ===== 유틸 =====
 
         Type FindTypeByShortName(string shortName)
         {
             try
             {
+                // Unity 4.2: 로드된 어셈블리에서 직접 찾는 게 안전
                 Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
-                if (object.ReferenceEquals(asms, null)) return null;
-
-                for (int a = 0; a < asms.Length; a++)
+                for (int i = 0; i < asms.Length; i++)
                 {
-                    Assembly asm = asms[a];
-                    if (object.ReferenceEquals(asm, null)) continue;
+                    Assembly a = asms[i];
+                    if (object.ReferenceEquals(a, null)) continue;
 
                     Type[] types = null;
-                    try { types = asm.GetTypes(); } catch { continue; }
+                    try { types = a.GetTypes(); } catch { continue; }
                     if (object.ReferenceEquals(types, null)) continue;
 
-                    for (int i = 0; i < types.Length; i++)
+                    for (int j = 0; j < types.Length; j++)
                     {
-                        Type tt = types[i];
-                        if (object.ReferenceEquals(tt, null)) continue;
-
-                        string n = tt.Name;
-                        if (!object.ReferenceEquals(n, null) && n == shortName)
-                            return tt;
+                        Type t = types[j];
+                        if (object.ReferenceEquals(t, null)) continue;
+                        if (t.Name == shortName) return t;
                     }
                 }
             }
             catch { }
+            return null;
+        }
+
+        object GetFieldValue(object inst, Type t, string fieldName)
+        {
+            if (object.ReferenceEquals(inst, null) || object.ReferenceEquals(t, null)) return null;
+            try
+            {
+                BindingFlags bf = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+                FieldInfo fi = t.GetField(fieldName, bf);
+                if (object.ReferenceEquals(fi, null)) return null;
+                return fi.GetValue(inst);
+            }
+            catch { return null; }
+        }
+
+        object TryGetFirstMemberValue(object inst, Type t, params string[] names)
+        {
+            if (object.ReferenceEquals(inst, null) || object.ReferenceEquals(t, null) || object.ReferenceEquals(names, null))
+                return null;
+
+            BindingFlags bf = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                string n = names[i];
+                if (string.IsNullOrEmpty(n)) continue;
+
+                try
+                {
+                    FieldInfo fi = t.GetField(n, bf);
+                    if (!object.ReferenceEquals(fi, null))
+                        return fi.GetValue(inst);
+                }
+                catch { }
+
+                try
+                {
+                    PropertyInfo pi = t.GetProperty(n, bf);
+                    if (!object.ReferenceEquals(pi, null) && pi.CanRead)
+                        return pi.GetValue(inst, null);
+                }
+                catch { }
+            }
 
             return null;
+        }
+
+        string DescribeFontData(object fontDataObj, Type fontDataType)
+        {
+            if (object.ReferenceEquals(fontDataObj, null)) return "<null>";
+
+            UnityEngine.Object uo = fontDataObj as UnityEngine.Object;
+
+            int id = 0;
+            string nm = "";
+
+            try { id = (!object.ReferenceEquals(uo, null)) ? uo.GetInstanceID() : 0; } catch { id = 0; }
+            try { nm = (!object.ReferenceEquals(uo, null)) ? uo.name : fontDataObj.GetType().Name; } catch { nm = fontDataObj.GetType().Name; }
+
+            if (id != 0) return "'" + SafeStr(nm) + "'#" + id;
+            return "'" + SafeStr(nm) + "'";
+        }
+
+        string DescribeTextValue(object textMeshObj, Type textMeshType)
+        {
+            if (object.ReferenceEquals(textMeshObj, null) || object.ReferenceEquals(textMeshType, null)) return "<null>";
+
+            object txt = TryGetFirstMemberValue(textMeshObj, textMeshType,
+                "text", "Text", "m_text", "m_String", "stringText", "FormattedText");
+
+            string s = "<null>";
+            try { s = txt as string; } catch { s = "<ex>"; }
+
+            if (object.ReferenceEquals(s, null)) s = "<null>";
+
+            if (s.Length > 70) s = s.Substring(0, 70) + "...";
+            s = s.Replace("\r", "\\r").Replace("\n", "\\n");
+
+            return "'" + s + "'";
+        }
+
+        string GetHierarchyPath(GameObject go)
+        {
+            if (object.ReferenceEquals(go, null)) return "<null>";
+            try
+            {
+                Transform t = go.transform;
+                if (object.ReferenceEquals(t, null)) return SafeStr(go.name);
+
+                List<string> parts = new List<string>();
+                int guard = 0;
+                while (!object.ReferenceEquals(t, null) && guard++ < 64)
+                {
+                    parts.Add(SafeStr(t.name));
+                    t = t.parent;
+                }
+                parts.Reverse();
+                return string.Join("/", parts.ToArray());
+            }
+            catch
+            {
+                return SafeStr(go.name);
+            }
+        }
+
+        static string SafeTexSize(Texture tex)
+        {
+            if (object.ReferenceEquals(tex, null)) return "";
+            try
+            {
+                return tex.width + "x" + tex.height;
+            }
+            catch { return ""; }
         }
 
         static string SafeName(UnityEngine.Object o)
