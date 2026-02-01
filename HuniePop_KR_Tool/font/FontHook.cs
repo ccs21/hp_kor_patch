@@ -110,6 +110,7 @@ namespace FontHook
                 Append("==== FontHook start " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " ====");
                 Append("[I] root=" + root);
                 Append("[I] dataPath=" + SafeStr(Application.dataPath));
+                InstallUnityHooks();
             }
             catch
             {
@@ -135,6 +136,18 @@ namespace FontHook
             return (s == null) ? "(null)" : s;
         }
 
+        private static string SafeStr(object o)
+        {
+            try
+            {
+                return (o == null) ? "(null)" : o.ToString();
+            }
+            catch
+            {
+                return "(toString failed)";
+            }
+        }
+
         // Application.dataPath = ...\HuniePop_Data
         // GameRoot = parent of that
         private static string ResolveGameRoot()
@@ -158,7 +171,41 @@ namespace FontHook
             try { return Directory.GetCurrentDirectory(); } catch { }
             return ".";
         }
-    }
+    
+
+        // Capture Unity exceptions/logs even when Player.log/output_log.txt is not created.
+        private static bool _unityHooked;
+        private static void InstallUnityHooks()
+        {
+            if (_unityHooked) return;
+            _unityHooked = true;
+
+            try
+            {
+                // Unity 4.2: Application.RegisterLogCallback(LogCallback)
+                Application.RegisterLogCallback((string condition, string stackTrace, LogType type) =>
+                {
+                    try
+                    {
+                        Append("[U] " + type.ToString() + " " + condition);
+                        if (!string.IsNullOrEmpty(stackTrace))
+                            Append("[U] " + stackTrace);
+                    }
+                    catch { }
+                });
+            }
+            catch { }
+
+            try
+            {
+                AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
+                {
+                    try { Append("[UE] " + SafeStr(e.ExceptionObject)); } catch { }
+                };
+            }
+            catch { }
+        }
+}
 
     internal class FontHookRunner : MonoBehaviour
     {
@@ -213,22 +260,27 @@ namespace FontHook
 
         private IEnumerator LoopApply()
         {
+            // C# 제한: IEnumerator(yield) 본문에는 catch가 포함된 try를 둘 수 없습니다.
             while (true)
             {
                 yield return new WaitForSeconds(2f);
+                LoopApplyTick();
+            }
+        }
 
-                try
-                {
-                    bool isLoading = false;
-                    try { isLoading = Application.isLoadingLevel; } catch { isLoading = false; }
-                    if (isLoading) continue;
+        private void LoopApplyTick()
+        {
+            try
+            {
+                bool isLoading = false;
+                try { isLoading = Application.isLoadingLevel; } catch { isLoading = false; }
+                if (isLoading) return;
 
-                    ApplyAllFontsOnce();
-                }
-                catch (Exception e)
-                {
-                    Log.E("[Runner] LoopApply EX: " + e);
-                }
+                ApplyAllFontsOnce();
+            }
+            catch (Exception e)
+            {
+                Log.E("[Runner] LoopApply EX: " + e);
             }
         }
 
@@ -419,21 +471,24 @@ namespace FontHook
                 float p0x = g.xoffset;
                 float p1x = g.xoffset + g.width;
 
+                // tk2d expects p0 = bottom-left, p1 = top-right (p0.y <= p1.y).
                 float top = pack.BaseLine - g.yoffset;
                 float bottom = top - g.height;
 
-                Vector3 p0 = new Vector3(p0x, top, 0);
-                Vector3 p1 = new Vector3(p1x, bottom, 0);
+                Vector3 p0 = new Vector3(p0x, bottom, 0);
+                Vector3 p1 = new Vector3(p1x, top, 0);
                 SetField(ch, "p0", p0);
                 SetField(ch, "p1", p1);
 
+                // BMFont 'y' is top-down; Unity UV is bottom-up.
                 float u0 = (float)g.x / (float)pack.ScaleW;
                 float u1 = (float)(g.x + g.width) / (float)pack.ScaleW;
                 float vTop = 1f - ((float)g.y / (float)pack.ScaleH);
                 float vBottom = 1f - ((float)(g.y + g.height) / (float)pack.ScaleH);
 
-                Vector3 uv0 = new Vector3(u0, vTop, 0);
-                Vector3 uv1 = new Vector3(u1, vBottom, 0);
+                // tk2d expects uv0 = bottom-left, uv1 = top-right (uv0.y <= uv1.y).
+                Vector3 uv0 = new Vector3(u0, vBottom, 0);
+                Vector3 uv1 = new Vector3(u1, vTop, 0);
                 SetField(ch, "uv0", uv0);
                 SetField(ch, "uv1", uv1);
 
