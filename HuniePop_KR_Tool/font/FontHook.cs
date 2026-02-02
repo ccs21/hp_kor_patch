@@ -3,8 +3,10 @@
 // - Fix: NEVER use Type == Type (avoids System.Type.op_Equality MissingMethodException on old Unity/Mono)
 // - Fix: NEVER use System.IO.Path.* (avoids MissingMethodException Path.Combine)
 // - Log path fixed to GameRoot (parent of Application.dataPath)
-// - Loads BMFont packs from HuniePop_Data\Managed\fonts\ (r16/r18/r20/r26, b20/b22/b30)
-// - Rewrites tk2dFontData material/materialInst texture + dictionary
+// - Loads BMFont packs (.fnt + .png) into tk2dFontData dictionaries
+// - Plan #2 merges existing tk2dFontData dictionary with BMFont glyphs (keep special entries)
+// - Multi-page .fnt support (2 pages => merge side-by-side atlas, adjust glyph x by page offset)
+// - Adds a fixed screen-space offset: +15px right, +15px up (only p0/p1; does NOT touch metrics)
 
 using System;
 using System.IO;
@@ -28,136 +30,96 @@ namespace FontHook
 
             try
             {
-                Log.Init();
-                Log.I("[Entry] Install ENTER");
-
-                GameObject go = new GameObject("__FontHook_Root");
+                GameObject go = new GameObject("FontHookRunner");
                 UnityEngine.Object.DontDestroyOnLoad(go);
                 go.hideFlags = HideFlags.HideAndDontSave;
+                go.AddComponent<FontHookRunner>();
 
-                FontHookRunner runner = go.AddComponent<FontHookRunner>();
-                Log.I("[Entry] Runner created");
-
-                // Start()에 의존하지 않고 즉시 부팅
-                if (!object.ReferenceEquals(runner, null))
-                {
-                    runner.Bootstrap();
-                }
-
-                Log.I("[Entry] Install LEAVE");
+                Log.I("[Entry] Install OK");
             }
             catch (Exception e)
             {
-                try { Log.E("[Entry] Install EX: " + e); } catch { }
+                Log.E("[Entry] Install EX: " + e);
             }
-        }
-    }
-
-    internal static class P
-    {
-        // Path.Combine 대체: 안전한 경로 결합(Windows 기준)
-        public static string Join2(string a, string b)
-        {
-            if (a == null) a = "";
-            if (b == null) b = "";
-
-            a = a.Replace('/', '\\');
-            b = b.Replace('/', '\\');
-
-            if (a.Length == 0) return b;
-            if (b.Length == 0) return a;
-
-            bool aEnd = a[a.Length - 1] == '\\';
-            bool bStart = b[0] == '\\';
-
-            if (aEnd && bStart) return a + b.Substring(1);
-            if (!aEnd && !bStart) return a + "\\" + b;
-            return a + b;
-        }
-
-        public static string Join3(string a, string b, string c)
-        {
-            return Join2(Join2(a, b), c);
-        }
-
-        public static string GetFileNameNoExt(string fullPath)
-        {
-            if (string.IsNullOrEmpty(fullPath)) return "";
-            string s = fullPath.Replace('/', '\\');
-            int slash = s.LastIndexOf('\\');
-            string name = (slash >= 0) ? s.Substring(slash + 1) : s;
-
-            int dot = name.LastIndexOf('.');
-            if (dot > 0) return name.Substring(0, dot);
-            return name;
         }
     }
 
     internal static class Log
     {
         private static bool _inited;
-        private static string _path;
+        private static string _logPath;
 
-        public static void Init()
+        private static void Init()
         {
             if (_inited) return;
             _inited = true;
 
             try
             {
-                string root = ResolveGameRoot();
-                _path = P.Join2(root, "FontHook_runtime.log");
+                string dataPath = Application.dataPath; // .../HuniePop_Data
+                string root = P.GetDirName(dataPath);    // .../HuniePop
+                _logPath = P.Join2(root, "FontHook_runtime.log");
 
-                Append("==== FontHook start " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " ====");
-                Append("[I] root=" + root);
-                Append("[I] dataPath=" + SafeStr(Application.dataPath));
-            }
-            catch
-            {
-                _path = "FontHook_runtime.log";
-                try { Append("==== FontHook start (fallback) " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " ===="); } catch { }
-            }
-        }
-
-        public static void I(string msg) { Append("[I] " + msg); }
-        public static void E(string msg) { Append("[E] " + msg); }
-
-        private static void Append(string msg)
-        {
-            try
-            {
-                File.AppendAllText(_path, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + msg + "\r\n", Encoding.UTF8);
+                File.AppendAllText(_logPath, "==== FontHook start " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " ====\n");
+                File.AppendAllText(_logPath, "[I] root=" + root + "\n");
+                File.AppendAllText(_logPath, "[I] dataPath=" + dataPath + "\n");
             }
             catch { }
         }
 
-        private static string SafeStr(string s)
-        {
-            return (s == null) ? "(null)" : s;
-        }
-
-        // Application.dataPath = ...\HuniePop_Data
-        // GameRoot = parent of that
-        private static string ResolveGameRoot()
+        public static void I(string s)
         {
             try
             {
-                string dp = Application.dataPath;
-                if (!string.IsNullOrEmpty(dp))
-                {
-                    string s = dp.Replace('/', '\\');
-                    // 끝이 \HuniePop_Data 라고 가정하고 parent 구함
-                    int last = s.LastIndexOf('\\');
-                    if (last > 0)
-                    {
-                        return s.Substring(0, last);
-                    }
-                }
+                Init();
+                File.AppendAllText(_logPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "[I] " + s + "\n");
             }
             catch { }
+        }
 
-            try { return Directory.GetCurrentDirectory(); } catch { }
-            return ".";
+        public static void E(string s)
+        {
+            try
+            {
+                Init();
+                File.AppendAllText(_logPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "[E] " + s + "\n");
+            }
+            catch { }
+        }
+    }
+
+    internal static class P
+    {
+        // Minimal path helpers (Unity 4.2 safe)
+        public static string Join2(string a, string b)
+        {
+            if (string.IsNullOrEmpty(a)) return b;
+            if (string.IsNullOrEmpty(b)) return a;
+            char c = a[a.Length - 1];
+            if (c == '\\' || c == '/') return a + b;
+            return a + "\\" + b;
+        }
+
+        public static string GetDirName(string p)
+        {
+            if (string.IsNullOrEmpty(p)) return ".";
+            int i1 = p.LastIndexOf('\\');
+            int i2 = p.LastIndexOf('/');
+            int i = i1 > i2 ? i1 : i2;
+            if (i <= 0) return ".";
+            return p.Substring(0, i);
+        }
+
+        public static string GetFileNameNoExt(string p)
+        {
+            if (string.IsNullOrEmpty(p)) return "";
+            int i1 = p.LastIndexOf('\\');
+            int i2 = p.LastIndexOf('/');
+            int i = i1 > i2 ? i1 : i2;
+            string fn = (i >= 0) ? p.Substring(i + 1) : p;
+            int dot = fn.LastIndexOf('.');
+            if (dot > 0) return fn.Substring(0, dot);
+            return fn;
         }
     }
 
@@ -170,63 +132,77 @@ namespace FontHook
         private Dictionary<int, string> _applied = new Dictionary<int, string>();
 
         private string _fontsDir;
+        private Dictionary<string, BMFontPack> _packs = new Dictionary<string, BMFontPack>();
 
+        // Target types (tk2d)
         private Type _tFontData;
         private Type _tFontChar;
 
-        private Dictionary<string, BMFontPack> _packs = new Dictionary<string, BMFontPack>(StringComparer.OrdinalIgnoreCase);
+        private FieldInfo _fi_material;
+        private FieldInfo _fi_texture;
+        private FieldInfo _fi_charDict;
+        private FieldInfo _fi_lineHeight;
+        private FieldInfo _fi_largestWidth;
 
-        
-        // --- Diagnostics (dialog freeze / missing glyphs) ---
-        private Type _tTextMesh;
-        private FieldInfo _fiFontCharDict; // cached field on tk2dFontData that holds Dictionary<int, tk2dFontChar>
-        private MethodInfo _miDictContainsKey;
-        private bool _pendingGlyphDiag;
-        private float _lastGlyphDiagAt;
-        private string _lastUnityExceptionSummary;
+        private MethodInfo _mi_initDictionary;
 
-        private static FontHookRunner _instForLog;
-        private static bool _unityLogHooked;
         private static readonly int[] REG_SIZES = new int[] { 16, 18, 20, 26 };
         private static readonly int[] BOLD_SIZES = new int[] { 20, 22, 30 };
+        private const int OFFSET_X = 15;
+        private const int OFFSET_Y = 15;
 
-        public void Bootstrap()
+        public void Start()
         {
-            if (_booted) return;
-            _booted = true;
+            Log.I("[Runner] Start()");
+        }
 
+        public void Update()
+        {
+            if (!_booted)
+            {
+                _booted = true;
+                Bootstrap();
+            }
+
+            // Poll slowly to avoid performance impact / repeated application.
+            // Fonts can appear later as scenes load.
+            if (Time.frameCount % 120 == 0)
+            {
+                try
+                {
+                    ApplyAllFontsOnce();
+                }
+                catch (Exception e)
+                {
+                    Log.E("[Runner] Update ApplyAllFontsOnce EX: " + e);
+                }
+            }
+        }
+
+        private void Bootstrap()
+        {
             try
             {
-                Log.I("[Runner] Bootstrap ENTER");
+                // fonts folder next to Managed (user's setup)
+                string dataPath = Application.dataPath;
+                string root = P.GetDirName(dataPath);
+                _fontsDir = P.Join2(P.Join2(dataPath, "Managed"), "fonts");
 
-                _fontsDir = ResolveFontsDir();
+                Log.I("[Runner] Bootstrap ENTER");
                 Log.I("[Runner] fontsDir=" + _fontsDir);
 
-                _tFontData = FindTypeByName("tk2dFontData");
-                _tFontChar = FindTypeByName("tk2dFontChar");
+                ResolveTk2dTypes();
 
-                Log.I("[Runner] tk2dFontData found=" + (!object.ReferenceEquals(_tFontData, null)));
-                Log.I("[Runner] tk2dFontChar found=" + (!object.ReferenceEquals(_tFontChar, null)));
+                // Load BMFont packs (only fnt required; png pages resolved from .fnt)
+                TryLoadPack("r16");
+                TryLoadPack("r18");
+                TryLoadPack("r20");
+                TryLoadPack("r26");
+                TryLoadPack("b20");
+                TryLoadPack("b22");
+                TryLoadPack("b30");
 
-
-                // Hook Unity log so we can capture exceptions even when Player.log is missing.
-                InstallUnityLogHook();
-
-                _tTextMesh = FindTypeByName("tk2dTextMesh");
-                Log.I("[Runner] tk2dTextMesh found=" + (!object.ReferenceEquals(_tTextMesh, null)));
-
-                if (object.ReferenceEquals(_tFontData, null) || object.ReferenceEquals(_tFontChar, null))
-                {
-                    Log.E("[Runner] tk2d types missing. Abort.");
-                    return;
-                }
-
-                LoadAllPacks();
-                ApplyAllFontsOnce();
-
-                StartCoroutine(LoopApply());
-
-                Log.I("[Runner] Bootstrap LEAVE");
+                Log.I("[Runner] Bootstrap OK. packs=" + _packs.Count);
             }
             catch (Exception e)
             {
@@ -234,72 +210,50 @@ namespace FontHook
             }
         }
 
-        private IEnumerator LoopApply()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(2f);
-
-                try
-                {
-                    bool isLoading = false;
-                    try { isLoading = Application.isLoadingLevel; } catch { isLoading = false; }
-                    if (isLoading) continue;
-
-                    ApplyAllFontsOnce();
-                    TryRunGlyphDiagnostics();
-                }
-                catch (Exception e)
-                {
-                    Log.E("[Runner] LoopApply EX: " + e);
-                }
-            }
-        }
-
-        private string ResolveFontsDir()
+        private void ResolveTk2dTypes()
         {
             try
             {
-                // gameRoot = parent of dataPath
-                string dp = Application.dataPath; // ...\HuniePop_Data
-                if (!string.IsNullOrEmpty(dp))
+                // Find tk2dFontData and tk2dFontChar types by scanning loaded assemblies.
+                Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
+                for (int i = 0; i < asms.Length; i++)
                 {
-                    string data = dp.Replace('/', '\\');
-                    // root
-                    int last = data.LastIndexOf('\\');
-                    string root = (last > 0) ? data.Substring(0, last) : data;
+                    Assembly a = asms[i];
+                    Type[] ts;
+                    try { ts = a.GetTypes(); }
+                    catch { continue; }
 
-                    // root\HuniePop_Data\Managed\fonts
-                    string fonts = P.Join3(data, "Managed", "fonts");
-                    if (Directory.Exists(fonts)) return fonts;
+                    for (int j = 0; j < ts.Length; j++)
+                    {
+                        Type t = ts[j];
+                        if (object.ReferenceEquals(_tFontData, null) && t.Name == "tk2dFontData")
+                            _tFontData = t;
+                        if (object.ReferenceEquals(_tFontChar, null) && t.Name == "tk2dFontChar")
+                            _tFontChar = t;
+                    }
                 }
-            }
-            catch { }
 
-            // fallback: current\HuniePop_Data\Managed\fonts
-            try
+                if (object.ReferenceEquals(_tFontData, null) || object.ReferenceEquals(_tFontChar, null))
+                {
+                    Log.E("[Runner] tk2d types not found. fontData=" + (_tFontData != null) + " fontChar=" + (_tFontChar != null));
+                    return;
+                }
+
+                _fi_material = _tFontData.GetField("material", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                _fi_charDict = _tFontData.GetField("charDict", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                _fi_lineHeight = _tFontData.GetField("lineHeight", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                _fi_largestWidth = _tFontData.GetField("largestWidth", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+                _mi_initDictionary = _tFontData.GetMethod("InitDictionary", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+                // Resolve Material.mainTexture field via reflection-safe route
+                // We'll use property on Material (mainTexture) not field, so no _fi_texture needed.
+                Log.I("[Runner] ResolveTk2dTypes OK");
+            }
+            catch (Exception e)
             {
-                string cur = Directory.GetCurrentDirectory();
-                return P.Join3(P.Join2(cur, "HuniePop_Data"), "Managed", "fonts");
+                Log.E("[Runner] ResolveTk2dTypes EX: " + e);
             }
-            catch { }
-
-            return "HuniePop_Data\\Managed\\fonts";
-        }
-
-        private void LoadAllPacks()
-        {
-            _packs.Clear();
-
-            TryLoadPack("r16");
-            TryLoadPack("r18");
-            TryLoadPack("r20");
-            TryLoadPack("r26");
-            TryLoadPack("b20");
-            TryLoadPack("b22");
-            TryLoadPack("b30");
-
-            Log.I("[Runner] packsLoaded=" + _packs.Count);
         }
 
         private void TryLoadPack(string key)
@@ -307,15 +261,13 @@ namespace FontHook
             try
             {
                 string fnt = P.Join2(_fontsDir, key + ".fnt");
-                string png = P.Join2(_fontsDir, key + ".png");
-
-                if (!File.Exists(fnt) || !File.Exists(png))
+                if (!File.Exists(fnt))
                 {
-                    Log.I("[Runner] pack missing: " + key);
+                    Log.I("[Runner] pack missing fnt: " + key);
                     return;
                 }
 
-                BMFontPack pack = BMFontPack.LoadFromFiles(key, fnt, png);
+                BMFontPack pack = BMFontPack.LoadFromFnt(key, fnt, _fontsDir);
                 if (object.ReferenceEquals(pack, null))
                 {
                     Log.E("[Runner] pack load failed: " + key);
@@ -323,113 +275,146 @@ namespace FontHook
                 }
 
                 _packs[key] = pack;
-                Log.I("[Runner] pack OK: " + key + " tex=" + pack.Texture.width + "x" + pack.Texture.height + " glyphs=" + pack.Glyphs.Count);
+                Log.I("[Runner] pack OK: " + key + " tex=" + pack.Texture.width + "x" + pack.Texture.height + " glyphs=" + pack.Glyphs.Count + " pagesMerged=" + pack.PageCount);
             }
             catch (Exception e)
             {
-                Log.E("[Runner] TryLoadPack EX (" + key + "): " + e);
+                Log.E("[Runner] TryLoadPack EX: " + e);
             }
         }
 
         private void ApplyAllFontsOnce()
         {
+            if (object.ReferenceEquals(_tFontData, null) || object.ReferenceEquals(_tFontChar, null)) return;
             if (_packs.Count == 0) return;
 
-            UnityEngine.Object[] allFonts = null;
-            try { allFonts = Resources.FindObjectsOfTypeAll(_tFontData); }
-            catch (Exception e)
-            {
-                Log.E("[Runner] FindObjectsOfTypeAll(tk2dFontData) EX: " + e);
-                return;
-            }
-
-            int total = (allFonts == null) ? 0 : allFonts.Length;
+            // Find all tk2dFontData instances
+            UnityEngine.Object[] all = Resources.FindObjectsOfTypeAll(_tFontData);
+            int fonts = (all != null) ? all.Length : 0;
             int changed = 0;
 
-            for (int i = 0; i < total; i++)
+            for (int i = 0; i < fonts; i++)
             {
-                UnityEngine.Object fontObj = allFonts[i];
-                if (object.ReferenceEquals(fontObj, null)) continue;
+                UnityEngine.Object obj = all[i];
+                if (object.ReferenceEquals(obj, null)) continue;
 
-                try
+                int id = obj.GetInstanceID();
+                string already;
+                if (_applied.TryGetValue(id, out already))
+                    continue;
+
+                string pick = PickPackKey(obj);
+                if (string.IsNullOrEmpty(pick))
+                    continue;
+
+                BMFontPack pack;
+                if (!_packs.TryGetValue(pick, out pack) || object.ReferenceEquals(pack, null))
+                    continue;
+
+                if (ApplyPackToFontData(obj, pack))
                 {
-                    string name = fontObj.name;
-                    bool bold = GuessBold(name);
-                    int px = GuessPxSize(fontObj, name);
-
-                    string key = SelectPackKey(px, bold);
-                    BMFontPack pack;
-                    if (!_packs.TryGetValue(key, out pack)) continue;
-
-                    // Skip if already applied the same pack to this instance.
-                    int iid = 0;
-                    try { iid = fontObj.GetInstanceID(); } catch { iid = 0; }
-                    if (iid != 0)
-                    {
-                        string prev;
-                        if (_applied.TryGetValue(iid, out prev) && string.Equals(prev, key, StringComparison.OrdinalIgnoreCase))
-                            continue;
-                    }
-
-                    bool did = ApplyPackToFontData(fontObj, pack);
-                    if (did)
-                    {
-                        changed++;
-                        if (iid != 0) _applied[iid] = key;
-                    }
-
-                    if (i == 0)
-                        Log.I("[Runner] sample font=" + name + " => key=" + key + " px=" + px + " bold=" + bold);
-                }
-                catch (Exception e)
-                {
-                    Log.E("[Runner] ApplyOne EX: " + e);
+                    _applied[id] = pick;
+                    changed++;
                 }
             }
 
-            Log.I("[Runner] ApplyAllFontsOnce: fonts=" + total + " changed=" + changed);
+            Log.I("[Runner] ApplyAllFontsOnce: fonts=" + fonts + " changed=" + changed);
         }
 
-        private bool ApplyPackToFontData(object fontDataObj, BMFontPack pack)
+        private string PickPackKey(UnityEngine.Object fontData)
+        {
+            // Keep existing strategy from the working version:
+            // - Determine "bold" vs "regular" by name hints
+            // - Determine size by extracting digits from tk2dFontData name (e.g. ...16px..., ...20px...)
+            try
+            {
+                string n = fontData.name;
+                if (string.IsNullOrEmpty(n)) return null;
+
+                bool bold = false;
+                string lower = n.ToLowerInvariant();
+                if (lower.IndexOf("bold") >= 0 || lower.IndexOf("demibold") >= 0 || lower.IndexOf("extrabold") >= 0)
+                    bold = true;
+
+                int px = ExtractFirstInt(lower);
+                if (px <= 0) return null;
+
+                int best = FindClosestSize(px, bold ? BOLD_SIZES : REG_SIZES);
+                if (best <= 0) return null;
+
+                return (bold ? "b" : "r") + best.ToString();
+            }
+            catch { return null; }
+        }
+
+        private int ExtractFirstInt(string s)
         {
             try
             {
-                // material / materialInst 둘 다 교체
-                Material mat = GetFieldOrProp(fontDataObj, "material") as Material;
-                if (!object.ReferenceEquals(mat, null))
+                Match m = Regex.Match(s, @"(\d+)");
+                if (!object.ReferenceEquals(m, null) && m.Success)
                 {
-                    mat.mainTexture = pack.Texture;
-                    try { mat.SetTexture("_MainTex", pack.Texture); } catch { }
+                    int v;
+                    if (int.TryParse(m.Groups[1].Value, out v)) return v;
                 }
+            }
+            catch { }
+            return 0;
+        }
 
-                Material matInst = GetFieldOrProp(fontDataObj, "materialInst") as Material;
-                if (!object.ReferenceEquals(matInst, null))
+        private int FindClosestSize(int px, int[] sizes)
+        {
+            if (sizes == null || sizes.Length == 0) return 0;
+            int best = sizes[0];
+            int bestd = Math.Abs(px - best);
+            for (int i = 1; i < sizes.Length; i++)
+            {
+                int d = Math.Abs(px - sizes[i]);
+                if (d < bestd)
                 {
-                    matInst.mainTexture = pack.Texture;
-                    try { matInst.SetTexture("_MainTex", pack.Texture); } catch { }
+                    bestd = d;
+                    best = sizes[i];
                 }
+            }
+            return best;
+        }
 
-                SetField(fontDataObj, "premultipliedAlpha", false);
-                SetField(fontDataObj, "useDictionary", true);
-                SetField(fontDataObj, "lineHeight", (float)pack.LineHeight);
-                SetField(fontDataObj, "largestWidth", (float)pack.LargestWidth);
-                SetField(fontDataObj, "texelSize", new Vector2(1f / (float)pack.ScaleW, 1f / (float)pack.ScaleH));
+        private bool ApplyPackToFontData(UnityEngine.Object fontData, BMFontPack pack)
+        {
+            try
+            {
+                if (object.ReferenceEquals(fontData, null) || object.ReferenceEquals(pack, null)) return false;
 
-                MethodInfo miSetDict = fontDataObj.GetType().GetMethod("SetDictionary", BindingFlags.Public | BindingFlags.Instance);
-                if (object.ReferenceEquals(miSetDict, null))
+                // material / texture replace
+                Material mat = null;
+                if (!object.ReferenceEquals(_fi_material, null))
+                    mat = _fi_material.GetValue(fontData) as Material;
+
+                if (object.ReferenceEquals(mat, null))
                 {
-                    Log.E("[Runner] SetDictionary not found on tk2dFontData");
+                    Log.E("[Runner] material null for fontData=" + fontData.name);
                     return false;
                 }
 
-                object dictObj = BuildMergedTk2dDict(fontDataObj, pack);
-                miSetDict.Invoke(fontDataObj, new object[] { dictObj });
+                // Swap texture
+                mat.mainTexture = pack.Texture;
 
-                MethodInfo miInit = fontDataObj.GetType().GetMethod("InitDictionary", BindingFlags.Public | BindingFlags.Instance);
-                if (!object.ReferenceEquals(miInit, null))
-                {
-                    miInit.Invoke(fontDataObj, null);
-                }
+                // Merge existing dict with new glyphs (keeps special entries)
+                object merged = BuildMergedTk2dDict(fontData, pack);
+                if (object.ReferenceEquals(merged, null)) return false;
+
+                if (!object.ReferenceEquals(_fi_charDict, null))
+                    _fi_charDict.SetValue(fontData, merged);
+
+                // Keep metrics from pack (same behavior as working version)
+                if (!object.ReferenceEquals(_fi_lineHeight, null))
+                    _fi_lineHeight.SetValue(fontData, (float)pack.LineHeight);
+                if (!object.ReferenceEquals(_fi_largestWidth, null))
+                    _fi_largestWidth.SetValue(fontData, (float)pack.LargestWidth);
+
+                // InitDictionary if present
+                if (!object.ReferenceEquals(_mi_initDictionary, null))
+                    _mi_initDictionary.Invoke(fontData, new object[0]);
 
                 return true;
             }
@@ -454,10 +439,10 @@ namespace FontHook
 
                 object ch = Activator.CreateInstance(_tFontChar);
 
-                float p0x = g.xoffset;
-                float p1x = g.xoffset + g.width;
+                float p0x = g.xoffset + OFFSET_X;
+                float p1x = g.xoffset + g.width + OFFSET_X;
 
-                float top = pack.BaseLine - g.yoffset;
+                float top = (pack.BaseLine - g.yoffset) + OFFSET_Y;
                 float bottom = top - g.height;
 
                 Vector3 p0 = new Vector3(p0x, top, 0);
@@ -487,697 +472,77 @@ namespace FontHook
         }
 
         // --- Plan #2: Merge existing tk2dFontData dictionary with new BMFont pack glyphs ---
-        // Keeps any pre-existing special symbols / control entries that the game expects,
-        // while overriding glyphs that exist in the new pack.
-        private object BuildMergedTk2dDict(object fontDataObj, BMFontPack pack)
+        // Keeps any pre-existing special symbols / control entries that the game expects.
+        private object BuildMergedTk2dDict(UnityEngine.Object fontData, BMFontPack pack)
         {
-            // Create a new Dictionary<int, tk2dFontChar>
-            Type dictType = typeof(Dictionary<,>).MakeGenericType(typeof(int), _tFontChar);
-            object newDict = Activator.CreateInstance(dictType);
-
-            // Reflection helpers on the concrete dict type
-            MethodInfo miAdd = dictType.GetMethod("Add", new Type[] { typeof(int), _tFontChar });
-            PropertyInfo piItem = dictType.GetProperty("Item", BindingFlags.Public | BindingFlags.Instance);
-            MethodInfo miSetItem = object.ReferenceEquals(piItem, null) ? null : piItem.GetSetMethod();
-            MethodInfo miContainsKey = dictType.GetMethod("ContainsKey", new Type[] { typeof(int) });
-
-            // 1) Copy existing dictionary entries (if any) into newDict
-            object oldDict = null;
-            try { oldDict = SafeGetFontCharDict(fontDataObj); } catch { oldDict = null; }
-
-            if (!object.ReferenceEquals(oldDict, null))
+            try
             {
-                try
+                object existing = null;
+                if (!object.ReferenceEquals(_fi_charDict, null))
+                    existing = _fi_charDict.GetValue(fontData);
+
+                object newDict = BuildTk2dDict(pack);
+                if (object.ReferenceEquals(newDict, null)) return null;
+
+                if (object.ReferenceEquals(existing, null)) return newDict;
+
+                // existing is Dictionary<int, tk2dFontChar>
+                Type existingType = existing.GetType();
+                MethodInfo miGetEnum = existingType.GetMethod("GetEnumerator");
+                MethodInfo miAdd = newDict.GetType().GetMethod("Add", new Type[] { typeof(int), _tFontChar });
+
+                if (object.ReferenceEquals(miGetEnum, null) || object.ReferenceEquals(miAdd, null))
+                    return newDict;
+
+                object en = miGetEnum.Invoke(existing, new object[0]);
+                if (object.ReferenceEquals(en, null)) return newDict;
+
+                Type enType = en.GetType();
+                MethodInfo miMoveNext = enType.GetMethod("MoveNext");
+                PropertyInfo piCurrent = enType.GetProperty("Current");
+
+                if (object.ReferenceEquals(miMoveNext, null) || object.ReferenceEquals(piCurrent, null))
+                    return newDict;
+
+                // Current is KeyValuePair<int, tk2dFontChar>
+                while ((bool)miMoveNext.Invoke(en, new object[0]))
                 {
-                    IEnumerable e = oldDict as IEnumerable;
-                    if (!object.ReferenceEquals(e, null))
-                    {
-                        foreach (object kv in e)
-                        {
-                            if (object.ReferenceEquals(kv, null)) continue;
+                    object cur = piCurrent.GetValue(en, null);
+                    if (object.ReferenceEquals(cur, null)) continue;
 
-                            // kv is KeyValuePair<int, tk2dFontChar>
-                            Type kvT = kv.GetType();
-                            PropertyInfo pk = kvT.GetProperty("Key");
-                            PropertyInfo pv = kvT.GetProperty("Value");
-                            if (object.ReferenceEquals(pk, null) || object.ReferenceEquals(pv, null)) continue;
+                    Type kvType = cur.GetType();
+                    PropertyInfo piKey = kvType.GetProperty("Key");
+                    PropertyInfo piVal = kvType.GetProperty("Value");
+                    if (object.ReferenceEquals(piKey, null) || object.ReferenceEquals(piVal, null)) continue;
 
-                            object kObj = pk.GetValue(kv, null);
-                            object vObj = pv.GetValue(kv, null);
+                    int key = (int)piKey.GetValue(cur, null);
+                    object val = piVal.GetValue(cur, null);
+                    if (object.ReferenceEquals(val, null)) continue;
 
-                            if (object.ReferenceEquals(kObj, null) || object.ReferenceEquals(vObj, null)) continue;
-
-                            int k = (int)kObj;
-
-                            // Add to newDict (no overwrite at this stage)
-                            try
-                            {
-                                if (!object.ReferenceEquals(miAdd, null))
-                                    miAdd.Invoke(newDict, new object[] { k, vObj });
-                            }
-                            catch
-                            {
-                                // ignore
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    // ignore
-                }
-            }
-
-            // 2) Override / add glyphs from the BMFont pack into newDict
-            foreach (KeyValuePair<int, BMFontGlyph> kv in pack.Glyphs)
-            {
-                int code = kv.Key;
-                BMFontGlyph g = kv.Value;
-
-                object ch = Activator.CreateInstance(_tFontChar);
-
-                float p0x = g.xoffset;
-                float p1x = g.xoffset + g.width;
-
-                float top = pack.BaseLine - g.yoffset;
-                float bottom = top - g.height;
-
-                Vector3 p0 = new Vector3(p0x, top, 0);
-                Vector3 p1 = new Vector3(p1x, bottom, 0);
-                SetField(ch, "p0", p0);
-                SetField(ch, "p1", p1);
-
-                float u0 = (float)g.x / (float)pack.ScaleW;
-                float u1 = (float)(g.x + g.width) / (float)pack.ScaleW;
-                float vTop = 1f - ((float)g.y / (float)pack.ScaleH);
-                float vBottom = 1f - ((float)(g.y + g.height) / (float)pack.ScaleH);
-
-                Vector3 uv0 = new Vector3(u0, vTop, 0);
-                Vector3 uv1 = new Vector3(u1, vBottom, 0);
-                SetField(ch, "uv0", uv0);
-                SetField(ch, "uv1", uv1);
-
-                SetField(ch, "advance", (float)g.xadvance);
-                TrySetByte(ch, "flipped", 0);
-
-                // Prefer overwrite (indexer) to avoid Add() duplicate-key exceptions.
-                bool setOk = false;
-                try
-                {
-                    if (!object.ReferenceEquals(miSetItem, null))
-                    {
-                        miSetItem.Invoke(newDict, new object[] { code, ch });
-                        setOk = true;
-                    }
-                }
-                catch { setOk = false; }
-
-                if (!setOk)
-                {
-                    // Fallback: if key not present, try Add
-                    try
-                    {
-                        bool has = false;
-                        if (!object.ReferenceEquals(miContainsKey, null))
-                            has = (bool)miContainsKey.Invoke(newDict, new object[] { code });
-
-                        if (!has && !object.ReferenceEquals(miAdd, null))
-                            miAdd.Invoke(newDict, new object[] { code, ch });
-                    }
+                    // If newDict already has this key, skip (new glyph should override)
+                    // Avoid ContainsKey reflection cost; try Add and ignore exceptions.
+                    try { miAdd.Invoke(newDict, new object[] { key, val }); }
                     catch { }
                 }
-            }
 
-            // 3) Ensure critical control codes exist (tab/newline/carriage return)
-            EnsureControlCode(newDict, 9, pack, miContainsKey, miSetItem, miAdd);   // \t
-            EnsureControlCode(newDict, 10, pack, miContainsKey, miSetItem, miAdd);  // \n
-            EnsureControlCode(newDict, 13, pack, miContainsKey, miSetItem, miAdd);  // \r
-
-            return newDict;
-        }
-
-        private void EnsureControlCode(object dictObj, int code, BMFontPack pack, MethodInfo miContainsKey, MethodInfo miSetItem, MethodInfo miAdd)
-        {
-            try
-            {
-                bool has = false;
-                try
-                {
-                    if (!object.ReferenceEquals(miContainsKey, null))
-                        has = (bool)miContainsKey.Invoke(dictObj, new object[] { code });
-                }
-                catch { has = true; }
-
-                if (has) return;
-
-                // Try to clone space(32) if available, otherwise create a zero-width dummy glyph.
-                object baseChar = TryGetChar(dictObj, 32);
-                object ch = object.ReferenceEquals(baseChar, null) ? CreateZeroChar(pack) : CloneChar(baseChar, true);
-
-                if (object.ReferenceEquals(ch, null)) ch = CreateZeroChar(pack);
-
-                // Make sure advance is 0 for control codes
-                try { SetField(ch, "advance", 0f); } catch { }
-
-                bool setOk = false;
-                try
-                {
-                    if (!object.ReferenceEquals(miSetItem, null))
-                    {
-                        miSetItem.Invoke(dictObj, new object[] { code, ch });
-                        setOk = true;
-                    }
-                }
-                catch { setOk = false; }
-
-                if (!setOk)
-                {
-                    try
-                    {
-                        if (!object.ReferenceEquals(miAdd, null))
-                            miAdd.Invoke(dictObj, new object[] { code, ch });
-                    }
-                    catch { }
-                }
-            }
-            catch { }
-        }
-
-        private object TryGetChar(object dictObj, int code)
-        {
-            try
-            {
-                if (object.ReferenceEquals(dictObj, null)) return null;
-
-                Type t = dictObj.GetType();
-                MethodInfo miContains = t.GetMethod("ContainsKey", new Type[] { typeof(int) });
-                if (!object.ReferenceEquals(miContains, null))
-                {
-                    bool has = (bool)miContains.Invoke(dictObj, new object[] { code });
-                    if (!has) return null;
-                }
-
-                PropertyInfo piItem = t.GetProperty("Item", BindingFlags.Public | BindingFlags.Instance);
-                if (!object.ReferenceEquals(piItem, null))
-                {
-                    MethodInfo miGet = piItem.GetGetMethod();
-                    if (!object.ReferenceEquals(miGet, null))
-                        return miGet.Invoke(dictObj, new object[] { code });
-                }
-            }
-            catch { }
-            return null;
-        }
-
-        // cloneCommon=true will keep p0/p1/uv0/uv1/flipped, and sets advance=0 if caller wants.
-        private object CloneChar(object srcChar, bool cloneCommon)
-        {
-            try
-            {
-                object dst = Activator.CreateInstance(_tFontChar);
-
-                if (cloneCommon)
-                {
-                    CopyFieldIfExists(srcChar, dst, "p0");
-                    CopyFieldIfExists(srcChar, dst, "p1");
-                    CopyFieldIfExists(srcChar, dst, "uv0");
-                    CopyFieldIfExists(srcChar, dst, "uv1");
-                    CopyFieldIfExists(srcChar, dst, "advance");
-                    CopyFieldIfExists(srcChar, dst, "flipped");
-                }
-
-                return dst;
-            }
-            catch { }
-            return null;
-        }
-
-        private void CopyFieldIfExists(object src, object dst, string name)
-        {
-            try
-            {
-                if (object.ReferenceEquals(src, null) || object.ReferenceEquals(dst, null)) return;
-
-                FieldInfo fs = src.GetType().GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                FieldInfo fd = dst.GetType().GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                if (!object.ReferenceEquals(fs, null) && !object.ReferenceEquals(fd, null))
-                {
-                    object v = fs.GetValue(src);
-                    fd.SetValue(dst, v);
-                    return;
-                }
-
-                // Property fallback (rare, but safe)
-                PropertyInfo ps = src.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                PropertyInfo pd = dst.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                if (!object.ReferenceEquals(ps, null) && ps.CanRead && !object.ReferenceEquals(pd, null) && pd.CanWrite)
-                {
-                    object v = ps.GetValue(src, null);
-                    pd.SetValue(dst, v, null);
-                }
-            }
-            catch { }
-        }
-
-        private object CreateZeroChar(BMFontPack pack)
-        {
-            try
-            {
-                object ch = Activator.CreateInstance(_tFontChar);
-
-                Vector3 z = Vector3.zero;
-                SetField(ch, "p0", z);
-                SetField(ch, "p1", z);
-                SetField(ch, "uv0", z);
-                SetField(ch, "uv1", z);
-                SetField(ch, "advance", 0f);
-                TrySetByte(ch, "flipped", 0);
-
-                return ch;
-            }
-            catch { }
-            return null;
-        }
-
-        
-        // ---------- Unity log capture ----------
-        private void InstallUnityLogHook()
-        {
-            try
-            {
-                _instForLog = this;
-
-                if (_unityLogHooked) return;
-                _unityLogHooked = true;
-
-                // Unity 4.2: Application.RegisterLogCallback(LogCallback callback)
-                Application.RegisterLogCallback(OnUnityLog);
-                Log.I("[Runner] UnityLogHook installed");
+                return newDict;
             }
             catch (Exception e)
             {
-                Log.E("[Runner] InstallUnityLogHook EX: " + e);
+                Log.E("[Runner] BuildMergedTk2dDict EX: " + e);
+                return null;
             }
         }
 
-        private static void OnUnityLog(string condition, string stackTrace, LogType type)
+        private void SetField(object obj, string name, object val)
         {
             try
             {
-                // Always mirror Unity logs into our runtime log file.
-                Log.I("[U] " + type.ToString() + ": " + (condition ?? "(null)"));
-                if (!string.IsNullOrEmpty(stackTrace))
-                    Log.I("[U] " + stackTrace);
-
-                FontHookRunner inst = _instForLog;
-                if (object.ReferenceEquals(inst, null)) return;
-
-                // Detect the exact crash pattern: tk2dFontChar dictionary missing a key.
-                if (!string.IsNullOrEmpty(condition) && condition.IndexOf("KeyNotFoundException", StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    inst._lastUnityExceptionSummary = condition;
-                    inst._pendingGlyphDiag = true;
-                }
+                FieldInfo f = obj.GetType().GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                if (!object.ReferenceEquals(f, null))
+                    f.SetValue(obj, val);
             }
             catch { }
-        }
-
-        // ---------- Diagnostics: find which glyph codes are missing ----------
-        private void TryRunGlyphDiagnostics()
-        {
-            try
-            {
-                if (!_pendingGlyphDiag) return;
-
-                float now = Time.realtimeSinceStartup;
-                if (now - _lastGlyphDiagAt < 1.0f) return; // throttle
-                _lastGlyphDiagAt = now;
-                _pendingGlyphDiag = false;
-
-                DumpMissingGlyphs();
-            }
-            catch (Exception e)
-            {
-                Log.E("[Diag] TryRunGlyphDiagnostics EX: " + e);
-            }
-        }
-
-        private void DumpMissingGlyphs()
-        {
-            if (object.ReferenceEquals(_tTextMesh, null))
-            {
-                Log.E("[Diag] tk2dTextMesh type not found; cannot scan texts.");
-                return;
-            }
-
-            UnityEngine.Object[] allText = null;
-            try { allText = Resources.FindObjectsOfTypeAll(_tTextMesh); }
-            catch (Exception e)
-            {
-                Log.E("[Diag] FindObjectsOfTypeAll(tk2dTextMesh) EX: " + e);
-                return;
-            }
-
-            int total = (allText == null) ? 0 : allText.Length;
-            Log.I("[Diag] ===== Missing glyph scan BEGIN (textMeshes=" + total + ") lastEx=" + (_lastUnityExceptionSummary ?? "(null)") + " =====");
-
-            int reportedMeshes = 0;
-
-            for (int i = 0; i < total; i++)
-            {
-                object tm = allText[i];
-                if (object.ReferenceEquals(tm, null)) continue;
-
-                string txt = SafeGetTextFromTextMesh(tm);
-                if (string.IsNullOrEmpty(txt)) continue;
-
-                object fontData = SafeGetFontDataFromTextMesh(tm);
-                if (object.ReferenceEquals(fontData, null)) continue;
-
-                object dict = SafeGetFontCharDict(fontData);
-                if (object.ReferenceEquals(dict, null)) continue;
-
-                List<int> missing = CollectMissingCodes(dict, txt);
-                if (missing.Count == 0) continue;
-
-                reportedMeshes++;
-                if (reportedMeshes <= 25)
-                {
-                    string tmName = SafeGetUnityName(tm);
-                    string fdName = SafeGetUnityName(fontData);
-                    Log.I("[Diag] MISSING in textMesh='" + tmName + "' fontData='" + fdName + "' textLen=" + txt.Length);
-                    Log.I("[Diag] textPreview=" + PreviewText(txt, 120));
-                    Log.I("[Diag] missingCodes=" + FormatMissing(missing, 80));
-                }
-            }
-
-            Log.I("[Diag] ===== Missing glyph scan END (reported=" + reportedMeshes + ") =====");
-        }
-
-        private List<int> CollectMissingCodes(object dictObj, string text)
-        {
-            List<int> missing = new List<int>();
-
-            MethodInfo miContains = _miDictContainsKey;
-            if (object.ReferenceEquals(miContains, null))
-            {
-                try { miContains = dictObj.GetType().GetMethod("ContainsKey", new Type[] { typeof(int) }); }
-                catch { miContains = null; }
-                _miDictContainsKey = miContains;
-            }
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                int code = (int)text[i];
-
-                // Skip common layout control codes. If these are the cause, we still log them later.
-                if (code == 10 || code == 13) continue;
-
-                bool has = false;
-                try
-                {
-                    if (!object.ReferenceEquals(miContains, null))
-                        has = (bool)miContains.Invoke(dictObj, new object[] { code });
-                }
-                catch { has = true; }
-
-                if (!has && missing.IndexOf(code) < 0)
-                    missing.Add(code);
-
-                if (missing.Count >= 200) break;
-            }
-
-            // Also check a few critical codes explicitly (space, tab, etc.)
-            int[] critical = new int[] { 32, 9, 10, 13, 8230 }; // space, tab, LF, CR, ellipsis
-            for (int k = 0; k < critical.Length; k++)
-            {
-                int code = critical[k];
-                bool has = false;
-                try
-                {
-                    if (!object.ReferenceEquals(miContains, null))
-                        has = (bool)miContains.Invoke(dictObj, new object[] { code });
-                }
-                catch { has = true; }
-
-                if (!has && missing.IndexOf(code) < 0)
-                    missing.Add(code);
-            }
-
-            return missing;
-        }
-
-        private object SafeGetFontCharDict(object fontDataObj)
-        {
-            try
-            {
-                EnsureFontCharDictField(fontDataObj.GetType());
-                if (!object.ReferenceEquals(_fiFontCharDict, null))
-                {
-                    object dict = _fiFontCharDict.GetValue(fontDataObj);
-                    return dict;
-                }
-            }
-            catch { }
-            return null;
-        }
-
-        private void EnsureFontCharDictField(Type fontDataType)
-        {
-            if (!object.ReferenceEquals(_fiFontCharDict, null)) return;
-            if (object.ReferenceEquals(fontDataType, null)) return;
-
-            try
-            {
-                FieldInfo[] fs = fontDataType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                for (int i = 0; i < fs.Length; i++)
-                {
-                    FieldInfo f = fs[i];
-                    if (object.ReferenceEquals(f, null)) continue;
-
-                    Type ft = f.FieldType;
-                    if (object.ReferenceEquals(ft, null)) continue;
-                    if (!ft.IsGenericType) continue;
-
-                    Type gt = ft.GetGenericTypeDefinition();
-                    if (!object.ReferenceEquals(gt, typeof(Dictionary<,>))) continue;
-
-                    Type[] args = ft.GetGenericArguments();
-                    if (args == null || args.Length != 2) continue;
-
-                    if (!object.ReferenceEquals(args[0], typeof(int))) continue;
-                    if (object.ReferenceEquals(_tFontChar, null)) continue;
-                    if (!object.ReferenceEquals(args[1], _tFontChar)) continue;
-
-                    _fiFontCharDict = f;
-                    Log.I("[Diag] Found tk2dFontData charDict field: " + f.Name);
-                    return;
-                }
-            }
-            catch { }
-        }
-
-        private object SafeGetFontDataFromTextMesh(object textMeshObj)
-        {
-            // Common tk2dTextMesh fields/properties: font / fontData
-            object fd = GetFieldOrProp(textMeshObj, "font");
-            if (!object.ReferenceEquals(fd, null)) return fd;
-
-            fd = GetFieldOrProp(textMeshObj, "fontData");
-            if (!object.ReferenceEquals(fd, null)) return fd;
-
-            fd = GetFieldOrProp(textMeshObj, "_font");
-            if (!object.ReferenceEquals(fd, null)) return fd;
-
-            return null;
-        }
-
-        private string SafeGetTextFromTextMesh(object textMeshObj)
-        {
-            object t = GetFieldOrProp(textMeshObj, "text");
-            if (!object.ReferenceEquals(t, null) && t is string) return (string)t;
-
-            t = GetFieldOrProp(textMeshObj, "_text");
-            if (!object.ReferenceEquals(t, null) && t is string) return (string)t;
-
-            return null;
-        }
-
-        private string SafeGetUnityName(object obj)
-        {
-            try
-            {
-                UnityEngine.Object uo = obj as UnityEngine.Object;
-                if (!object.ReferenceEquals(uo, null)) return uo.name;
-            }
-            catch { }
-            return obj.GetType().Name;
-        }
-
-        private string PreviewText(string s, int max)
-        {
-            if (s == null) return "(null)";
-            s = s.Replace("\r", "\\r").Replace("\n", "\\n").Replace("\t", "\\t");
-            if (s.Length <= max) return s;
-            return s.Substring(0, max) + "...";
-        }
-
-        private string FormatMissing(List<int> codes, int maxItems)
-        {
-            if (codes == null || codes.Count == 0) return "(none)";
-            StringBuilder sb = new StringBuilder();
-            int n = Math.Min(codes.Count, maxItems);
-            for (int i = 0; i < n; i++)
-            {
-                int c = codes[i];
-                if (i > 0) sb.Append(", ");
-                sb.Append(c.ToString());
-                sb.Append("(0x");
-                sb.Append(c.ToString("X"));
-                sb.Append(")");
-                sb.Append(":'");
-                sb.Append(CodeToPrintable(c));
-                sb.Append("'");
-            }
-            if (codes.Count > n) sb.Append(" ...");
-            return sb.ToString();
-        }
-
-        private char CodeToPrintable(int code)
-        {
-            try
-            {
-                if (code < 32) return '?';
-                if (code > 0xFFFF) return '?';
-                return (char)code;
-            }
-            catch { return '?'; }
-        }
-
-
-        // ---------- Matching ----------
-        private string SelectPackKey(int px, bool bold)
-        {
-            int sel = ClosestSize(px, bold ? BOLD_SIZES : REG_SIZES);
-            return (bold ? "b" : "r") + sel.ToString();
-        }
-
-        private int ClosestSize(int target, int[] sizes)
-        {
-            if (sizes == null || sizes.Length == 0) return target;
-            int best = sizes[0];
-            int bestDiff = Math.Abs(best - target);
-            for (int i = 1; i < sizes.Length; i++)
-            {
-                int d = Math.Abs(sizes[i] - target);
-                if (d < bestDiff)
-                {
-                    bestDiff = d;
-                    best = sizes[i];
-                }
-            }
-            return best;
-        }
-
-        private bool GuessBold(string name)
-        {
-            if (string.IsNullOrEmpty(name)) return false;
-            string n = name.ToLowerInvariant();
-            return (n.IndexOf("bold") >= 0) || (n.IndexOf("demi") >= 0) || (n.IndexOf("extra") >= 0) || (n.IndexOf("black") >= 0);
-        }
-
-        private int GuessPxSize(object fontDataObj, string name)
-        {
-            if (!string.IsNullOrEmpty(name))
-            {
-                Match m = Regex.Match(name, @"(\d+)\s*px", RegexOptions.IgnoreCase);
-                if (m.Success)
-                {
-                    int v;
-                    if (int.TryParse(m.Groups[1].Value, out v)) return v;
-                }
-            }
-
-            object lh = GetFieldOrProp(fontDataObj, "lineHeight");
-            if (!object.ReferenceEquals(lh, null))
-            {
-                if (lh is float)
-                {
-                    int v = Mathf.RoundToInt((float)lh);
-                    if (v > 0) return v;
-                }
-                if (lh is int)
-                {
-                    int v = (int)lh;
-                    if (v > 0) return v;
-                }
-            }
-
-            return 20;
-        }
-
-        // ---------- Reflection helpers ----------
-        private Type FindTypeByName(string simpleName)
-        {
-            try
-            {
-                Assembly[] asms = AppDomain.CurrentDomain.GetAssemblies();
-                for (int i = 0; i < asms.Length; i++)
-                {
-                    Assembly asm = asms[i];
-                    Type[] types = null;
-                    try { types = asm.GetTypes(); } catch { continue; }
-                    if (object.ReferenceEquals(types, null)) continue;
-
-                    for (int j = 0; j < types.Length; j++)
-                    {
-                        Type t = types[j];
-                        if (object.ReferenceEquals(t, null)) continue;
-                        if (t.Name == simpleName) return t;
-                    }
-                }
-            }
-            catch { }
-            return null;
-        }
-
-        private object GetFieldOrProp(object obj, string name)
-        {
-            if (object.ReferenceEquals(obj, null)) return null;
-            Type t = obj.GetType();
-
-            FieldInfo f = t.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (!object.ReferenceEquals(f, null))
-            {
-                try { return f.GetValue(obj); } catch { }
-            }
-
-            PropertyInfo p = t.GetProperty(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (!object.ReferenceEquals(p, null) && p.CanRead)
-            {
-                try { return p.GetValue(obj, null); } catch { }
-            }
-
-            return null;
-        }
-
-        private void SetField(object obj, string name, object value)
-        {
-            if (object.ReferenceEquals(obj, null)) return;
-            Type t = obj.GetType();
-
-            FieldInfo f = t.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (!object.ReferenceEquals(f, null))
-            {
-                try { f.SetValue(obj, value); } catch { }
-                return;
-            }
-
-            PropertyInfo p = t.GetProperty(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (!object.ReferenceEquals(p, null) && p.CanWrite)
-            {
-                try { p.SetValue(obj, value, null); } catch { }
-            }
         }
 
         private void TrySetByte(object obj, string name, byte val)
@@ -1193,7 +558,12 @@ namespace FontHook
         }
     }
 
-    // ---------------- BMFont Loader ----------------
+    // ---------------- BMFont Loader (supports multi-page .fnt) ----------------
+    // Minimal change from the "working" version:
+    //  - Reads page file names from .fnt (page id file="xxx.png")
+    //  - If 2 pages exist (e.g. r261.png + r262.png), merges them into one atlas texture
+    //  - Adjusts glyph x/y by page offset
+    // NOTE: Still Unity 4.2 safe: no System.IO.Path usage, no Type == comparisons.
 
     internal class BMFontPack
     {
@@ -1206,14 +576,19 @@ namespace FontHook
         public int ScaleH;
         public int LargestWidth;
 
+        public int PageCount;
+
         public Dictionary<int, BMFontGlyph> Glyphs = new Dictionary<int, BMFontGlyph>();
 
-        public static BMFontPack LoadFromFiles(string key, string fntPath, string pngPath)
+        // fntDir: directory containing the .fnt and its page png(s)
+        public static BMFontPack LoadFromFnt(string key, string fntPath, string fntDir)
         {
             BMFontPack pack = new BMFontPack();
             pack.Key = key;
 
             string txt = File.ReadAllText(fntPath, Encoding.UTF8);
+
+            Dictionary<int, string> pageFiles = new Dictionary<int, string>();
 
             using (StringReader sr = new StringReader(txt))
             {
@@ -1221,6 +596,8 @@ namespace FontHook
                 while ((line = sr.ReadLine()) != null)
                 {
                     line = line.Trim();
+                    if (line.Length == 0) continue;
+
                     if (line.StartsWith("common "))
                     {
                         Dictionary<string, string> kv = ParseKVs(line);
@@ -1228,6 +605,17 @@ namespace FontHook
                         pack.BaseLine = GetInt(kv, "base", pack.LineHeight);
                         pack.ScaleW = GetInt(kv, "scaleW", 0);
                         pack.ScaleH = GetInt(kv, "scaleH", 0);
+                        pack.PageCount = GetInt(kv, "pages", 1);
+                    }
+                    else if (line.StartsWith("page "))
+                    {
+                        Dictionary<string, string> kv = ParseKVs(line);
+                        int id = GetInt(kv, "id", -1);
+                        string file;
+                        if (id >= 0 && kv.TryGetValue("file", out file) && !string.IsNullOrEmpty(file))
+                        {
+                            pageFiles[id] = file;
+                        }
                     }
                     else if (line.StartsWith("char "))
                     {
@@ -1241,6 +629,7 @@ namespace FontHook
                         g.xoffset = GetInt(kv, "xoffset", 0);
                         g.yoffset = GetInt(kv, "yoffset", 0);
                         g.xadvance = GetInt(kv, "xadvance", g.width);
+                        g.page = GetInt(kv, "page", 0);
 
                         if (g.id >= 0)
                         {
@@ -1251,16 +640,210 @@ namespace FontHook
                 }
             }
 
-            pack.Texture = LoadPngTexture(pngPath);
-            if (object.ReferenceEquals(pack.Texture, null)) return null;
+            // If the .fnt does not contain page lines, fall back to key.png (single page)
+            if (pageFiles.Count == 0)
+            {
+                string fallbackPng = key + ".png";
+                pageFiles[0] = fallbackPng;
+                pack.PageCount = 1;
+            }
 
-            if (pack.ScaleW <= 0) pack.ScaleW = pack.Texture.width;
-            if (pack.ScaleH <= 0) pack.ScaleH = pack.Texture.height;
+            // Load pages
+            int maxPage = -1;
+            foreach (KeyValuePair<int, string> kv in pageFiles)
+            {
+                if (kv.Key > maxPage) maxPage = kv.Key;
+            }
+            int pages = maxPage + 1;
+            if (pages <= 0) pages = 1;
 
-            if (pack.LineHeight <= 0) pack.LineHeight = 20;
-            if (pack.BaseLine <= 0) pack.BaseLine = pack.LineHeight;
+            Texture2D[] texPages = new Texture2D[pages];
+            int validPages = 0;
 
-            return pack;
+            for (int i = 0; i < pages; i++)
+            {
+                string fn;
+                if (!pageFiles.TryGetValue(i, out fn) || string.IsNullOrEmpty(fn))
+                {
+                    texPages[i] = null;
+                    continue;
+                }
+
+                string pngFull = P.Join2(fntDir, fn);
+                if (!File.Exists(pngFull))
+                {
+                    pngFull = P.Join2(fntDir, P.GetFileNameNoExt(fn) + ".png");
+                }
+
+                if (!File.Exists(pngFull))
+                {
+                    Log.E("[BMFont] page png missing: key=" + key + " id=" + i + " file=" + fn);
+                    texPages[i] = null;
+                    continue;
+                }
+
+                texPages[i] = LoadPngTexture(pngFull);
+                if (!object.ReferenceEquals(texPages[i], null)) validPages++;
+            }
+
+            if (validPages <= 0)
+            {
+                Log.E("[BMFont] no valid png pages: key=" + key);
+                return null;
+            }
+
+            // If only one page is valid, use it directly.
+            if (validPages == 1)
+            {
+                for (int i = 0; i < texPages.Length; i++)
+                {
+                    if (!object.ReferenceEquals(texPages[i], null))
+                    {
+                        pack.Texture = texPages[i];
+                        break;
+                    }
+                }
+
+                if (pack.ScaleW <= 0) pack.ScaleW = pack.Texture.width;
+                if (pack.ScaleH <= 0) pack.ScaleH = pack.Texture.height;
+
+                if (pack.LineHeight <= 0) pack.LineHeight = 20;
+                if (pack.BaseLine <= 0) pack.BaseLine = pack.LineHeight;
+
+                pack.PageCount = 1;
+                return pack;
+            }
+
+            // Only implement the required case: 2 pages => merge side-by-side
+            if (validPages >= 2)
+            {
+                BMFontPack merged = TryMerge2PagesSideBySide(pack, texPages);
+                if (!object.ReferenceEquals(merged, null)) return merged;
+
+                // If merge failed for any reason, fall back to first valid page (better than null)
+                for (int i = 0; i < texPages.Length; i++)
+                {
+                    if (!object.ReferenceEquals(texPages[i], null))
+                    {
+                        pack.Texture = texPages[i];
+                        pack.PageCount = 1;
+                        if (pack.ScaleW <= 0) pack.ScaleW = pack.Texture.width;
+                        if (pack.ScaleH <= 0) pack.ScaleH = pack.Texture.height;
+                        if (pack.LineHeight <= 0) pack.LineHeight = 20;
+                        if (pack.BaseLine <= 0) pack.BaseLine = pack.LineHeight;
+                        return pack;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        // Merge 2 pages into one atlas (left = page0, right = page1)
+        private static BMFontPack TryMerge2PagesSideBySide(BMFontPack src, Texture2D[] pages)
+        {
+            try
+            {
+                Texture2D p0 = null;
+                Texture2D p1 = null;
+
+                if (pages.Length > 0) p0 = pages[0];
+                if (pages.Length > 1) p1 = pages[1];
+
+                if (object.ReferenceEquals(p0, null) || object.ReferenceEquals(p1, null))
+                {
+                    List<Texture2D> tmp = new List<Texture2D>();
+                    for (int i = 0; i < pages.Length; i++)
+                        if (!object.ReferenceEquals(pages[i], null)) tmp.Add(pages[i]);
+                    if (tmp.Count < 2) return null;
+                    p0 = tmp[0];
+                    p1 = tmp[1];
+                }
+
+                int w = p0.width;
+                int h = p0.height;
+
+                if (p1.width != w || p1.height != h)
+                {
+                    Log.E("[BMFont] merge pages size mismatch: " + w + "x" + h + " vs " + p1.width + "x" + p1.height);
+                    return null;
+                }
+
+                int maxSize = 4096;
+                try { maxSize = SystemInfo.maxTextureSize; } catch { maxSize = 4096; }
+                if (maxSize <= 0) maxSize = 4096;
+
+                int atlasW = w * 2;
+                int atlasH = h;
+
+                if (atlasW > maxSize || atlasH > maxSize)
+                {
+                    Log.E("[BMFont] merge atlas too big: " + atlasW + "x" + atlasH + " max=" + maxSize);
+                    return null;
+                }
+
+                Texture2D atlas = new Texture2D(atlasW, atlasH, TextureFormat.ARGB32, false);
+                atlas.name = src.Key + "_atlas";
+                atlas.filterMode = FilterMode.Point;
+                atlas.wrapMode = TextureWrapMode.Clamp;
+                atlas.anisoLevel = 0;
+
+                try
+                {
+                    Color[] clear = new Color[atlasW * atlasH];
+                    atlas.SetPixels(clear);
+                }
+                catch { }
+
+                CopyTexToAtlas(atlas, p0, 0, 0);
+                CopyTexToAtlas(atlas, p1, w, 0);
+
+                atlas.Apply(false, false);
+
+                foreach (KeyValuePair<int, BMFontGlyph> kv in src.Glyphs)
+                {
+                    BMFontGlyph g = kv.Value;
+                    if (g.page == 1)
+                    {
+                        g.x += w;
+                    }
+                    g.page = 0;
+                }
+
+                src.Texture = atlas;
+                src.ScaleW = atlasW;
+                src.ScaleH = atlasH;
+                src.PageCount = 1;
+
+                if (src.LineHeight <= 0) src.LineHeight = 20;
+                if (src.BaseLine <= 0) src.BaseLine = src.LineHeight;
+
+                return src;
+            }
+            catch (Exception e)
+            {
+                Log.E("[BMFont] TryMerge2PagesSideBySide EX: " + e);
+                return null;
+            }
+        }
+
+        // Copy src texture into atlas at top-left origin offset (ox, oy) in BMFont coordinates.
+        // Unity SetPixels uses bottom-left origin, so we convert y.
+        private static void CopyTexToAtlas(Texture2D atlas, Texture2D src, int ox, int oyTop)
+        {
+            if (object.ReferenceEquals(atlas, null) || object.ReferenceEquals(src, null)) return;
+
+            int w = src.width;
+            int h = src.height;
+
+            int atlasH = atlas.height;
+            int dstY = atlasH - oyTop - h;
+
+            Color32[] pix32 = src.GetPixels32();
+            Color[] pix = new Color[pix32.Length];
+            for (int i = 0; i < pix32.Length; i++) pix[i] = pix32[i];
+
+            atlas.SetPixels(ox, dstY, w, h, pix);
         }
 
         private static Dictionary<string, string> ParseKVs(string line)
@@ -1326,5 +909,6 @@ namespace FontHook
         public int id;
         public int x, y, width, height;
         public int xoffset, yoffset, xadvance;
+        public int page;
     }
 }
