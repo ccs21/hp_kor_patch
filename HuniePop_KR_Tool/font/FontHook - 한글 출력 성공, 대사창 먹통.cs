@@ -1,5 +1,6 @@
 // FontHook.cs (Unity 4.2 safe / NO System.IO.Path usage)
 // - Fix: NEVER use Type == null / != null (avoids System.Type.op_Inequality)
+// - Fix: NEVER use Type == Type (avoids System.Type.op_Equality MissingMethodException on old Unity/Mono)
 // - Fix: NEVER use System.IO.Path.* (avoids MissingMethodException Path.Combine)
 // - Log path fixed to GameRoot (parent of Application.dataPath)
 // - Loads BMFont packs from HuniePop_Data\Managed\fonts\ (r16/r18/r20/r26, b20/b22/b30)
@@ -110,7 +111,6 @@ namespace FontHook
                 Append("==== FontHook start " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " ====");
                 Append("[I] root=" + root);
                 Append("[I] dataPath=" + SafeStr(Application.dataPath));
-                InstallUnityHooks();
             }
             catch
             {
@@ -136,18 +136,6 @@ namespace FontHook
             return (s == null) ? "(null)" : s;
         }
 
-        private static string SafeStr(object o)
-        {
-            try
-            {
-                return (o == null) ? "(null)" : o.ToString();
-            }
-            catch
-            {
-                return "(toString failed)";
-            }
-        }
-
         // Application.dataPath = ...\HuniePop_Data
         // GameRoot = parent of that
         private static string ResolveGameRoot()
@@ -171,45 +159,15 @@ namespace FontHook
             try { return Directory.GetCurrentDirectory(); } catch { }
             return ".";
         }
-    
-
-        // Capture Unity exceptions/logs even when Player.log/output_log.txt is not created.
-        private static bool _unityHooked;
-        private static void InstallUnityHooks()
-        {
-            if (_unityHooked) return;
-            _unityHooked = true;
-
-            try
-            {
-                // Unity 4.2: Application.RegisterLogCallback(LogCallback)
-                Application.RegisterLogCallback((string condition, string stackTrace, LogType type) =>
-                {
-                    try
-                    {
-                        Append("[U] " + type.ToString() + " " + condition);
-                        if (!string.IsNullOrEmpty(stackTrace))
-                            Append("[U] " + stackTrace);
-                    }
-                    catch { }
-                });
-            }
-            catch { }
-
-            try
-            {
-                AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
-                {
-                    try { Append("[UE] " + SafeStr(e.ExceptionObject)); } catch { }
-                };
-            }
-            catch { }
-        }
-}
+    }
 
     internal class FontHookRunner : MonoBehaviour
     {
         private bool _booted;
+
+        // Avoid re-applying every 2 seconds to the same tk2dFontData instance.
+        // Key: UnityEngine.Object instanceID, Value: applied pack key (e.g. r20/b22)
+        private Dictionary<int, string> _applied = new Dictionary<int, string>();
 
         private string _fontsDir;
 
@@ -218,9 +176,7 @@ namespace FontHook
 
         private Dictionary<string, BMFontPack> _packs = new Dictionary<string, BMFontPack>(StringComparer.OrdinalIgnoreCase);
 
-                private float _nextApplyAt = 0f;
-        private bool _forceApply = false;
-private static readonly int[] REG_SIZES = new int[] { 16, 18, 20, 26 };
+        private static readonly int[] REG_SIZES = new int[] { 16, 18, 20, 26 };
         private static readonly int[] BOLD_SIZES = new int[] { 20, 22, 30 };
 
         public void Bootstrap()
@@ -248,42 +204,36 @@ private static readonly int[] REG_SIZES = new int[] { 16, 18, 20, 26 };
                 }
 
                 LoadAllPacks();
-                // 적용은 로딩이 끝난 뒤 Update()에서 1회 + 주기적으로 수행
-                _nextApplyAt = Time.realtimeSinceStartup + 0.5f;
-                _forceApply = true;
-Log.I("[Runner] Bootstrap LEAVE");
+                ApplyAllFontsOnce();
+
+                StartCoroutine(LoopApply());
+
+                Log.I("[Runner] Bootstrap LEAVE");
             }
             catch (Exception e)
             {
                 Log.E("[Runner] Bootstrap EX: " + e);
             }
         }
-        private void Update()
+
+        private IEnumerator LoopApply()
         {
-            // Unity 4.2/구 Mono에서 IEnumerator(yield) 기반 코루틴은 최신 csc가
-            // IteratorStateMachineAttribute를 넣어 TypeLoadException을 유발할 수 있어
-            // Update 타이머로 대체합니다.
-            try
+            while (true)
             {
-                if (_packs.Count == 0) return;
+                yield return new WaitForSeconds(2f);
 
-                float now = 0f;
-                try { now = Time.realtimeSinceStartup; } catch { return; }
+                try
+                {
+                    bool isLoading = false;
+                    try { isLoading = Application.isLoadingLevel; } catch { isLoading = false; }
+                    if (isLoading) continue;
 
-                if (!_forceApply && now < _nextApplyAt) return;
-
-                bool isLoading = false;
-                try { isLoading = Application.isLoadingLevel; } catch { isLoading = false; }
-                if (isLoading) return;
-
-                _forceApply = false;
-                _nextApplyAt = now + 2.0f;
-
-                ApplyAllFontsOnce();
-            }
-            catch (Exception e)
-            {
-                Log.E("[Runner] Update EX: " + e);
+                    ApplyAllFontsOnce();
+                }
+                catch (Exception e)
+                {
+                    Log.E("[Runner] LoopApply EX: " + e);
+                }
             }
         }
 
@@ -392,8 +342,22 @@ Log.I("[Runner] Bootstrap LEAVE");
                     BMFontPack pack;
                     if (!_packs.TryGetValue(key, out pack)) continue;
 
+                    // Skip if already applied the same pack to this instance.
+                    int iid = 0;
+                    try { iid = fontObj.GetInstanceID(); } catch { iid = 0; }
+                    if (iid != 0)
+                    {
+                        string prev;
+                        if (_applied.TryGetValue(iid, out prev) && string.Equals(prev, key, StringComparison.OrdinalIgnoreCase))
+                            continue;
+                    }
+
                     bool did = ApplyPackToFontData(fontObj, pack);
-                    if (did) changed++;
+                    if (did)
+                    {
+                        changed++;
+                        if (iid != 0) _applied[iid] = key;
+                    }
 
                     if (i == 0)
                         Log.I("[Runner] sample font=" + name + " => key=" + key + " px=" + px + " bold=" + bold);
@@ -411,22 +375,6 @@ Log.I("[Runner] Bootstrap LEAVE");
         {
             try
             {
-                // 이미 적용된 폰트면 재적용하지 않음(반복 적용 시 UI 깨짐/프리징 방지)
-                try
-                {
-                    Material mi = GetFieldOrProp(fontDataObj, "materialInst") as Material;
-                    if (!object.ReferenceEquals(mi, null))
-                    {
-                        Texture cur = null;
-                        try { cur = mi.mainTexture; } catch { cur = null; }
-                        if (!object.ReferenceEquals(cur, null) && object.ReferenceEquals(cur, pack.Texture))
-                        {
-                            return false;
-                        }
-                    }
-                }
-                catch { }
-
                 // material / materialInst 둘 다 교체
                 Material mat = GetFieldOrProp(fontDataObj, "material") as Material;
                 if (!object.ReferenceEquals(mat, null))
@@ -455,7 +403,7 @@ Log.I("[Runner] Bootstrap LEAVE");
                     return false;
                 }
 
-                object dictObj = GetOrBuildTk2dDict(pack);
+                object dictObj = BuildTk2dDict(pack);
                 miSetDict.Invoke(fontDataObj, new object[] { dictObj });
 
                 MethodInfo miInit = fontDataObj.GetType().GetMethod("InitDictionary", BindingFlags.Public | BindingFlags.Instance);
@@ -471,36 +419,6 @@ Log.I("[Runner] Bootstrap LEAVE");
                 Log.E("[Runner] ApplyPackToFontData EX: " + e);
                 return false;
             }
-        }
-
-        private object GetOrBuildTk2dDict(BMFontPack pack)
-        {
-            try
-            {
-                if (!object.ReferenceEquals(pack, null))
-                {
-                    if (!object.ReferenceEquals(pack.CachedTk2dDict, null))
-                    {
-                        if (pack.CachedTk2dCharTypeName == SafeTypeName(_tFontChar))
-                            return pack.CachedTk2dDict;
-                    }
-
-                    object d = BuildTk2dDict(pack);
-                    pack.CachedTk2dDict = d;
-                    pack.CachedTk2dCharTypeName = SafeTypeName(_tFontChar);
-                    return d;
-                }
-            }
-            catch (Exception e)
-            {
-                Log.E("[Runner] GetOrBuildTk2dDict EX: " + e);
-            }
-            return BuildTk2dDict(pack);
-        }
-
-        private string SafeTypeName(Type t)
-        {
-            try { return object.ReferenceEquals(t, null) ? "" : t.FullName; } catch { return ""; }
         }
 
         private object BuildTk2dDict(BMFontPack pack)
@@ -520,24 +438,21 @@ Log.I("[Runner] Bootstrap LEAVE");
                 float p0x = g.xoffset;
                 float p1x = g.xoffset + g.width;
 
-                // tk2d expects p0 = bottom-left, p1 = top-right (p0.y <= p1.y).
                 float top = pack.BaseLine - g.yoffset;
                 float bottom = top - g.height;
 
-                Vector3 p0 = new Vector3(p0x, bottom, 0);
-                Vector3 p1 = new Vector3(p1x, top, 0);
+                Vector3 p0 = new Vector3(p0x, top, 0);
+                Vector3 p1 = new Vector3(p1x, bottom, 0);
                 SetField(ch, "p0", p0);
                 SetField(ch, "p1", p1);
 
-                // BMFont 'y' is top-down; Unity UV is bottom-up.
                 float u0 = (float)g.x / (float)pack.ScaleW;
                 float u1 = (float)(g.x + g.width) / (float)pack.ScaleW;
                 float vTop = 1f - ((float)g.y / (float)pack.ScaleH);
                 float vBottom = 1f - ((float)(g.y + g.height) / (float)pack.ScaleH);
 
-                // tk2d expects uv0 = bottom-left, uv1 = top-right (uv0.y <= uv1.y).
-                Vector3 uv0 = new Vector3(u0, vBottom, 0);
-                Vector3 uv1 = new Vector3(u1, vTop, 0);
+                Vector3 uv0 = new Vector3(u0, vTop, 0);
+                Vector3 uv1 = new Vector3(u1, vBottom, 0);
                 SetField(ch, "uv0", uv0);
                 SetField(ch, "uv1", uv1);
 
@@ -682,6 +597,7 @@ Log.I("[Runner] Bootstrap LEAVE");
             try
             {
                 FieldInfo f = obj.GetType().GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                // IMPORTANT(Unity 4.2/old Mono): never use Type == Type (can compile to System.Type.op_Equality).
                 if (!object.ReferenceEquals(f, null) && object.ReferenceEquals(f.FieldType, typeof(byte)))
                     f.SetValue(obj, val);
             }
@@ -695,12 +611,6 @@ Log.I("[Runner] Bootstrap LEAVE");
     {
         public string Key;
         public Texture2D Texture;
-
-        // 캐시: tk2dFontData.SetDictionary에 넣을 Dictionary<int, tk2dFontChar>
-        // (여러 tk2dFontData가 같은 pack을 쓰므로 1회만 생성)
-        public object CachedTk2dDict;
-        public string CachedTk2dCharTypeName;
-
 
         public int LineHeight;
         public int BaseLine;
