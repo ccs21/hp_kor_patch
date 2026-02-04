@@ -302,15 +302,6 @@ namespace FontHook
             TryLoadPack("b20");
             TryLoadPack("b22");
             TryLoadPack("b30");
-            // [ADD] colored score/popup packs
-            TryLoadPack("b30_Aqua");
-            TryLoadPack("b30_Blue");
-            TryLoadPack("b30_Orange");
-            TryLoadPack("b30_Pink");
-            TryLoadPack("b30_Yellow");
-            TryLoadPack("b30_Perple");
-            TryLoadPack("b30_Green");
-            TryLoadPack("b30_Red");
 
             Log.I("[Runner] packsLoaded=" + _packs.Count);
         }
@@ -371,10 +362,7 @@ namespace FontHook
                     bool bold = GuessBold(name);
                     int px = GuessPxSize(fontObj, name);
 
-                    // [ADD] Forced color pack mapping (name/texture signals) - do not touch other selection logic
-                    string key = SelectForcedColorPackKey(fontObj, name);
-                    if (string.IsNullOrEmpty(key))
-                        key = SelectPackKey(px, bold);
+                    string key = SelectPackKey(px, bold);
                     BMFontPack pack;
                     if (!_packs.TryGetValue(key, out pack)) continue;
 
@@ -1140,85 +1128,6 @@ bottom += 14f;
 
 
         // ---------- Matching ----------
-        // [ADD] Forced mapping for colored score/popup fonts.
-        // High-success strategy: match by tk2dFontData name OR material/texture name fragments.
-        // Returns null to keep existing behavior.
-        private string SelectForcedColorPackKey(object fontDataObj, string fontName)
-        {
-            if (string.IsNullOrEmpty(fontName) && object.ReferenceEquals(fontDataObj, null)) return null;
-
-            // Gather signals
-            string s = "";
-            try
-            {
-                string fn = (fontName == null) ? "" : fontName;
-                string tex = "";
-                string mat = "";
-
-                try
-                {
-                    Material m = GetFieldOrProp(fontDataObj, "material") as Material;
-                    if (!object.ReferenceEquals(m, null))
-                    {
-                        try { mat = m.name; } catch { mat = ""; }
-                        try
-                        {
-                            Texture t = m.mainTexture;
-                            if (!object.ReferenceEquals(t, null))
-                            {
-                                try { tex = t.name; } catch { tex = ""; }
-                            }
-                        }
-                        catch { }
-                    }
-                }
-                catch { }
-
-                s = (fn + " " + tex + " " + mat);
-                s = s.ToLowerInvariant();
-            }
-            catch
-            {
-                try { s = (fontName ?? "").ToLowerInvariant(); } catch { s = (fontName ?? ""); }
-            }
-
-            // NOTE: user requested substring rules (aquablue/aqua/sentiment etc.)
-            // Aqua
-            if (s.IndexOf("aquablue") >= 0 || s.IndexOf("aqua") >= 0 || s.IndexOf("sentiment") >= 0)
-                return "b30_Aqua";
-
-            // Blue
-            if (s.IndexOf("poptext_drink") >= 0 || s.IndexOf("token_talent") >= 0 || s.IndexOf("drink") >= 0 || s.IndexOf("talent") >= 0)
-                return "b30_Blue";
-
-            // Orange
-            if (s.IndexOf("poptext_food") >= 0 || s.IndexOf("token_romance") >= 0 || s.IndexOf("food") >= 0 || s.IndexOf("romance") >= 0)
-                return "b30_Orange";
-
-            // Pink
-            if (s.IndexOf("poptext_gift") >= 0 || s.IndexOf("token_heart") >= 0 || s.IndexOf("gift") >= 0 || s.IndexOf("heart") >= 0)
-                return "b30_Pink";
-
-            // Yellow
-            if (s.IndexOf("poptext_unique") >= 0 || s.IndexOf("token_joy") >= 0 || s.IndexOf("yellow") >= 0 || s.IndexOf("unique") >= 0 || s.IndexOf("joy") >= 0)
-                return "b30_Yellow";
-
-            // Purple (typo kept: Perple)
-            if (s.IndexOf("token_broken") >= 0 || s.IndexOf("broken") >= 0 || s.IndexOf("perple") >= 0 || s.IndexOf("purple") >= 0)
-                return "b30_Perple";
-
-            // Green
-            if (s.IndexOf("poptext_money") >= 0 || s.IndexOf("token_flirtation") >= 0 || s.IndexOf("money") >= 0 || s.IndexOf("flirtation") >= 0 || s.IndexOf("green") >= 0)
-                return "b30_Green";
-
-            // Red
-            if (s.IndexOf("token_sexual") >= 0 || s.IndexOf("sexual") >= 0 || s.IndexOf("poptext_sexual") >= 0 || s.IndexOf("red") >= 0)
-                return "b30_Red";
-
-            return null;
-        }
-
-
         private string SelectPackKey(int px, bool bold)
         {
             int sel = ClosestSize(px, bold ? BOLD_SIZES : REG_SIZES);

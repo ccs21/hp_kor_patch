@@ -302,15 +302,6 @@ namespace FontHook
             TryLoadPack("b20");
             TryLoadPack("b22");
             TryLoadPack("b30");
-            // [ADD] colored score/popup packs
-            TryLoadPack("b30_Aqua");
-            TryLoadPack("b30_Blue");
-            TryLoadPack("b30_Orange");
-            TryLoadPack("b30_Pink");
-            TryLoadPack("b30_Yellow");
-            TryLoadPack("b30_Perple");
-            TryLoadPack("b30_Green");
-            TryLoadPack("b30_Red");
 
             Log.I("[Runner] packsLoaded=" + _packs.Count);
         }
@@ -371,10 +362,7 @@ namespace FontHook
                     bool bold = GuessBold(name);
                     int px = GuessPxSize(fontObj, name);
 
-                    // [ADD] Forced color pack mapping (name/texture signals) - do not touch other selection logic
-                    string key = SelectForcedColorPackKey(fontObj, name);
-                    if (string.IsNullOrEmpty(key))
-                        key = SelectPackKey(px, bold);
+                    string key = SelectPackKey(px, bold);
                     BMFontPack pack;
                     if (!_packs.TryGetValue(key, out pack)) continue;
 
@@ -405,64 +393,7 @@ namespace FontHook
             }
 
             Log.I("[Runner] ApplyAllFontsOnce: fonts=" + total + " changed=" + changed);
-
-            // Rebuild all existing tk2dTextMesh instances once, so they pick up new font data/material.
-            RebuildAllTextMeshesOnce();
         }
-        private void RebuildAllTextMeshesOnce()
-        {
-            if (object.ReferenceEquals(_tTextMesh, null))
-                return;
-
-            UnityEngine.Object[] allText = null;
-            try { allText = Resources.FindObjectsOfTypeAll(_tTextMesh); }
-            catch (Exception e)
-            {
-                Log.E("[Runner] FindObjectsOfTypeAll(tk2dTextMesh) EX: " + e);
-                return;
-            }
-
-            int total = (allText == null) ? 0 : allText.Length;
-            if (total <= 0) return;
-
-            MethodInfo miForceBuild = null;
-            MethodInfo miCommit = null;
-
-            try { miForceBuild = _tTextMesh.GetMethod("ForceBuild", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, Type.EmptyTypes, null); }
-            catch { miForceBuild = null; }
-            try { miCommit = _tTextMesh.GetMethod("Commit", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, Type.EmptyTypes, null); }
-            catch { miCommit = null; }
-
-            int called = 0;
-
-            for (int i = 0; i < total; i++)
-            {
-                object tm = allText[i];
-                if (object.ReferenceEquals(tm, null)) continue;
-
-                try
-                {
-                    if (!object.ReferenceEquals(miForceBuild, null))
-                    {
-                        miForceBuild.Invoke(tm, null);
-                        called++;
-                    }
-                    else if (!object.ReferenceEquals(miCommit, null))
-                    {
-                        miCommit.Invoke(tm, null);
-                        called++;
-                    }
-                }
-                catch
-                {
-                    // ignore individual failures (objects may be in destroy stage)
-                }
-            }
-
-            Log.I("[Runner] RebuildAllTextMeshesOnce: textMeshes=" + total + " rebuilt=" + called);
-        }
-
-
 
         private bool ApplyPackToFontData(object fontDataObj, BMFontPack pack)
         {
@@ -533,10 +464,10 @@ namespace FontHook
                 float bottom = top - g.height;
 
 // [ADD] offset
-p0x += 8f;
-p1x += 8f;
-top += 14f;
-bottom += 14f;
+p0x += 15f;
+p1x += 15f;
+top += 15f;
+bottom += 15f;
 
                 Vector3 p0 = new Vector3(p0x, top, 0);
                 Vector3 p1 = new Vector3(p1x, bottom, 0);
@@ -641,10 +572,10 @@ bottom += 14f;
                 float bottom = top - g.height;
 
 // [ADD] offset
-p0x += 8f;
-p1x += 8f;
-top += 14f;
-bottom += 14f;
+p0x += 15f;
+p1x += 15f;
+top += 15f;
+bottom += 15f;
 
                 Vector3 p0 = new Vector3(p0x, top, 0);
                 Vector3 p1 = new Vector3(p1x, bottom, 0);
@@ -1140,85 +1071,6 @@ bottom += 14f;
 
 
         // ---------- Matching ----------
-        // [ADD] Forced mapping for colored score/popup fonts.
-        // High-success strategy: match by tk2dFontData name OR material/texture name fragments.
-        // Returns null to keep existing behavior.
-        private string SelectForcedColorPackKey(object fontDataObj, string fontName)
-        {
-            if (string.IsNullOrEmpty(fontName) && object.ReferenceEquals(fontDataObj, null)) return null;
-
-            // Gather signals
-            string s = "";
-            try
-            {
-                string fn = (fontName == null) ? "" : fontName;
-                string tex = "";
-                string mat = "";
-
-                try
-                {
-                    Material m = GetFieldOrProp(fontDataObj, "material") as Material;
-                    if (!object.ReferenceEquals(m, null))
-                    {
-                        try { mat = m.name; } catch { mat = ""; }
-                        try
-                        {
-                            Texture t = m.mainTexture;
-                            if (!object.ReferenceEquals(t, null))
-                            {
-                                try { tex = t.name; } catch { tex = ""; }
-                            }
-                        }
-                        catch { }
-                    }
-                }
-                catch { }
-
-                s = (fn + " " + tex + " " + mat);
-                s = s.ToLowerInvariant();
-            }
-            catch
-            {
-                try { s = (fontName ?? "").ToLowerInvariant(); } catch { s = (fontName ?? ""); }
-            }
-
-            // NOTE: user requested substring rules (aquablue/aqua/sentiment etc.)
-            // Aqua
-            if (s.IndexOf("aquablue") >= 0 || s.IndexOf("aqua") >= 0 || s.IndexOf("sentiment") >= 0)
-                return "b30_Aqua";
-
-            // Blue
-            if (s.IndexOf("poptext_drink") >= 0 || s.IndexOf("token_talent") >= 0 || s.IndexOf("drink") >= 0 || s.IndexOf("talent") >= 0)
-                return "b30_Blue";
-
-            // Orange
-            if (s.IndexOf("poptext_food") >= 0 || s.IndexOf("token_romance") >= 0 || s.IndexOf("food") >= 0 || s.IndexOf("romance") >= 0)
-                return "b30_Orange";
-
-            // Pink
-            if (s.IndexOf("poptext_gift") >= 0 || s.IndexOf("token_heart") >= 0 || s.IndexOf("gift") >= 0 || s.IndexOf("heart") >= 0)
-                return "b30_Pink";
-
-            // Yellow
-            if (s.IndexOf("poptext_unique") >= 0 || s.IndexOf("token_joy") >= 0 || s.IndexOf("yellow") >= 0 || s.IndexOf("unique") >= 0 || s.IndexOf("joy") >= 0)
-                return "b30_Yellow";
-
-            // Purple (typo kept: Perple)
-            if (s.IndexOf("token_broken") >= 0 || s.IndexOf("broken") >= 0 || s.IndexOf("perple") >= 0 || s.IndexOf("purple") >= 0)
-                return "b30_Perple";
-
-            // Green
-            if (s.IndexOf("poptext_money") >= 0 || s.IndexOf("token_flirtation") >= 0 || s.IndexOf("money") >= 0 || s.IndexOf("flirtation") >= 0 || s.IndexOf("green") >= 0)
-                return "b30_Green";
-
-            // Red
-            if (s.IndexOf("token_sexual") >= 0 || s.IndexOf("sexual") >= 0 || s.IndexOf("poptext_sexual") >= 0 || s.IndexOf("red") >= 0)
-                return "b30_Red";
-
-            return null;
-        }
-
-
         private string SelectPackKey(int px, bool bold)
         {
             int sel = ClosestSize(px, bold ? BOLD_SIZES : REG_SIZES);
