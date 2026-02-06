@@ -1,0 +1,30 @@
+=== HuniePop Keyword Scanner Summary ===
+game_root: D:\SteamLibrary\steamapps\common\HuniePop
+out_dir: D:\git\hp_kor_patch\HuniePop_KR_Tool\대사 추출\hp_keyword_scan_out
+files_scanned: 2
+keywords: 9
+
+[typetree hits per keyword]
+- Where is your favorite place to hang out?: 0
+- Do you prefer one season over the others?: 0
+- I've got to know, what cup size you rockin'?: 0
+- ···············What kind of question is that?····· D cup if you really have to know.: 0
+- Lame question, but what's your favorite color?: 0
+- What did you study in college?: 0
+- What would you say your main hobby is?: 0
+- Baby blue!····· Just like my work uniform!: 0
+- Spring,·· without a doubt.····· Everything is so colorful and alive.: 0
+
+[raw hits per keyword]
+- Where is your favorite place to hang out?: 36
+- Do you prefer one season over the others?: 36
+- I've got to know, what cup size you rockin'?: 36
+- ···············What kind of question is that?····· D cup if you really have to know.: 0
+- Lame question, but what's your favorite color?: 36
+- What did you study in college?: 12
+- What would you say your main hobby is?: 36
+- Baby blue!····· Just like my work uniform!: 1
+- Spring,·· without a doubt.····· Everything is so colorful and alive.: 1
+
+[not found]
+- ···············What kind of question is that?····· D cup if you really have to know.
