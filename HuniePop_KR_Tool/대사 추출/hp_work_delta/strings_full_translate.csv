@@ -171,66 +171,66 @@ resources.assets,1165,MonoBehaviour,data.text,Ability Name
 resources.assets,1172,MonoBehaviour,data.text,"00
 "
 resources.assets,1179,MonoBehaviour,data.text,Item Name
-resources.assets,1187,MonoBehaviour,data.text,"$10,000"
+resources.assets,1187,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1192,MonoBehaviour,data.text,Item Name
 resources.assets,1195,MonoBehaviour,data.text,"00
 "
-resources.assets,1198,MonoBehaviour,data.text,"$10,000"
+resources.assets,1198,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1219,MonoBehaviour,data.text,"00
 "
-resources.assets,1230,MonoBehaviour,data.text,"$10,000"
+resources.assets,1230,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1234,MonoBehaviour,data.text,Item Name
-resources.assets,1237,MonoBehaviour,data.text,"$10,000"
+resources.assets,1237,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1239,MonoBehaviour,data.text,"00
 "
 resources.assets,1241,MonoBehaviour,data.text,Item Name
 resources.assets,1259,MonoBehaviour,data.text,"00
 "
 resources.assets,1268,MonoBehaviour,data.text,Item Name
-resources.assets,1271,MonoBehaviour,data.text,"$10,000"
+resources.assets,1271,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1273,MonoBehaviour,data.text,Item Name
-resources.assets,1276,MonoBehaviour,data.text,"$10,000"
-resources.assets,1298,MonoBehaviour,data.text,"$10,000"
+resources.assets,1276,MonoBehaviour,data.text,"$10,000 "
+resources.assets,1298,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1301,MonoBehaviour,data.text,Item Name
-resources.assets,1303,MonoBehaviour,data.text,"$10,000"
+resources.assets,1303,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1306,MonoBehaviour,data.text,Item Name
 resources.assets,1323,MonoBehaviour,data.text,Cafe
 resources.assets,1328,MonoBehaviour,data.text,Item Name
 resources.assets,1329,MonoBehaviour,text,Let's plan for later today.
-resources.assets,1331,MonoBehaviour,data.text,"$10,000"
+resources.assets,1331,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1333,MonoBehaviour,data.text,Item Name
-resources.assets,1336,MonoBehaviour,data.text,"$10,000"
+resources.assets,1336,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1344,MonoBehaviour,data.text,Option label goes here...
 resources.assets,1347,MonoBehaviour,data.text,Park
 resources.assets,1356,MonoBehaviour,data.text,Nightclub
-resources.assets,1358,MonoBehaviour,data.text,"$10,000"
+resources.assets,1358,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1361,MonoBehaviour,data.text,Item Name
 resources.assets,1362,MonoBehaviour,data.text,Option label goes here...
-resources.assets,1363,MonoBehaviour,data.text,"$10,000"
+resources.assets,1363,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1366,MonoBehaviour,data.text,Item Name
 resources.assets,1385,MonoBehaviour,data.text,Item Name
-resources.assets,1387,MonoBehaviour,data.text,"$10,000"
+resources.assets,1387,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1396,MonoBehaviour,data.text,Option label goes here...
-resources.assets,1405,MonoBehaviour,data.text,"$10,000"
+resources.assets,1405,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1407,MonoBehaviour,data.text,Item Name
 resources.assets,1414,MonoBehaviour,data.text,Bar
 resources.assets,1425,MonoBehaviour,data.text,Item Name
-resources.assets,1427,MonoBehaviour,data.text,"$10,000"
+resources.assets,1427,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1430,MonoBehaviour,data.text,Option label goes here...
 resources.assets,1432,MonoBehaviour,data.text,Beach
 resources.assets,1438,MonoBehaviour,data.text,Option label goes here...
-resources.assets,1445,MonoBehaviour,data.text,"$10,000"
+resources.assets,1445,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1446,MonoBehaviour,data.text,Option label goes here...
 resources.assets,1447,MonoBehaviour,data.text,Item Name
 resources.assets,1454,MonoBehaviour,text,How does night time sound to you?
 resources.assets,1456,MonoBehaviour,data.text,Market
 resources.assets,1462,MonoBehaviour,text,How about the day after tomorrow?
 resources.assets,1465,MonoBehaviour,data.text,Item Name
-resources.assets,1467,MonoBehaviour,data.text,"$10,000"
+resources.assets,1467,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1468,MonoBehaviour,data.text,Casino
 resources.assets,1470,MonoBehaviour,data.text,Mall
 resources.assets,1474,MonoBehaviour,text,Let's meet up during the evening.
-resources.assets,1485,MonoBehaviour,data.text,"$10,000"
+resources.assets,1485,MonoBehaviour,data.text,"$10,000 "
 resources.assets,1487,MonoBehaviour,data.text,Item Name
 resources.assets,1496,MonoBehaviour,text,"The morning, bright and early!"
 resources.assets,1504,MonoBehaviour,text,I think I'll be free in the afternoon.
@@ -941,7 +941,7 @@ sharedassets0.assets,8646,MonoBehaviour,text,"I don't know,····· I haven't 
 sharedassets0.assets,8646,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
 sharedassets0.assets,8646,MonoBehaviour,text,I weigh a hundred and two pounds.····· I may be small··· but at least I'm not fat.
 sharedassets0.assets,8647,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
-sharedassets0.assets,8647,MonoBehaviour,text,"aa*B,····· take it or leave it.····· Boobs aren't everything you know."
+sharedassets0.assets,8647,MonoBehaviour,text,"*aa*B,····· take it or leave it.····· Boobs aren't everything you know."
 sharedassets0.assets,8647,MonoBehaviour,text,"Lame question, but what's your favorite color?"
 sharedassets0.assets,8647,MonoBehaviour,text,If you can't tell my favorite color is red····· you must·· be··· fucking··· blind.···
 sharedassets0.assets,8647,MonoBehaviour,text,Where is your favorite place to hang out?
@@ -979,7 +979,7 @@ sharedassets0.assets,8652,MonoBehaviour,text,I'm a yoga instructor at the fitnes
 sharedassets0.assets,8653,MonoBehaviour,text,What did you study in college?
 sharedassets0.assets,8653,MonoBehaviour,text,I started in law····· but····· I lost interest.············ I only came out with a two year degree.
 sharedassets0.assets,8653,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
-sharedassets0.assets,8653,MonoBehaviour,text,hahahaha*··········I was wondering about that.········ My last name is Lapran.
+sharedassets0.assets,8653,MonoBehaviour,text,*hahahaha*··········I was wondering about that.········ My last name is Lapran.
 sharedassets0.assets,8653,MonoBehaviour,text,So I won't forget it; when is your birthday?
 sharedassets0.assets,8653,MonoBehaviour,text,My birthday is the twenty-fifth of June.·········· Yes sir!
 sharedassets0.assets,8653,MonoBehaviour,text,My birthday is the twenty-fifth of June.·········· Yes ma'am!
@@ -1040,7 +1040,7 @@ sharedassets0.assets,8662,MonoBehaviour,text,"I,····· actually...·····
 sharedassets0.assets,8663,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
 sharedassets0.assets,8663,MonoBehaviour,text,I'm glad you asked!····· I'm down to one-eighteen!····· But most of that is muscle!
 sharedassets0.assets,8663,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
-sharedassets0.assets,8663,MonoBehaviour,text,"hahahaha*·····These guys?····· Umm,····· yeah...····· double D's."
+sharedassets0.assets,8663,MonoBehaviour,text,"*hahahaha*·····These guys?····· Umm,····· yeah...····· double D's."
 sharedassets0.assets,8663,MonoBehaviour,text,"What do you do? Like, for work, I mean."
 sharedassets0.assets,8663,MonoBehaviour,text,I work part-time as a hairdresser in the salon at the mall.
 sharedassets0.assets,8664,MonoBehaviour,text,What would you say your main hobby is?
@@ -1094,7 +1094,7 @@ sharedassets0.assets,8671,MonoBehaviour,text,I'm always trying to get better at 
 sharedassets0.assets,8672,MonoBehaviour,text,Where is your favorite place to hang out?
 sharedassets0.assets,8672,MonoBehaviour,text,I enjoy visiting the cafe just about every morning.····· It's my little ritual.
 sharedassets0.assets,8672,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
-sharedassets0.assets,8672,MonoBehaviour,text,hahahaha*·····What kind of question is that?····· D cup if you really have to know.
+sharedassets0.assets,8672,MonoBehaviour,text,*hahahaha*·····What kind of question is that?····· D cup if you really have to know.
 sharedassets0.assets,8672,MonoBehaviour,text,Do you prefer one season over the others?
 sharedassets0.assets,8672,MonoBehaviour,text,"Spring,·· without a doubt.····· Everything is so colorful and alive."
 sharedassets0.assets,8673,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
@@ -1134,7 +1134,7 @@ sharedassets0.assets,8678,MonoBehaviour,text,"Not really.·········· Bu
 sharedassets0.assets,8678,MonoBehaviour,text,So I won't forget it; when is your birthday?
 sharedassets0.assets,8678,MonoBehaviour,text,"May thirteenth.····· It's fine if you forgot,····· it's just a stupid day."
 sharedassets0.assets,8679,MonoBehaviour,text,This is random but how tall are you?
-sharedassets0.assets,8679,MonoBehaviour,text,aaaacc*····· I'm only five feet tall.········ I'm like the shortest person I know.
+sharedassets0.assets,8679,MonoBehaviour,text,*aaaacc*····· I'm only five feet tall.········ I'm like the shortest person I know.
 sharedassets0.assets,8679,MonoBehaviour,text,What do you study in college?
 sharedassets0.assets,8679,MonoBehaviour,text,I'm not going to college.····· Going through high school was enough bullshit for me.
 sharedassets0.assets,8679,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
@@ -1144,7 +1144,7 @@ sharedassets0.assets,8680,MonoBehaviour,text,I like to play video games;····
 sharedassets0.assets,8680,MonoBehaviour,text,Where is your favorite place to hang out?
 sharedassets0.assets,8680,MonoBehaviour,text,"Honestly,············· I just like to chill in my room most of the time."
 sharedassets0.assets,8680,MonoBehaviour,text,"What do you do? Like, for work, I mean."
-sharedassets0.assets,8680,MonoBehaviour,text,aaaaaacc*·· I'm a barista at the cafe.·········· Somebody please kill me.·····
+sharedassets0.assets,8680,MonoBehaviour,text,*aaaaaacc*·· I'm a barista at the cafe.·········· Somebody please kill me.·····
 sharedassets0.assets,8681,MonoBehaviour,text,"Lame question, but what's your favorite color?"
 sharedassets0.assets,8681,MonoBehaviour,text,"I hadn't really put much thought into that...····· maybe,····· like,········· beige?········ Is beige a color?·····"
 sharedassets0.assets,8681,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
@@ -1165,7 +1165,7 @@ sharedassets0.assets,8683,MonoBehaviour,text,"Well,····· I haven't really d
 sharedassets0.assets,8683,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
 sharedassets0.assets,8683,MonoBehaviour,text,I don't mind at all.····· I'm a hundred and twelve pounds.
 sharedassets0.assets,8684,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
-sharedassets0.assets,8684,MonoBehaviour,text,hehehe*··Really?····· If you must know...····· I'm a C cup.
+sharedassets0.assets,8684,MonoBehaviour,text,*hehehe*··Really?····· If you must know...····· I'm a C cup.
 sharedassets0.assets,8684,MonoBehaviour,text,Do you prefer one season over the others?
 sharedassets0.assets,8684,MonoBehaviour,text,"Ummm...····· I kinda like all the seasons.····· If I had to pick one,····· probably summer!"
 sharedassets0.assets,8684,MonoBehaviour,text,"So, exactly how old are you?"
@@ -4529,8 +4529,8 @@ sharedassets0.assets,9016,MonoBehaviour,text,You may have already asked me that.
 sharedassets0.assets,9016,MonoBehaviour,text,I'm not going to answer the same question twice.
 sharedassets0.assets,9016,MonoBehaviour,text,"You're not going to make me repeat myself,····· are you?"
 sharedassets0.assets,9016,MonoBehaviour,text,"I don't mean to be rude,········ but······· I think you've asked that before."
-sharedassets0.assets,9016,MonoBehaviour,text,aaaaacc*·····Already asked that one.
-sharedassets0.assets,9016,MonoBehaviour,text,"haha···cmcm*·····You silly,····· you already asked me that before!"
+sharedassets0.assets,9016,MonoBehaviour,text,*aaaaacc*·····Already asked that one.
+sharedassets0.assets,9016,MonoBehaviour,text,"*haha···cmcm*·····You silly,····· you already asked me that before!"
 sharedassets0.assets,9016,MonoBehaviour,text,I've already given my response to that question.
 sharedassets0.assets,9016,MonoBehaviour,text,How dare you ask me to repeat myself!
 sharedassets0.assets,9016,MonoBehaviour,text,Ah-ha!········ Got you!······· You've already asked me that.····· Pay attention!
