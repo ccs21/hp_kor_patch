@@ -432,6 +432,7 @@ resources.assets,1068,MonoBehaviour,levels[0].bonusSpriteName,puzzle_token_talen
 resources.assets,1068,MonoBehaviour,levels[0].bonusOverSpriteName,puzzle_token_talent_over
 resources.assets,1068,MonoBehaviour,levels[1].spriteName,puzzle_token_talent_triple
 resources.assets,1068,MonoBehaviour,levels[1].overSpriteName,puzzle_token_talent_triple_over
+resources.assets,1075,MonoBehaviour,text,particle_token_energy_talent!
 resources.assets,1076,MonoBehaviour,m_Name,CharismaTrait
 resources.assets,1076,MonoBehaviour,name,Charisma
 resources.assets,1077,MonoBehaviour,m_Name,LuckTrait
@@ -2410,6 +2411,7 @@ resources.assets,1303,MonoBehaviour,data.text,"$10,000"
 resources.assets,1306,MonoBehaviour,data.text,Item Name
 resources.assets,1323,MonoBehaviour,data.text,Cafe
 resources.assets,1328,MonoBehaviour,data.text,Item Name
+resources.assets,1329,MonoBehaviour,text,Let's plan for later today.
 resources.assets,1331,MonoBehaviour,data.text,"$10,000"
 resources.assets,1332,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_option_background_over
 resources.assets,1332,MonoBehaviour,overTransitionDefs[0].childName,AskDateOptionBackground
@@ -2476,9 +2478,11 @@ resources.assets,1448,MonoBehaviour,overTransitionDefs[1].spriteName,ask_date_lo
 resources.assets,1448,MonoBehaviour,overTransitionDefs[1].childName,AskDateLocationLabelBackground
 resources.assets,1452,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_option_background_over
 resources.assets,1452,MonoBehaviour,overTransitionDefs[0].childName,AskDateOptionBackground
+resources.assets,1454,MonoBehaviour,text,How does night time sound to you?
 resources.assets,1456,MonoBehaviour,data.text,Market
 resources.assets,1460,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_option_background_over
 resources.assets,1460,MonoBehaviour,overTransitionDefs[0].childName,AskDateOptionBackground
+resources.assets,1462,MonoBehaviour,text,How about the day after tomorrow?
 resources.assets,1464,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_location_background_over
 resources.assets,1464,MonoBehaviour,overTransitionDefs[0].childName,AskDateLocationThumbBackground
 resources.assets,1464,MonoBehaviour,overTransitionDefs[1].spriteName,ask_date_location_name_over
@@ -2489,6 +2493,7 @@ resources.assets,1468,MonoBehaviour,data.text,Casino
 resources.assets,1470,MonoBehaviour,data.text,Mall
 resources.assets,1472,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_option_background_over
 resources.assets,1472,MonoBehaviour,overTransitionDefs[0].childName,AskDateOptionBackground
+resources.assets,1474,MonoBehaviour,text,Let's meet up during the evening.
 resources.assets,1475,MonoBehaviour,overTransitionDefs[0].spriteName,store_window_item_background_over
 resources.assets,1475,MonoBehaviour,overTransitionDefs[0].childName,StoreWindowItemBackground
 resources.assets,1477,MonoBehaviour,overTransitionDefs[0].spriteName,store_window_item_background_over
@@ -2505,15 +2510,18 @@ resources.assets,1490,MonoBehaviour,overTransitionDefs[1].spriteName,ask_date_lo
 resources.assets,1490,MonoBehaviour,overTransitionDefs[1].childName,AskDateLocationLabelBackground
 resources.assets,1494,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_option_background_over
 resources.assets,1494,MonoBehaviour,overTransitionDefs[0].childName,AskDateOptionBackground
+resources.assets,1496,MonoBehaviour,text,"The morning, bright and early!"
 resources.assets,1499,MonoBehaviour,tintBgColor,8531B0
 resources.assets,1503,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_option_background_over
 resources.assets,1503,MonoBehaviour,overTransitionDefs[0].childName,AskDateOptionBackground
+resources.assets,1504,MonoBehaviour,text,I think I'll be free in the afternoon.
 resources.assets,1506,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_location_background_over
 resources.assets,1506,MonoBehaviour,overTransitionDefs[0].childName,AskDateLocationThumbBackground
 resources.assets,1506,MonoBehaviour,overTransitionDefs[1].spriteName,ask_date_location_name_over
 resources.assets,1506,MonoBehaviour,overTransitionDefs[1].childName,AskDateLocationLabelBackground
 resources.assets,1508,MonoBehaviour,overTransitionDefs[0].spriteName,ask_date_option_background_over
 resources.assets,1508,MonoBehaviour,overTransitionDefs[0].childName,AskDateOptionBackground
+resources.assets,1509,MonoBehaviour,text,Tomorrow works best for me.
 resources.assets,1511,MonoBehaviour,data.text,Option label goes here...
 resources.assets,1513,MonoBehaviour,data.text,Carnival
 sharedassets0.assets,8607,MonoBehaviour,m_Name,145PlushiesStuffedBearAbility
@@ -3288,6 +3296,296 @@ sharedassets0.assets,8641,MonoBehaviour,steps[6].sceneLine.dialogLine.text,"So a
 sharedassets0.assets,8641,MonoBehaviour,steps[7].sceneLine.dialogLine.text,Just bust out the HunieBee and check the girl finder screen.
 sharedassets0.assets,8641,MonoBehaviour,steps[8].sceneLine.dialogLine.text,"I'm pumped!····· You pumped?····· Yeah,··· you're pumped!····· Go get em!"
 sharedassets0.assets,8641,MonoBehaviour,steps[9].sceneLine.dialogLine.text,I'll be around if you need me!····· *ccccc*·····What am I saying?····· Of course you need me.
+sharedassets0.assets,8642,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8642,MonoBehaviour,text,"My full name is Aiko Yumi.····· I know, I know.····· Could I be more Japanese?"
+sharedassets0.assets,8642,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8642,MonoBehaviour,text,Last time I checked··· I was five-four.
+sharedassets0.assets,8642,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8642,MonoBehaviour,text,"I'm sure you'll forget anyway,····· but it's November ninth."
+sharedassets0.assets,8643,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8643,MonoBehaviour,text,"That's how you know you've got nothing to talk about.····· *hahahahahaha*··············· Ahhhhh, I like green."
+sharedassets0.assets,8643,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8643,MonoBehaviour,text,Why twenty-one of course...··············· Nah I'm fucking with you!····· I'm twenty-eight.
+sharedassets0.assets,8643,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8643,MonoBehaviour,text,"Of course;····· every woman's favorite question.····· I'm one-oh-nine, ya dick."
+sharedassets0.assets,8644,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8644,MonoBehaviour,text,If I·· had to·· pick········ I'd probably say Autumn.·········· I'm a sucker for all the colors.
+sharedassets0.assets,8644,MonoBehaviour,text,What did you study in college?
+sharedassets0.assets,8644,MonoBehaviour,text,I've got a master's degree in mathematics····· and I regret it every day.
+sharedassets0.assets,8644,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8644,MonoBehaviour,text,You mean besides the university professor thing?
+sharedassets0.assets,8645,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8645,MonoBehaviour,text,"Wooow,····· how romantic...····· I'm ""rocking"" D's."
+sharedassets0.assets,8645,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8645,MonoBehaviour,text,"Sleeping...····· no, wait!····· Gambling."
+sharedassets0.assets,8645,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8645,MonoBehaviour,text,"Oh,·· shit.······· You can't keep me out of the casino."
+sharedassets0.assets,8646,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8646,MonoBehaviour,text,Belrose.····· Happy?
+sharedassets0.assets,8646,MonoBehaviour,text,What do you study in college?
+sharedassets0.assets,8646,MonoBehaviour,text,"I don't know,····· I haven't decided.····· I'm thinking about dropping out anyway."
+sharedassets0.assets,8646,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8646,MonoBehaviour,text,I weigh a hundred and two pounds.····· I may be small··· but at least I'm not fat.
+sharedassets0.assets,8647,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8647,MonoBehaviour,text,"aa*B,····· take it or leave it.····· Boobs aren't everything you know."
+sharedassets0.assets,8647,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8647,MonoBehaviour,text,If you can't tell my favorite color is red····· you must·· be··· fucking··· blind.···
+sharedassets0.assets,8647,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8647,MonoBehaviour,text,Lusties nightclub is my fucking shit.
+sharedassets0.assets,8648,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8648,MonoBehaviour,text,I'm twenty-one.····· I don't know why but people say I look younger.
+sharedassets0.assets,8648,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8648,MonoBehaviour,text,Five-two.·········· What of it?······· I can still knock a bitch out.
+sharedassets0.assets,8648,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8648,MonoBehaviour,text,Work?·············*hahahahahaha*···*haah*····· Bitch I'm already going to school.····· What the fuck do you expect?
+sharedassets0.assets,8649,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8649,MonoBehaviour,text,"April sixth.········ Actually,····· please do forget it."
+sharedassets0.assets,8649,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8649,MonoBehaviour,text,"I like to go shopping,····· especially if it's someone else's money."
+sharedassets0.assets,8649,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8649,MonoBehaviour,text,Probably spring because it's not cold as shit or hot as fuck.
+sharedassets0.assets,8650,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8650,MonoBehaviour,text,I've always loved Autumn.········ It's such a pretty season!
+sharedassets0.assets,8650,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8650,MonoBehaviour,text,"Well,····· I'm a hundred and thirty-two pounds,····· but I'm trying to diet!"
+sharedassets0.assets,8650,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8650,MonoBehaviour,text,"I'll be turning twenty-four soon,····· but at the moment····· I'm twenty-three."
+sharedassets0.assets,8651,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8651,MonoBehaviour,text,"My cup size?·········· Oh,··········· wow...··············· Umm,········ D.·····*hahahaha*····· That's so embarrassing!"
+sharedassets0.assets,8651,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8651,MonoBehaviour,text,"You know,····· I really enjoy spending time at the park,····· I notice."
+sharedassets0.assets,8651,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8651,MonoBehaviour,text,Purple!·········· It's the color of my favorite flower;····· the lilac.
+sharedassets0.assets,8652,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8652,MonoBehaviour,text,Just one inch shy of six feet.············· I'm pretty tall for a girl I know.
+sharedassets0.assets,8652,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8652,MonoBehaviour,text,I know some people think it's weird··· but··· I do meditation.········ It really helps clear my mind!
+sharedassets0.assets,8652,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8652,MonoBehaviour,text,I'm a yoga instructor at the fitness center.·········· I've been practicing for years.
+sharedassets0.assets,8653,MonoBehaviour,text,What did you study in college?
+sharedassets0.assets,8653,MonoBehaviour,text,I started in law····· but····· I lost interest.············ I only came out with a two year degree.
+sharedassets0.assets,8653,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8653,MonoBehaviour,text,hahahaha*··········I was wondering about that.········ My last name is Lapran.
+sharedassets0.assets,8653,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8653,MonoBehaviour,text,My birthday is the twenty-fifth of June.·········· Yes sir!
+sharedassets0.assets,8653,MonoBehaviour,text,My birthday is the twenty-fifth of June.·········· Yes ma'am!
+sharedassets0.assets,8654,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8654,MonoBehaviour,text,I enjoy swimming in your ocean waters.····· Everything is frozen solid on my home planet.
+sharedassets0.assets,8654,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8654,MonoBehaviour,text,"My ship crashed in the waters near the beach,··· so I spend a lot of time there."
+sharedassets0.assets,8654,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8654,MonoBehaviour,text,"That's right,··· your people celebrate birth...····· I would be roughly the equivalent of your July twentieth."
+sharedassets0.assets,8655,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8655,MonoBehaviour,text,Whichever season is coldest.····· Winter;····· was it?
+sharedassets0.assets,8655,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8655,MonoBehaviour,text,The tag on my bra says··· double D.········· Double·· D?······· What a strange sizing system...
+sharedassets0.assets,8655,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8655,MonoBehaviour,text,All females of my species are exactly five feet and nine inches high.
+sharedassets0.assets,8656,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8656,MonoBehaviour,text,"My occupation is galactic bounty hunter;····· the best in my sector,·· I might add!"
+sharedassets0.assets,8656,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8656,MonoBehaviour,text,Based on your planet's gravitational force··· I'd calculate roughly··· one hundred and thirty pounds.
+sharedassets0.assets,8656,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8656,MonoBehaviour,text,Do you consider silver a color?
+sharedassets0.assets,8657,MonoBehaviour,text,"Where are you from, exactly?"
+sharedassets0.assets,8657,MonoBehaviour,text,"My home planet is called····· Tendricide.········ It's a cold,··· dangerous place;·· but it's home!"
+sharedassets0.assets,8657,MonoBehaviour,text,What's your last name? Do you even have one?
+sharedassets0.assets,8657,MonoBehaviour,text,I presume you mean my clan name?····· I am a high ranking member of the Luvendass clan.
+sharedassets0.assets,8657,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8657,MonoBehaviour,text,Going by your earth calendar?····· I would be thirty-two.
+sharedassets0.assets,8658,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8658,MonoBehaviour,text,You're looking at a hundred and twenty-six pounds of pure beauty.
+sharedassets0.assets,8658,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8658,MonoBehaviour,text,"I think orange is pretty cute,····· so I'll go with that."
+sharedassets0.assets,8658,MonoBehaviour,text,What did you study in college?
+sharedassets0.assets,8658,MonoBehaviour,text,"Oh,····· no,····· honey.················ I had to drop out of high school to care for my daughter."
+sharedassets0.assets,8659,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8659,MonoBehaviour,text,I was born on the twenty-seventh of January.
+sharedassets0.assets,8659,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8659,MonoBehaviour,text,"I'm an...····· actress.·········· You see, I make very special movies for my fans."
+sharedassets0.assets,8659,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8659,MonoBehaviour,text,These puppies?····· Double D's.····· One hundred percent natural too.
+sharedassets0.assets,8660,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8660,MonoBehaviour,text,Wherever I can get a drink!····· I'm at the bar most nights.
+sharedassets0.assets,8660,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8660,MonoBehaviour,text,Technically I'm thirty-six...····· but I don't feel a day older than twenty-five.
+sharedassets0.assets,8660,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8660,MonoBehaviour,text,"I'm five feet and seven inches of love, baby.·····"
+sharedassets0.assets,8661,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8661,MonoBehaviour,text,Winter has always been my favorite since I was little.····· Good memories...
+sharedassets0.assets,8661,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8661,MonoBehaviour,text,My·· main·· hobby...········ Hmmm...·················· does·· getting drunk count?···*mcmcmc*
+sharedassets0.assets,8661,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8661,MonoBehaviour,text,"Which one?··········*hahahaha*···*cccc*··· Well,·· if you mean my real last name,····· it's Maye."
+sharedassets0.assets,8662,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8662,MonoBehaviour,text,That's okay!····· My last name is Delrio.
+sharedassets0.assets,8662,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8662,MonoBehaviour,text,"Oh,····· yeah,····· that would be good to know huh?····· I'm twenty-one."
+sharedassets0.assets,8662,MonoBehaviour,text,What do you study in college?
+sharedassets0.assets,8662,MonoBehaviour,text,"I,····· actually...····· kinda dropped out of high school...*hhhaahhh*·····"
+sharedassets0.assets,8663,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8663,MonoBehaviour,text,I'm glad you asked!····· I'm down to one-eighteen!····· But most of that is muscle!
+sharedassets0.assets,8663,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8663,MonoBehaviour,text,"hahahaha*·····These guys?····· Umm,····· yeah...····· double D's."
+sharedassets0.assets,8663,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8663,MonoBehaviour,text,I work part-time as a hairdresser in the salon at the mall.
+sharedassets0.assets,8664,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8664,MonoBehaviour,text,Definitely working out.····· I never miss a day!
+sharedassets0.assets,8664,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8664,MonoBehaviour,text,That's not lame!····· I like blue;····· like a deep ocean blue.
+sharedassets0.assets,8664,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8664,MonoBehaviour,text,Summer hands down.····· You can go running down by the beach!
+sharedassets0.assets,8665,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8665,MonoBehaviour,text,The gym is practically my second home.*hahahaha*
+sharedassets0.assets,8665,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8665,MonoBehaviour,text,I'm five feet-six inches.
+sharedassets0.assets,8665,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8665,MonoBehaviour,text,March sixteenth!····· Mark it down!
+sharedassets0.assets,8666,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8666,MonoBehaviour,text,I hang out in your room when you're not home.····· You've got the best dirty magazines.·····
+sharedassets0.assets,8666,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8666,MonoBehaviour,text,Five feet and four inches.····· Thank god I'm not a pixie;····· those guys are tiny.
+sharedassets0.assets,8666,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8666,MonoBehaviour,text,Seriously?····· You're seriously gonna ask me that?····· It's fuckin' pink bitch!
+sharedassets0.assets,8667,MonoBehaviour,text,What's your last name? Do you even have one?
+sharedassets0.assets,8667,MonoBehaviour,text,Okay...····· you have to promise not to laugh.····· It's... *ccccc*·····Sugardust...
+sharedassets0.assets,8667,MonoBehaviour,text,"Where are you from, exactly?"
+sharedassets0.assets,8667,MonoBehaviour,text,"Sky··· Garden!········ It's kinda like your world but the clouds are pink.········ Weird, right?"
+sharedassets0.assets,8667,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8667,MonoBehaviour,text,"Summer,····· no doubt.····· If you haven't noticed,··· I like to walk around in my underwear."
+sharedassets0.assets,8668,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8668,MonoBehaviour,text,"One-ten...····· Wait,····· one-ten?····· Damn,··· I'm kinda chubbin' up."
+sharedassets0.assets,8668,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8668,MonoBehaviour,text,The universe was given the honor of having me··· in it··· on August third.
+sharedassets0.assets,8668,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8668,MonoBehaviour,text,Uhhh...····· the whole love fairy thing doesn't ring a bell?
+sharedassets0.assets,8669,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8669,MonoBehaviour,text,I'm roughly····· three hundred and eighty-four years old!
+sharedassets0.assets,8669,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8669,MonoBehaviour,text,Ughh...····· these things are C's.····· I'm like the flattest fairy ever...
+sharedassets0.assets,8669,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8669,MonoBehaviour,text,I watch a massive amount of porn.
+sharedassets0.assets,8670,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8670,MonoBehaviour,text,"You haven't?····· Well,··· my full name·· is Lola Rembrite."
+sharedassets0.assets,8670,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8670,MonoBehaviour,text,My birthday is February twenty-third.····· Don't forget!
+sharedassets0.assets,8670,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8670,MonoBehaviour,text,I'm twenty-four!····· Don't you know it's not polite to ask a lady's age?
+sharedassets0.assets,8671,MonoBehaviour,text,What did you study in college?
+sharedassets0.assets,8671,MonoBehaviour,text,I graduated with a four year degree in business administration.
+sharedassets0.assets,8671,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8671,MonoBehaviour,text,Baby blue!····· Just like my work uniform!
+sharedassets0.assets,8671,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8671,MonoBehaviour,text,I'm always trying to get better at Tennis.····· You should play me!
+sharedassets0.assets,8672,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8672,MonoBehaviour,text,I enjoy visiting the cafe just about every morning.····· It's my little ritual.
+sharedassets0.assets,8672,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8672,MonoBehaviour,text,hahahaha*·····What kind of question is that?····· D cup if you really have to know.
+sharedassets0.assets,8672,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8672,MonoBehaviour,text,"Spring,·· without a doubt.····· Everything is so colorful and alive."
+sharedassets0.assets,8673,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8673,MonoBehaviour,text,Well...····· uhhh...····· a hundred and twenty-two pounds.····· I'm trying to diet though!
+sharedassets0.assets,8673,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8673,MonoBehaviour,text,"That's alright, I like random.····· I'm exactly five foot seven."
+sharedassets0.assets,8673,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8673,MonoBehaviour,text,I'm glad you asked.····· I'm an airline stewardess...····· and I absolutely love it.
+sharedassets0.assets,8674,MonoBehaviour,text,"Where are you from, exactly?"
+sharedassets0.assets,8674,MonoBehaviour,text,I don't know...····· I really have no idea.····· I'm sorry!
+sharedassets0.assets,8674,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8674,MonoBehaviour,text,"Cup...? Size...?····· Mmmm...····· Oh, yeah!····· That!····· I have B cups."
+sharedassets0.assets,8674,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8674,MonoBehaviour,text,Hmmmm...····· gold!····· It's really really shiny and sparkly.
+sharedassets0.assets,8675,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8675,MonoBehaviour,text,For...···· work?·········· I don't know...·· I'm a kitty!
+sharedassets0.assets,8675,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8675,MonoBehaviour,text,Uhhh...····· I sleep a lot.····· I'm always really really sleepy.
+sharedassets0.assets,8675,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8675,MonoBehaviour,text,I'm only one hundred pounds!····· Everyone's bigger than me...
+sharedassets0.assets,8676,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8676,MonoBehaviour,text,I'm just five feet and two tiiiny inches!
+sharedassets0.assets,8676,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8676,MonoBehaviour,text,October second!····· It's my favoritest day!
+sharedassets0.assets,8676,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8676,MonoBehaviour,text,I like to run around on the hiking trails.·· It's fun!·····
+sharedassets0.assets,8677,MonoBehaviour,text,What's your last name? Do you even have one?
+sharedassets0.assets,8677,MonoBehaviour,text,Last name?····· Noooo...····· I'm Momo!
+sharedassets0.assets,8677,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8677,MonoBehaviour,text,Spring!····· It's sooo nice outside··· and it's not too hot!
+sharedassets0.assets,8677,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8677,MonoBehaviour,text,"Mmmmm...·········· I'm only one years old,····· in kitty years."
+sharedassets0.assets,8678,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8678,MonoBehaviour,text,I just turned eighteen not that long ago actually.
+sharedassets0.assets,8678,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8678,MonoBehaviour,text,"Not really.·········· Buuut,··· winter is pretty cool··· because nobody bugs me to go outside."
+sharedassets0.assets,8678,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8678,MonoBehaviour,text,"May thirteenth.····· It's fine if you forgot,····· it's just a stupid day."
+sharedassets0.assets,8679,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8679,MonoBehaviour,text,aaaacc*····· I'm only five feet tall.········ I'm like the shortest person I know.
+sharedassets0.assets,8679,MonoBehaviour,text,What do you study in college?
+sharedassets0.assets,8679,MonoBehaviour,text,I'm not going to college.····· Going through high school was enough bullshit for me.
+sharedassets0.assets,8679,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8679,MonoBehaviour,text,"I'm like··· a hundred something pounds.············· One-oh-four,··· I believe."
+sharedassets0.assets,8680,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8680,MonoBehaviour,text,I like to play video games;····· especially fighting games····· and online *aa*MM*aa*O's.·····
+sharedassets0.assets,8680,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8680,MonoBehaviour,text,"Honestly,············· I just like to chill in my room most of the time."
+sharedassets0.assets,8680,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8680,MonoBehaviour,text,aaaaaacc*·· I'm a barista at the cafe.·········· Somebody please kill me.·····
+sharedassets0.assets,8681,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8681,MonoBehaviour,text,"I hadn't really put much thought into that...····· maybe,····· like,········· beige?········ Is beige a color?·····"
+sharedassets0.assets,8681,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8681,MonoBehaviour,text,I knew that was coming sooner or later...····· *aaaaacc*·····C cup...···
+sharedassets0.assets,8681,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8681,MonoBehaviour,text,"It's fine,····· that's just how guys are.········ It's Ann-Marie.·····"
+sharedassets0.assets,8681,MonoBehaviour,text,"It's fine,····· that's just how girls are.········ It's Ann-Marie.·····"
+sharedassets0.assets,8682,MonoBehaviour,text,"Forgive me, I haven't even asked your last name yet."
+sharedassets0.assets,8682,MonoBehaviour,text,It's cool.····· My last name is Maye.····· Tiffany Maye!
+sharedassets0.assets,8682,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8682,MonoBehaviour,text,I'm still in school ya dumbo!
+sharedassets0.assets,8682,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8682,MonoBehaviour,text,Oh!····· It's right before the holidays.····· December twenty-second!
+sharedassets0.assets,8683,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8683,MonoBehaviour,text,I know it's boring but I kinda just like to hang out around campus.
+sharedassets0.assets,8683,MonoBehaviour,text,What do you study in college?
+sharedassets0.assets,8683,MonoBehaviour,text,"Well,····· I haven't really decided on a major yet,····· so I'm just getting my core classes out of the way."
+sharedassets0.assets,8683,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8683,MonoBehaviour,text,I don't mind at all.····· I'm a hundred and twelve pounds.
+sharedassets0.assets,8684,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8684,MonoBehaviour,text,hehehe*··Really?····· If you must know...····· I'm a C cup.
+sharedassets0.assets,8684,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8684,MonoBehaviour,text,"Ummm...····· I kinda like all the seasons.····· If I had to pick one,····· probably summer!"
+sharedassets0.assets,8684,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8684,MonoBehaviour,text,Me?····· I'm twenty years old.····· Mmhm!
+sharedassets0.assets,8685,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8685,MonoBehaviour,text,I wish I was taller!····· I'm only five-foot-four.
+sharedassets0.assets,8685,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8685,MonoBehaviour,text,I really enjoy cheerleading.····· I've never missed a practice!
+sharedassets0.assets,8685,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8685,MonoBehaviour,text,"Pink,··· all day.········ Not hot pink.····· I prefer like a····· light milky pink."
+sharedassets0.assets,8686,MonoBehaviour,text,What's your last name? Do you even have one?
+sharedassets0.assets,8686,MonoBehaviour,text,"Actually,····· Venus is my last name.····· My first name is Theiatena."
+sharedassets0.assets,8686,MonoBehaviour,text,This is random but how tall are you?
+sharedassets0.assets,8686,MonoBehaviour,text,I stand exactly five feet and eight inches tall.
+sharedassets0.assets,8686,MonoBehaviour,text,Do you prefer one season over the others?
+sharedassets0.assets,8686,MonoBehaviour,text,I find that Autumn typically has the most endurable weather here.
+sharedassets0.assets,8687,MonoBehaviour,text,"What do you do? Like, for work, I mean."
+sharedassets0.assets,8687,MonoBehaviour,text,I'm the goddess of love.····· I don't need to work.
+sharedassets0.assets,8687,MonoBehaviour,text,Where is your favorite place to hang out?
+sharedassets0.assets,8687,MonoBehaviour,text,In your town?······· The hot springs are divine...
+sharedassets0.assets,8687,MonoBehaviour,text,How much do you weigh? If you don't mind my asking.
+sharedassets0.assets,8687,MonoBehaviour,text,"Ask yourself,····· what would the perfect woman weigh?····· One hundred and twenty-eight pounds, no less."
+sharedassets0.assets,8688,MonoBehaviour,text,"Where are you from, exactly?"
+sharedassets0.assets,8688,MonoBehaviour,text,I rule over the spectacular and breathtaking kingdom of Sky Garden.
+sharedassets0.assets,8688,MonoBehaviour,text,What would you say your main hobby is?
+sharedassets0.assets,8688,MonoBehaviour,text,I've no need for········ hobbies.············ I spend my time being pampered and served.
+sharedassets0.assets,8688,MonoBehaviour,text,"I've got to know, what cup size you rockin'?"
+sharedassets0.assets,8688,MonoBehaviour,text,You can't be the love goddess and not carry a double D cup size.·········· That would be absurd.
+sharedassets0.assets,8689,MonoBehaviour,text,"So, exactly how old are you?"
+sharedassets0.assets,8689,MonoBehaviour,text,I've been around for ten thousand years...············ give or take.
+sharedassets0.assets,8689,MonoBehaviour,text,So I won't forget it; when is your birthday?
+sharedassets0.assets,8689,MonoBehaviour,text,It would have been September first.
+sharedassets0.assets,8689,MonoBehaviour,text,"Lame question, but what's your favorite color?"
+sharedassets0.assets,8689,MonoBehaviour,text,I have somewhat of an affinity for the color white.
 sharedassets0.assets,8690,MonoBehaviour,m_Name,QuestionAiko1
 sharedassets0.assets,8690,MonoBehaviour,steps[1].sceneLine.dialogLine.text,What's your favorite part of the female body?
 sharedassets0.assets,8690,MonoBehaviour,steps[2].responseOptions[0].text,The chest... region.
@@ -6935,6 +7233,43 @@ sharedassets0.assets,9016,MonoBehaviour,lineSets[0].lines[2].dialogLine[8].text,
 sharedassets0.assets,9016,MonoBehaviour,lineSets[0].lines[2].dialogLine[9].text,···That's boring...····· I already answered that one!
 sharedassets0.assets,9016,MonoBehaviour,lineSets[0].lines[2].dialogLine[10].text,You've already asked me that question.
 sharedassets0.assets,9016,MonoBehaviour,lineSets[0].lines[2].dialogLine[11].text,Is this a game?·········· I've responded to that question before.
+sharedassets0.assets,9016,MonoBehaviour,text,query duplicate
+sharedassets0.assets,9016,MonoBehaviour,text,You jerk!·········· I already told you;····· you don't remember?
+sharedassets0.assets,9016,MonoBehaviour,text,"Ugghhh!········ If you ever listened, you'd know I already told you that."
+sharedassets0.assets,9016,MonoBehaviour,text,Oh...····· didn't you already ask me that?
+sharedassets0.assets,9016,MonoBehaviour,text,Forgot already·· huh?····· Well··· I'm not telling you again.
+sharedassets0.assets,9016,MonoBehaviour,text,You may have already asked me that...
+sharedassets0.assets,9016,MonoBehaviour,text,I'm not going to answer the same question twice.
+sharedassets0.assets,9016,MonoBehaviour,text,"You're not going to make me repeat myself,····· are you?"
+sharedassets0.assets,9016,MonoBehaviour,text,"I don't mean to be rude,········ but······· I think you've asked that before."
+sharedassets0.assets,9016,MonoBehaviour,text,aaaaacc*·····Already asked that one.
+sharedassets0.assets,9016,MonoBehaviour,text,"haha···cmcm*·····You silly,····· you already asked me that before!"
+sharedassets0.assets,9016,MonoBehaviour,text,I've already given my response to that question.
+sharedassets0.assets,9016,MonoBehaviour,text,How dare you ask me to repeat myself!
+sharedassets0.assets,9016,MonoBehaviour,text,Ah-ha!········ Got you!······· You've already asked me that.····· Pay attention!
+sharedassets0.assets,9016,MonoBehaviour,text,"Hey, Einstein!····· You already asked that."
+sharedassets0.assets,9016,MonoBehaviour,text,I'm pretty sure you've asked me that before...
+sharedassets0.assets,9016,MonoBehaviour,text,You're·· such··· a moron.·········· I answered that question already.
+sharedassets0.assets,9016,MonoBehaviour,text,I believe I've already mentioned that to you...
+sharedassets0.assets,9016,MonoBehaviour,text,Orrrrrr····· you could try asking me a new question.
+sharedassets0.assets,9016,MonoBehaviour,text,"Ummm,······· sweetie...············· you've already given me that question."
+sharedassets0.assets,9016,MonoBehaviour,text,Deja Vu...·········· did you already ask me that?
+sharedassets0.assets,9016,MonoBehaviour,text,What's the matter?····· Couldn't get it the first time you asked that question?
+sharedassets0.assets,9016,MonoBehaviour,text,That's cheating!····· You can only ask a question one time.
+sharedassets0.assets,9016,MonoBehaviour,text,Can you please refrain from asking the same question more than once.···
+sharedassets0.assets,9016,MonoBehaviour,text,You have your answer to that question already...
+sharedassets0.assets,9016,MonoBehaviour,text,I could swear I've already told you that...
+sharedassets0.assets,9016,MonoBehaviour,text,I'll give you a second to try and remember that last time I answered that...
+sharedassets0.assets,9016,MonoBehaviour,text,"Come on dude,····· you should already know that!"
+sharedassets0.assets,9016,MonoBehaviour,text,How about asking me something··· you haven't asked?
+sharedassets0.assets,9016,MonoBehaviour,text,I seem to remember answering that question before...
+sharedassets0.assets,9016,MonoBehaviour,text,You honestly don't remember asking me that before?
+sharedassets0.assets,9016,MonoBehaviour,text,We've covered that.····· Ask me something different!
+sharedassets0.assets,9016,MonoBehaviour,text,I've already told you!····· Nope!····· You have to remember!·····*hahahaha*
+sharedassets0.assets,9016,MonoBehaviour,text,You know you're not supposed to ask the same question twice.
+sharedassets0.assets,9016,MonoBehaviour,text,That's boring...····· I already answered that one!
+sharedassets0.assets,9016,MonoBehaviour,text,You've already asked me that question.
+sharedassets0.assets,9016,MonoBehaviour,text,Is this a game?·········· I've responded to that question before.
 sharedassets0.assets,9017,MonoBehaviour,m_Name,QueryIntro
 sharedassets0.assets,9017,MonoBehaviour,lineSets[0].label,query intro
 sharedassets0.assets,9017,MonoBehaviour,lineSets[0].lines[0].dialogLine[0].text,What's shakin' bacon?
@@ -6973,6 +7308,43 @@ sharedassets0.assets,9017,MonoBehaviour,lineSets[0].lines[2].dialogLine[8].text,
 sharedassets0.assets,9017,MonoBehaviour,lineSets[0].lines[2].dialogLine[9].text,···Oookaay!············· What do you wanna talk about?··· Hmm?
 sharedassets0.assets,9017,MonoBehaviour,lineSets[0].lines[2].dialogLine[10].text,Is there anything you'd like to know about?
 sharedassets0.assets,9017,MonoBehaviour,lineSets[0].lines[2].dialogLine[11].text,I'm··· listening...
+sharedassets0.assets,9017,MonoBehaviour,text,query intro
+sharedassets0.assets,9017,MonoBehaviour,text,What's shakin' bacon?
+sharedassets0.assets,9017,MonoBehaviour,text,Something I can help you with?
+sharedassets0.assets,9017,MonoBehaviour,text,Yeah?
+sharedassets0.assets,9017,MonoBehaviour,text,What?
+sharedassets0.assets,9017,MonoBehaviour,text,What's cooking good lookin'?
+sharedassets0.assets,9017,MonoBehaviour,text,What's on your mind?
+sharedassets0.assets,9017,MonoBehaviour,text,You can ask me anything you like...
+sharedassets0.assets,9017,MonoBehaviour,text,What can I do for you?
+sharedassets0.assets,9017,MonoBehaviour,text,What's good playa?····· Talk to me*ee*.
+sharedassets0.assets,9017,MonoBehaviour,text,Is there anything I can do for you master?
+sharedassets0.assets,9017,MonoBehaviour,text,"Please,····· ask anything you'd like."
+sharedassets0.assets,9017,MonoBehaviour,text,"Go ahead,·········· you may ask me one question."
+sharedassets0.assets,9017,MonoBehaviour,text,Somethin' on your mind?
+sharedassets0.assets,9017,MonoBehaviour,text,Yeeeess?
+sharedassets0.assets,9017,MonoBehaviour,text,"Go ahead,····· ask me anything!"
+sharedassets0.assets,9017,MonoBehaviour,text,"If you're gonna ask,····· just ask."
+sharedassets0.assets,9017,MonoBehaviour,text,Yes?
+sharedassets0.assets,9017,MonoBehaviour,text,"Ummmmm,····· soooooo,····· yeeeaaahhh..."
+sharedassets0.assets,9017,MonoBehaviour,text,"Something you need from me,····· sweetie?"
+sharedassets0.assets,9017,MonoBehaviour,text,I get the sense something's on your mind.
+sharedassets0.assets,9017,MonoBehaviour,text,Hmmm...····· what've you got rattling in that little dome of yours?
+sharedassets0.assets,9017,MonoBehaviour,text,I'm booorred!····· Ask me a question!
+sharedassets0.assets,9017,MonoBehaviour,text,I'm sure you must be curious about me...
+sharedassets0.assets,9017,MonoBehaviour,text,Make it quick...
+sharedassets0.assets,9017,MonoBehaviour,text,What do you wanna know about me?
+sharedassets0.assets,9017,MonoBehaviour,text,Mmmhmmm?
+sharedassets0.assets,9017,MonoBehaviour,text,Did you wanna say something?
+sharedassets0.assets,9017,MonoBehaviour,text,Yeah?····· Out with it.
+sharedassets0.assets,9017,MonoBehaviour,text,Ask me something about myself!
+sharedassets0.assets,9017,MonoBehaviour,text,Anything you wanna talk about?
+sharedassets0.assets,9017,MonoBehaviour,text,Is there··· anything else you'd like to know about me?
+sharedassets0.assets,9017,MonoBehaviour,text,You look like you have something to say...
+sharedassets0.assets,9017,MonoBehaviour,text,You need something?····· Spit it out.
+sharedassets0.assets,9017,MonoBehaviour,text,Oookaay!············· What do you wanna talk about?··· Hmm?
+sharedassets0.assets,9017,MonoBehaviour,text,Is there anything you'd like to know about?
+sharedassets0.assets,9017,MonoBehaviour,text,I'm··· listening...
 sharedassets0.assets,9018,MonoBehaviour,m_Name,QuestionBadChoice
 sharedassets0.assets,9018,MonoBehaviour,lineSets[0].label,question bad choice 1
 sharedassets0.assets,9018,MonoBehaviour,lineSets[0].lines[0].dialogLine[0].text,Oh...····· really?
@@ -7342,6 +7714,277 @@ sharedassets0.assets,9034,MonoBehaviour,m_Name,TokenSentimentEnergyTrail
 sharedassets0.assets,9034,MonoBehaviour,girlEnergySurge.tint,4FB9BE
 sharedassets0.assets,9035,MonoBehaviour,m_Name,TokenSexualityEnergyTrail
 sharedassets0.assets,9035,MonoBehaviour,girlEnergySurge.tint,AF5252
+sharedassets0.assets,9036,MonoBehaviour,text,College (6 yr)
+sharedassets0.assets,9036,MonoBehaviour,text,109 lbs
+sharedassets0.assets,9036,MonoBehaviour,text,Nov 9th
+sharedassets0.assets,9036,MonoBehaviour,text,Mint Green
+sharedassets0.assets,9036,MonoBehaviour,text,Summer School
+sharedassets0.assets,9036,MonoBehaviour,text,February Air
+sharedassets0.assets,9036,MonoBehaviour,text,Gold Chateau
+sharedassets0.assets,9036,MonoBehaviour,text,Dahlia Rose
+sharedassets0.assets,9036,MonoBehaviour,text,Royal Flush
+sharedassets0.assets,9036,MonoBehaviour,text,Ruby Heels
+sharedassets0.assets,9036,MonoBehaviour,text,Peep Toe Pumps
+sharedassets0.assets,9036,MonoBehaviour,text,Open Toe Flats
+sharedassets0.assets,9036,MonoBehaviour,text,Thin Strap Sandals
+sharedassets0.assets,9036,MonoBehaviour,text,Knee High Boots
+sharedassets0.assets,9037,MonoBehaviour,text,In College
+sharedassets0.assets,9037,MonoBehaviour,text,102 lbs
+sharedassets0.assets,9037,MonoBehaviour,text,Apr 6th
+sharedassets0.assets,9037,MonoBehaviour,text,Velvet Red
+sharedassets0.assets,9037,MonoBehaviour,text,Scene Girl
+sharedassets0.assets,9037,MonoBehaviour,text,Gothic Lolita
+sharedassets0.assets,9037,MonoBehaviour,text,Lacy Daydream
+sharedassets0.assets,9037,MonoBehaviour,text,Candy Wrapper
+sharedassets0.assets,9037,MonoBehaviour,text,Big Red
+sharedassets0.assets,9037,MonoBehaviour,text,Half 'n Half
+sharedassets0.assets,9037,MonoBehaviour,text,Tainted Purity
+sharedassets0.assets,9037,MonoBehaviour,text,Dark Streak
+sharedassets0.assets,9037,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9037,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9037,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9037,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9037,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9037,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9037,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9037,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9037,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9037,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9037,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9037,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9037,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9037,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9037,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9038,MonoBehaviour,text,College (2 yr)
+sharedassets0.assets,9038,MonoBehaviour,text,132 lbs
+sharedassets0.assets,9038,MonoBehaviour,text,Yoga Teacher
+sharedassets0.assets,9038,MonoBehaviour,text,Jun 25th
+sharedassets0.assets,9038,MonoBehaviour,text,Lilac Purple
+sharedassets0.assets,9038,MonoBehaviour,text,Silk Sari
+sharedassets0.assets,9038,MonoBehaviour,text,Aztec Flair
+sharedassets0.assets,9038,MonoBehaviour,text,Native Chic
+sharedassets0.assets,9038,MonoBehaviour,text,Eastern Desire
+sharedassets0.assets,9038,MonoBehaviour,text,With Love
+sharedassets0.assets,9038,MonoBehaviour,text,Short 'n Sweet
+sharedassets0.assets,9038,MonoBehaviour,text,Salon Stylish
+sharedassets0.assets,9038,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9038,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9038,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9038,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9038,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9038,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9038,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9038,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9038,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9038,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9038,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9038,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9038,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9038,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9038,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9039,MonoBehaviour,text,130 lbs
+sharedassets0.assets,9039,MonoBehaviour,text,Jul 20th
+sharedassets0.assets,9039,MonoBehaviour,text,Shiny Silver
+sharedassets0.assets,9039,MonoBehaviour,text,Latex Huntress
+sharedassets0.assets,9039,MonoBehaviour,text,Desert Slave
+sharedassets0.assets,9039,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9039,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9039,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9039,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9039,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9039,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9039,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9039,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9039,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9039,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9039,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9039,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9039,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9039,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9039,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9040,MonoBehaviour,text,126 lbs
+sharedassets0.assets,9040,MonoBehaviour,text,Porn Star
+sharedassets0.assets,9040,MonoBehaviour,text,Jan 27th
+sharedassets0.assets,9040,MonoBehaviour,text,Leopard Print
+sharedassets0.assets,9040,MonoBehaviour,text,Country Life
+sharedassets0.assets,9040,MonoBehaviour,text,Bar Maiden
+sharedassets0.assets,9040,MonoBehaviour,text,Playful Bunny
+sharedassets0.assets,9040,MonoBehaviour,text,Purple Passion
+sharedassets0.assets,9040,MonoBehaviour,text,Forever Young
+sharedassets0.assets,9040,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9040,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9040,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9040,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9040,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9040,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9040,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9040,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9040,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9040,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9040,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9040,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9040,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9040,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9040,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9040,MonoBehaviour,text,Cowboy Hat
+sharedassets0.assets,9041,MonoBehaviour,text,118 lbs
+sharedassets0.assets,9041,MonoBehaviour,text,Mar 16th
+sharedassets0.assets,9041,MonoBehaviour,text,Working Out
+sharedassets0.assets,9041,MonoBehaviour,text,Ocean Blue
+sharedassets0.assets,9041,MonoBehaviour,text,Pacific Rider
+sharedassets0.assets,9041,MonoBehaviour,text,Lemon Cream
+sharedassets0.assets,9041,MonoBehaviour,text,Oye Mamacita
+sharedassets0.assets,9041,MonoBehaviour,text,Emerald Coast
+sharedassets0.assets,9041,MonoBehaviour,text,Dixie Ribbon
+sharedassets0.assets,9041,MonoBehaviour,text,T'ai Chi
+sharedassets0.assets,9041,MonoBehaviour,text,T'ai Chi Quan
+sharedassets0.assets,9041,MonoBehaviour,text,Caribbean Sandals
+sharedassets0.assets,9041,MonoBehaviour,text,Street Walkers
+sharedassets0.assets,9041,MonoBehaviour,text,Pink Pumps
+sharedassets0.assets,9041,MonoBehaviour,text,Aztec Sandals
+sharedassets0.assets,9041,MonoBehaviour,text,Zipper Boots
+sharedassets0.assets,9042,MonoBehaviour,text,Sky Garden
+sharedassets0.assets,9042,MonoBehaviour,text,110 lbs
+sharedassets0.assets,9042,MonoBehaviour,text,Love Fairy
+sharedassets0.assets,9042,MonoBehaviour,text,Aug 3rd
+sharedassets0.assets,9042,MonoBehaviour,text,Hot Pink
+sharedassets0.assets,9042,MonoBehaviour,text,Fairy Uniform
+sharedassets0.assets,9042,MonoBehaviour,text,Magical Girl
+sharedassets0.assets,9042,MonoBehaviour,text,Neon Aurora
+sharedassets0.assets,9042,MonoBehaviour,text,Lovely Lust
+sharedassets0.assets,9042,MonoBehaviour,text,Nature's Bounty
+sharedassets0.assets,9042,MonoBehaviour,text,Wing Clips
+sharedassets0.assets,9042,MonoBehaviour,text,Fairy Princess
+sharedassets0.assets,9042,MonoBehaviour,text,Human Style
+sharedassets0.assets,9042,MonoBehaviour,text,Tropical Twirl
+sharedassets0.assets,9042,MonoBehaviour,text,Flower Crown
+sharedassets0.assets,9042,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9042,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9042,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9042,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9042,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9042,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9042,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9042,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9042,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9042,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9042,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9042,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9042,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9042,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9042,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9042,MonoBehaviour,text,Disguise Front Hair
+sharedassets0.assets,9042,MonoBehaviour,text,Disguise Back Hair
+sharedassets0.assets,9043,MonoBehaviour,text,College (4 yr)
+sharedassets0.assets,9043,MonoBehaviour,text,122 lbs
+sharedassets0.assets,9043,MonoBehaviour,text,Feb 23rd
+sharedassets0.assets,9043,MonoBehaviour,text,Baby Blue
+sharedassets0.assets,9043,MonoBehaviour,text,Lazy Sunday
+sharedassets0.assets,9043,MonoBehaviour,text,Tennis Dress
+sharedassets0.assets,9043,MonoBehaviour,text,Slip 'n Slide
+sharedassets0.assets,9043,MonoBehaviour,text,Afro Curls
+sharedassets0.assets,9043,MonoBehaviour,text,The Bob
+sharedassets0.assets,9043,MonoBehaviour,text,Sporty Sprout
+sharedassets0.assets,9043,MonoBehaviour,text,Twin Drills
+sharedassets0.assets,9043,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9043,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9043,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9043,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9043,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9043,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9043,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9043,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9043,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9043,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9043,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9043,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9043,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9043,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9043,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9044,MonoBehaviour,text,1 (Cat Yrs)
+sharedassets0.assets,9044,MonoBehaviour,text,100 lbs
+sharedassets0.assets,9044,MonoBehaviour,text,Oct 2nd
+sharedassets0.assets,9044,MonoBehaviour,text,Gleamy Gold
+sharedassets0.assets,9044,MonoBehaviour,text,Hiking Trail
+sharedassets0.assets,9044,MonoBehaviour,text,Posh Kitty
+sharedassets0.assets,9044,MonoBehaviour,text,Super Sailor
+sharedassets0.assets,9044,MonoBehaviour,text,Loyal Servant
+sharedassets0.assets,9044,MonoBehaviour,text,Lemon Lime
+sharedassets0.assets,9044,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9044,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9044,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9044,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9044,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9044,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9044,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9044,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9044,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9044,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9044,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9044,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9044,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9044,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9044,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9045,MonoBehaviour,text,104 lbs
+sharedassets0.assets,9045,MonoBehaviour,text,May 13th
+sharedassets0.assets,9045,MonoBehaviour,text,Beige Cream
+sharedassets0.assets,9045,MonoBehaviour,text,Nerd Girl
+sharedassets0.assets,9045,MonoBehaviour,text,Sunset Shore
+sharedassets0.assets,9045,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9045,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9045,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9045,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9045,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9045,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9045,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9045,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9045,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9045,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9045,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9045,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9045,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9045,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9045,MonoBehaviour,text,Footwear #5
+sharedassets0.assets,9046,MonoBehaviour,text,In College
+sharedassets0.assets,9046,MonoBehaviour,text,112 lbs
+sharedassets0.assets,9046,MonoBehaviour,text,Dec 22nd
+sharedassets0.assets,9046,MonoBehaviour,text,Milky Pink
+sharedassets0.assets,9046,MonoBehaviour,text,School Uniform
+sharedassets0.assets,9046,MonoBehaviour,text,Blueberry Picnic
+sharedassets0.assets,9046,MonoBehaviour,text,Cherry Cheer
+sharedassets0.assets,9046,MonoBehaviour,text,Coconut Palm
+sharedassets0.assets,9046,MonoBehaviour,text,Freezy Pop
+sharedassets0.assets,9046,MonoBehaviour,text,Long Hair
+sharedassets0.assets,9046,MonoBehaviour,text,Long Braids
+sharedassets0.assets,9046,MonoBehaviour,text,School Shoes
+sharedassets0.assets,9046,MonoBehaviour,text,Pink Mary Janes
+sharedassets0.assets,9046,MonoBehaviour,text,Fuzzy Boots
+sharedassets0.assets,9046,MonoBehaviour,text,White Boots
+sharedassets0.assets,9046,MonoBehaviour,text,Beach Sandals
+sharedassets0.assets,9047,MonoBehaviour,text,ff&?
+sharedassets0.assets,9047,MonoBehaviour,text,Sky Garden
+sharedassets0.assets,9047,MonoBehaviour,text,128 lbs
+sharedassets0.assets,9047,MonoBehaviour,text,Sep 1st
+sharedassets0.assets,9047,MonoBehaviour,text,Pearl White
+sharedassets0.assets,9047,MonoBehaviour,text,Hot Springs
+sharedassets0.assets,9047,MonoBehaviour,text,Sinful Wish
+sharedassets0.assets,9047,MonoBehaviour,text,Trophy Wife
+sharedassets0.assets,9047,MonoBehaviour,text,Heavenly Bliss
+sharedassets0.assets,9047,MonoBehaviour,text,Hairstyle #1
+sharedassets0.assets,9047,MonoBehaviour,text,Hairstyle #2
+sharedassets0.assets,9047,MonoBehaviour,text,Hairstyle #3
+sharedassets0.assets,9047,MonoBehaviour,text,Hairstyle #4
+sharedassets0.assets,9047,MonoBehaviour,text,Hairstyle #5
+sharedassets0.assets,9047,MonoBehaviour,text,Outfit #1
+sharedassets0.assets,9047,MonoBehaviour,text,Outfit #2
+sharedassets0.assets,9047,MonoBehaviour,text,Outfit #3
+sharedassets0.assets,9047,MonoBehaviour,text,Outfit #4
+sharedassets0.assets,9047,MonoBehaviour,text,Outfit #5
+sharedassets0.assets,9047,MonoBehaviour,text,Footwear #1
+sharedassets0.assets,9047,MonoBehaviour,text,Footwear #2
+sharedassets0.assets,9047,MonoBehaviour,text,Footwear #3
+sharedassets0.assets,9047,MonoBehaviour,text,Footwear #4
+sharedassets0.assets,9047,MonoBehaviour,text,Footwear #5
 sharedassets0.assets,9048,MonoBehaviour,m_Name,157MusicFlute
 sharedassets0.assets,9048,MonoBehaviour,name,Flute
 sharedassets0.assets,9048,MonoBehaviour,description,[[Talent]talent] token matches give an additional +100% Affection.
@@ -8528,6 +9171,10 @@ sharedassets0.assets,9341,MonoBehaviour,levels[0].bonusSpriteName,puzzle_token_s
 sharedassets0.assets,9341,MonoBehaviour,levels[0].bonusOverSpriteName,puzzle_token_sexual_over
 sharedassets0.assets,9341,MonoBehaviour,levels[1].spriteName,puzzle_token_sexual_triple
 sharedassets0.assets,9341,MonoBehaviour,levels[1].overSpriteName,puzzle_token_sexual_triple_over
+sharedassets0.assets,9353,MonoBehaviour,text,particle_token_energy_talent!
+sharedassets0.assets,9353,MonoBehaviour,text,particle_token_energy_sexual!
+sharedassets0.assets,9361,MonoBehaviour,text,particle_token_energy_broken!
+sharedassets0.assets,9365,MonoBehaviour,text,particle_token_energy_sexual!
 sharedassets0.assets,9366,MonoBehaviour,m_Name,FlirtationTrait
 sharedassets0.assets,9366,MonoBehaviour,name,Flirtation
 sharedassets0.assets,9367,MonoBehaviour,m_Name,PassionTrait
