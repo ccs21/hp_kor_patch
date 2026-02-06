@@ -8,23 +8,60 @@ Windowed	창 모드
 High	고
 Medium	중
 Low	저
+Female	여자
+Male	남자
+Easy	쉬움
+Normal	보통
+Hard	어려움
 Save Data #1	세이브 데이터 #1
-Monday 01	월요일 01
-Morning	아침
-Shopping Mall	쇼핑 몰
-Audrey	오드리
-1,000	1,000
-0	0
-0%	0%
 Save Data #2	세이브 데이터 #2
 Save Data #3	세이브 데이터 #3
 Save Data #4	세이브 데이터 #4
 Ask on Date	데이트 신청
-Girl Finder	걸 찾기
+Girl Finder	여자 찾기
 View Inventory	인벤토리 보기
+INVENTORY	인벤토리
 Check Profile	프로필 확인
 Purchase Gifts	선물 구매하기
-Talk With Her	그녀와 대화하기
+STORE	스토어
+Click to purchase this item.	  클릭해서 구매
+Talk With Her	대화하기
+Shopping Mall	  쇼핑 몰
+Garden	정원
+Carnival	카니발
+Casino	카지노
+Restaurant	레스토랑
+Market	마켓
+Trail	단서
+Rink	링크
+Lounge	라운지
+Overlook	전망대
+Courts	코트
+Park	공원
+Bedroom	침실
+Bar	바
+Beach	해변
+Cafe	카페
+Campus	캠퍼스
+Gym	헬스장
+Mall	몰
+Nightclub	나이트클럽
+Broken Heart Token	깨진 하트 토큰
+Passion Token	열정 토큰
+Romance Token	로맨스 토큰
+Sentiment Token	감성 토큰
+Sexuality Token	섹슈얼리티 토큰
+Flirtation Token	유혹 토큰
+Joy Token	즐거움 토큰
+Talent Token	재능 토큰
+Flirtation	유혹
+Passion	열정
+Romance	로맨스
+Sensitivity	민감도
+Sexuality	섹슈얼리티
+Talent	재능
+Charisma	카리스마
+Luck	운
 Aaaaaaaaaahhhhh...	아아아아아아악...
 Good morning Aiko!	좋은 아침이야, 아이코!
 Oh,····· hey Beli.	어,····· 안녕 벨리.
@@ -665,10 +702,10 @@ What's that?····· I didn't hear you?··· Did you say...····· hell ye
 Now if you wanna meet a hot chick,····· you gotta go where the hot chicks are.	핫한 여자를 만나고 싶으면····· 핫한 여자들이 있는 곳으로 가야지.
 I've done some scouting and I have a few ideas of where to start.····· It depends what type of girls you're into.	조사 좀 해봤는데, 어디서부터 시작하면 좋을지 생각해놨어.····· 너 어떤 스타일의 여자 좋아하냐에 따라 달라지겠지.
 We can check out the university,····· the mall,··· the gym,·· the park·· or the nearby cafe.····· What'll it be?	대학교도 가볼 수 있고,····· 쇼핑몰,··· 헬스장,·· 공원·· 아니면 근처 카페도 있어.····· 어디 가볼래?
-University Campus	대학교 캠퍼스
-Fitness Club	피트니스 클럽
-Dawnwood Park	던우드 공원
-Nutmeg Cafe	넛멕 카페
+University Campus	  대학교 캠퍼스
+Fitness Club	  피트니스 클럽
+Dawnwood Park	  던우드 공원
+Nutmeg Cafe	  넛멕 카페
 Good choice rookie!······· Couldn't have picked it better myself.	좋은 선택이야, 신참!······· 내가 해도 그 이상은 못 골랐을 걸.
 Alright,····· ready?····· Get your game face on!	자,····· 준비됐지?····· 이제 진짜 시작이야!
 Oh yeah.····· Don't worry,····· they can't see or hear me.····· I'm just a figment of your imagination.	오, 그래.····· 걱정 마,····· 걔네는 나를 볼 수도 들을 수도 없어.····· 난 네 상상 속에만 있는 존재거든.
@@ -1119,17 +1156,14 @@ When we first met,····· what color dress was I wearing?	우리 처음 만�
 Red	빨강
 Pink	핑크
 Do you remember what day it was when we first met?	우리 처음 만난 날이 언제였는지 기억나?
-Sunday	일요일
-Saturday	토요일
-Friday	금요일
 Where did we go so I could teach you about dating?	내가 연애에 대해 가르쳐주려고 우리 어디 갔었지?
 Outdoor Lounge	야외 라운지
 Vinnie's Restaurant	비니네 레스토랑
 Scenic Overlook	전망 좋은 장소
 What type of token was your first ever token match?	네 첫 번째 토큰 매치는 어떤 종류였어?
 Romance Tokens	로맨스 토큰
-Flirtation Tokens	플러트 토큰
-Sexuality Tokens	성욕 토큰
+Flirtation Tokens	유혹 토큰
+Sexuality Tokens	섹슈얼리티 토큰
 What was my advice to you when meeting Tiffany?	티파니 만날 때 내가 뭐라고 조언해줬는지 기억나?
 How did I suggest that you open the initial conversation with Aiko?	내가 아이코랑 처음 대화 시작할 때 뭐라고 하라고 했었지?
 Do you remember what I said about approaching Kyanna··· for the first time?	내가 키아나한테 처음 다가갈 때 뭐라고 했는지 기억나?
@@ -1541,8 +1575,8 @@ Shiny Silver	빛나는 실버
 Gleamy Gold	글리미 골드
 Which of your four seasons do I find most comfortable?	네 개의 계절 중에 내가 가장 편하게 느끼는 계절은 뭐게?
 What location in town do I spend a lot of time at?	내가 이 동네에서 시간을 가장 많이 보내는 곳이 어딜까?
-Turtle Bay Beach	터틀베이 해변
-Ice Rink	아이스링크
+Turtle Bay Beach	  터틀베이 해변
+Ice Rink	  아이스링크
 My earth age is how many years?·····	내 지구 나이는 몇 살이지?·····
 36 Years Old	36살
 What is the name of my home planet?	내 고향 행성 이름이 뭐였더라?
@@ -1723,106 +1757,105 @@ Tell me,····· what is the cup size of my bra?	자,····· 내 브라 컵
 On what day of the year would my birth have happened?	내가 태어난 날이 연중 어느 날이었을까?
 What is my...····· what did you call it?····· a····· "hobby"?	내...······뭐라고 했지?······"취미"?
 Flute	플루트
-[[Talent]talent] token matches give an additional +100% Affection.	[[Talent]talent] 토큰 매치 시 애정도가 추가로 100% 증가합니다.
+Talent token matches give an additional +100% Affection.	..재능 토큰 매치 시 애정도가 추가로 +100% 올라갑니다.
 Drums	드럼
-[[Talent]talent] token matches give an additional +200% Affection.	[[Talent]talent] 토큰 매치 시 애정도가 추가로 +200% 상승합니다.
+Talent token matches give an additional +200% Affection.	..재능 토큰 매치 시 추가로 애정도 +200%를 얻어요.
 Trumpet	트럼펫
-[[Talent]talent] token matches give an additional +300% Affection.	[[Talent]talent] 토큰 매치 시 애정도가 추가로 +300% 올라갑니다.
+Talent token matches give an additional +300% Affection.	..재능 토큰 매칭 시 애정도 추가 +300% 획득.
 Banjo	반조
-[[Talent]talent] token matches give an additional +400% Affection.	[[Talent]talent] 토큰 매치 시 애정도 추가로 +400% 획득.
+Talent token matches give an additional +400% Affection.	..탤런트 토큰 매치 시 애정도가 추가로 +400% 올라가.
 Violin	바이올린
-[[Talent]talent] token matches give an additional +500% Affection.	[[Talent]talent] 토큰 매치 시 애정도가 추가로 +500% 올라갑니다.
+Talent token matches give an additional +500% Affection.	..재능 토큰 매치 시 애정도가 추가로 +500% 올라갑니다.
 Keyboard	키보드
-[[Talent]talent] token matches give an additional +600% Affection.	[[Talent]talent] 토큰이 일치하면 애정도가 추가로 +600% 올라가.
+Talent token matches give an additional +600% Affection.	..탤런트 토큰 매치 시 애정도 추가로 +600% 증가.
 Sun Lotion	선크림
-[[Flirtation]flirtation] token matches give an additional +100% Affection.	[[Flirtation]flirtation] 토큰 매치 시 애정도가 추가로 +100% 올라가.
+Flirtation token matches give an additional +100% Affection.	..유혹 토큰 매치 시 애정도가 추가로 +100% 상승합니다.
 Stylish Shades	스타일리시 선글라스
-[[Flirtation]flirtation] token matches give an additional +200% Affection.	[[Flirtation]flirtation] 토큰 매칭 시 추가로 호감도 +200% 획득.
+Flirtation token matches give an additional +200% Affection.	..유혹 토큰 매치 시 애정도가 추가로 +200% 증가합니다.
 Flip Flops	슬리퍼
-[[Flirtation]flirtation] token matches give an additional +300% Affection.	[[Flirtation]flirtation] 토큰 매치 시 추가로 +300% 호감도가 올라가.
+Flirtation token matches give an additional +300% Affection.	..유혹 토큰 매치 시 애정도가 추가로 +300% 상승합니다.
 Beach Ball	비치볼
-[[Flirtation]flirtation] token matches give an additional +400% Affection.	[[Flirtation]flirtation] 토큰 매치 시 애정도가 추가로 +400% 올라가.
+Flirtation token matches give an additional +400% Affection.	..유혹 토큰 매치 시 추가로 호감도가 +400% 더 올라가요.
 Big Beach Towel	커다란 비치 타월
-[[Flirtation]flirtation] token matches give an additional +500% Affection.	[[Flirtation]플러터이션] 토큰 매칭 시 애정도가 추가로 +500% 더 올라요.
+Flirtation token matches give an additional +500% Affection.	..유혹 토큰 매치 시 애정도가 추가로 +500% 상승합니다.
 Surfboard	서핑보드
-[[Flirtation]flirtation] token matches give an additional +600% Affection.	[[Flirtation]flirtation] 토큰 매치 시 애정도가 추가로 +600% 증가합니다.
+Flirtation token matches give an additional +600% Affection.	..유혹 토큰 매치 시 애정도가 추가로 +600% 올라갑니다.
 Buttery Croissant	버터 향이 가득한 크루아상
-[[Romance]romance] token matches give an additional +100% Affection.	[[Romance]romance] 토큰 매치 시 애정도가 추가로 +100% 올라가.
+Romance token matches give an additional +100% Affection.	..로맨스 토큰 매치 시 애정도가 추가로 +100% 올라요.
 Fresh Baguette	신선한 바게트
-[[Romance]romance] token matches give an additional +200% Affection.	[[Romance]romance] 토큰 매치 시 애정도가 추가로 +200% 올라갑니다.
+Romance token matches give an additional +200% Affection.	..로맨스 토큰 매치는 애정도가 추가로 +200% 증가해.
 Fancy Cheese	고급 치즈
-[[Romance]romance] token matches give an additional +300% Affection.	[[Romance]romance] 토큰이 맞으면 애정도가 추가로 +300% 올라요.
+Romance token matches give an additional +300% Affection.	..로맨스 토큰 매치 시 애정도가 추가로 +300% 증가합니다.
 French Beret	프렌치 베레
-[[Romance]romance] token matches give an additional +400% Affection.	[[Romance]romance] 토큰 매치 시 애정도가 추가로 +400% 증가합니다.
+Romance token matches give an additional +400% Affection.	..로맨스 토큰 매치 시 애정도가 추가로 +400% 증가합니다.
 Accordion	아코디언
-[[Romance]romance] token matches give an additional +500% Affection.	[[Romance]romance] 토큰 매치 시 애정도가 추가로 +500% 증가합니다.
+Romance token matches give an additional +500% Affection.	..로맨스 토큰 매칭 시 호감도가 추가로 +500% 증가합니다.
 Wine Bottle	와인병
-[[Romance]romance] token matches give an additional +600% Affection.	[[Romance]romance] 토큰 매칭 시 애정도가 추가로 +600% 증가합니다.
+Romance token matches give an additional +600% Affection.	..로맨스 토큰 매치 시 애정도가 추가로 +600% 증가해.
 Hot Wax Candles	뜨거운 왁스 촛불
-[[Sexuality]sexuality] token matches give an additional +100% Affection.	[[Sexuality]sexuality] 토큰 매치 시 애정도 추가 +100%.
+Sexuality token matches give an additional +100% Affection.	..섹슈얼리티 토큰이 매치되면 호감도가 추가로 +100% 증가해.
 Silk Blindfold	실크 안대
-[[Sexuality]sexuality] token matches give an additional +200% Affection.	[[Sexuality]sexuality] 토큰 매치 시 애정도가 추가로 +200% 올라갑니다.
+Sexuality token matches give an additional +200% Affection.	..섹슈얼리티 토큰 매치 시 호감도가 추가로 +200% 올라갑니다.
 Spiked Choker	스파이크 초커
-[[Sexuality]sexuality] token matches give an additional +300% Affection.	[[Sexuality]sexuality] 토큰이 맞으면 애정도가 추가로 +300% 올라가.
+Sexuality token matches give an additional +300% Affection.	..섹슈얼리티 토큰 매칭 시 애정도가 추가로 +300% 올라갑니다.
 Fuzzy Handcuffs	털이 달린 수갑
-[[Sexuality]sexuality] token matches give an additional +400% Affection.	[[Sexuality]sexuality] 토큰 매치 시 호감도가 추가로 +400% 올라가.
+Sexuality token matches give an additional +400% Affection.	..섹슈얼리티 토큰이 일치하면 애정도가 추가로 400% 증가해.
 Leather Whip	가죽 채찍
-[[Sexuality]sexuality] token matches give an additional +500% Affection.	[[Sexuality]sexuality] 토큰 일치 시 애정도가 추가로 +500% 상승합니다.
+Sexuality token matches give an additional +500% Affection.	..섹슈얼리티 토큰 매칭 시 애정도 추가 +500% 획득.
 Ball Gag	볼 개그
-[[Sexuality]sexuality] token matches give an additional +600% Affection.	[[Sexuality]sexuality] 토큰이 일치하면 호감도가 추가로 +600% 증가해.
+Sexuality token matches give an additional +600% Affection.	..섹슈얼리티 토큰이 매치될 때마다 애정도가 추가로 +600% 올라가.
 Ear Muffs	귀마개
-The maximum [[Passion]heart] level increases to 6 and [[Passion]heart] token matches give an additional +100% [[Passion]heart].	최대 [[Passion]heart] 레벨이 6으로 증가하고, [[Passion]heart] 토큰 매치 시 추가로 +100% [[Passion]heart]를 획득합니다.
+The maximum Passion level increases to 6 and Passion token matches give an additional +100% Passion.	..최대 열정 레벨이 6으로 증가하고, 열정 토큰 매치 시 추가로 +100% 열정을 얻어요.
 Warm Mittens	따뜻한 벙어리장갑
-The maximum [[Passion]heart] level increases to 8 and [[Passion]heart] token matches give an additional +200% [[Passion]heart].	최대 [[Passion]heart] 레벨이 8로 증가하고, [[Passion]heart] 토큰 매치 시 추가로 +200% [[Passion]heart]를 획득합니다.
+The maximum Passion level increases to 8 and Passion token matches give an additional +200% Passion.	..최대 열정 레벨이 8로 증가하고, 열정 토큰을 매치할 때 추가로 +200%의 열정을 얻어요.
 Snow Globe	스노우 글로브
-The maximum [[Passion]heart] level increases to 10 and [[Passion]heart] token matches give an additional +300% [[Passion]heart].	최대 [[Passion]heart] 레벨이 10까지 올라가고, [[Passion]heart] 토큰을 매치할 때 추가로 +300% [[Passion]heart]를 얻어.
+The maximum Passion level increases to 10 and Passion token matches give an additional +300% Passion.	..최대 열정 레벨이 10으로 증가하고, 열정 토큰을 매치하면 추가로 열정이 +300% 더 올라가.
 Ice Skates	아이스 스케이트
-The maximum [[Passion]heart] level increases to 12 and [[Passion]heart] token matches give an additional +400% [[Passion]heart].	최대 [[Passion]heart] 레벨이 12로 증가하고, [[Passion]heart] 토큰을 맞출 때마다 추가로 +400% [[Passion]heart]를 얻습니다.
+The maximum Passion level increases to 12 and Passion token matches give an additional +400% Passion.	..최대 열정 레벨이 12로 증가하며, 열정 토큰 매치 시 추가로 +400% 열정을 획득합니다.
 Snow Sled	스노우 썰매
-The maximum [[Passion]heart] level increases to 14 and [[Passion]heart] token matches give an additional +500% [[Passion]heart].	최대 [[Passion]heart] 레벨이 14로 증가하며, [[Passion]heart] 토큰 매치 시 추가로 +500% [[Passion]heart]를 얻어요.
+The maximum Passion level increases to 14 and Passion token matches give an additional +500% Passion.	..최대 열정 레벨이 14까지 올라가고, 열정 토큰 매칭 시 추가로 +500% 열정이 적용돼.
 Snowboard	스노보드
-The maximum [[Passion]heart] level increases to 16 and [[Passion]heart] token matches give an additional +600% [[Passion]heart].	최대 [[Passion]heart] 레벨이 16으로 증가하고, [[Passion]heart] 토큰 매치 시 추가로 +600% [[Passion]heart]를 얻어요.
+The maximum Passion level increases to 16 and Passion token matches give an additional +600% Passion.	..최대 열정 레벨이 16으로 늘어나고, 열정 토큰을 매치하면 추가로 +600% 열정이 쌓여.
 Bandages	붕대
-The penalty for matching [[Broken Heart]broken] tokens decreases to 11% of your current Affection per [[Broken Heart]broken] token matched.	[[Broken Heart]broken] 토큰을 맞출 때마다 깎이는 호감도가 현재 호감도의 11%로 줄어듭니다.
+The penalty for matching Broken Heart tokens decreases to 11% of your current Affection per Broken Heart token matched.	..깨진 하트 토큰을 매치할 때 받는 패널티가, 매치된 깨진 하트 토큰 개수마다 현재 호감도의 11%로 줄어듭니다.
 Stethoscope	청진기
-The penalty for matching [[Broken Heart]broken] tokens decreases to 10% of your current Affection per [[Broken Heart]broken] token matched.	[[Broken Heart]broken] 토큰을 맞출 때마다 깎이는 애정도가, 이제 매치된 [[Broken Heart]broken] 토큰 하나당 현재 애정도의 10%로 줄어듭니다.
+The penalty for matching Broken Heart tokens decreases to 10% of your current Affection per Broken Heart token matched.	..깨진 하트 토큰을 매치할 때 받는 페널티가, 이제 매치된 깨진 하트 하나당 현재 애정도의 10%로 줄어듭니다.
 Medical Clipboard	의료 차트
-The penalty for matching [[Broken Heart]broken] tokens decreases to 9% of your current Affection per [[Broken Heart]broken] token matched.	[[Broken Heart]broken] 토큰을 매치할 때마다 감성치가 현재 감성치의 9%만큼 감소합니다.
+The penalty for matching Broken Heart tokens decreases to 9% of your current Affection per Broken Heart token matched.	..깨진 하트 토큰을 맞출 때 받는 패널티가 이제 현재 호감도의 9%로 줄어듭니다, 맞춘 깨진 하트 토큰 하나당 적용돼요.
 Medicine Bottle	약병
-The penalty for matching [[Broken Heart]broken] tokens decreases to 8% of your current Affection per [[Broken Heart]broken] token matched.	[[Broken Heart]broken] 토큰을 맞췄을 때 감점이 현재 애정도의 8%로 줄어듭니다. (토큰 하나당 적용됨)
+The penalty for matching Broken Heart tokens decreases to 8% of your current Affection per Broken Heart token matched.	..깨진 하트 토큰을 맞출 때 받는 패널티가, 맞춘 개수마다 현재 호감도의 8%로 줄어듭니다.
 First-Aid Kit	구급상자
-The penalty for matching [[Broken Heart]broken] tokens decreases to 7% of your current Affection per [[Broken Heart]broken] token matched.	[[Broken Heart]broken] 토큰을 맞출 때마다 잃는 호감도가 현재 호감도의 7%로 줄어듭니다.
+The penalty for matching Broken Heart tokens decreases to 7% of your current Affection per Broken Heart token matched.	..깨진 하트 토큰을 맞출 때마다 깎이는 애정도가 현재 애정도의 7%로 감소합니다.
 Nurse Uniform	간호사 유니폼
-The penalty for matching [[Broken Heart]broken] tokens decreases to 6% of your current Affection per [[Broken Heart]broken] token matched.	[[Broken Heart]broken] 토큰을 맞출 때마다 현재 호감도의 6%만큼만 감소하게 됩니다.
+The penalty for matching Broken Heart tokens decreases to 6% of your current Affection per Broken Heart token matched.	..깨진 하트 토큰을 맞출 때 받는 패널티가 한 개당 현재 호감도의 6%로 줄어듭니다.
 Snake Flute	뱀 피리
-Power tokens multiply the Affection earned from a match by x1.75.	파워 토큰은 매치에서 얻는 호감을 x1.75배로 늘려줘.
+Power tokens multiply the Affection earned from a match by x1.75.	..파워 토큰은 매치에서 얻는 호감을 x1.75배로 늘려줘.
 Jeweled Turban	보석 터번
-Power tokens multiply the Affection earned from a match by x2.	파워 토큰은 매치에서 얻는 호감도를 2배로 늘려줘.
+Power tokens multiply the Affection earned from a match by x2.	..파워 토큰은 매치에서 얻는 호감도를 2배로 늘려줘.
 Feather Fan	깃털 부채
-Power tokens multiply the Affection earned from a match by x2.25.	파워 토큰은 매치로 얻는 호감도를 2.25배로 늘려줘.
+Power tokens multiply the Affection earned from a match by x2.25.	..파워 토큰은 매치로 얻는 호감도를 2.25배로 늘려줘.
 Scarab Pendant	스카라브 펜던트
-Power tokens multiply the Affection earned from a match by x2.5.	파워 토큰은 매치에서 얻는 호감도를 2.5배로 늘려줘.
+Power tokens multiply the Affection earned from a match by x2.5.	..파워 토큰은 매치에서 얻는 호감도를 2.5배로 늘려줘.
 Antique Vase	골동품 화병
-Power tokens multiply the Affection earned from a match by x2.75.	파워 토큰은 매치에서 얻는 애정도를 2.75배로 증가시켜줘.
+Power tokens multiply the Affection earned from a match by x2.75.	..파워 토큰은 매치에서 얻는 애정도를 2.75배로 증가시켜줘.
 Golden Cat Statue	황금 고양이 동상
-Power tokens multiply the Affection earned from a match by x3.	파워 토큰은 매치에서 얻는 호감도를 3배로 늘려줘.
+Power tokens multiply the Affection earned from a match by x3.	..파워 토큰은 매치에서 얻는 호감도를 3배로 늘려줘.
 Poker Chips	포커 칩
-The chance of generating a power token increases to 30% for 4-of-a-kind matches and 80% for 5-of-a-kind matches.	4개가 한 줄로 맞춰지면 파워 토큰 생성 확률이 30%로 올라가고,\n5개가 한 줄로 맞춰지면 무려 80%까지 증가해.
+The chance of generating a power token increases to 30% for 4-of-a-kind matches and 80% for 5-of-a-kind matches.	..4개가 한 줄로 맞춰지면 파워 토큰 생성 확률이 30%로 올라가고,\n5개가 한 줄로 맞춰지면 무려 80%까지 증가해.
 Lucky Dice	럭키 다이스
-The chance of generating a power token increases to 40% for 4-of-a-kind matches and 90% for 5-of-a-kind matches.	4개가 한 줄로 맞추면 파워 토큰 생성 확률이 40%로 올라가고,\n5개가 한 줄로 맞추면 무려 90%까지 올라가!
+The chance of generating a power token increases to 40% for 4-of-a-kind matches and 90% for 5-of-a-kind matches.	..4개가 한 줄로 맞추면 파워 토큰 생성 확률이 40%로 올라가고,\n5개가 한 줄로 맞추면 무려 90%까지 올라가!
 Playing Cards	카드 놀이
-The chance of generating a power token increases to 50% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	4개짜리 같은 패를 맞추면 파워 토큰이 나올 확률이 50%로 올라가고, 5개짜리 같은 패를 맞추면 100%로 확정 생성돼.
+The chance of generating a power token increases to 50% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	..4개짜리 같은 패를 맞추면 파워 토큰이 나올 확률이 50%로 올라가고, 5개짜리 같은 패를 맞추면 100%로 확정 생성돼.
 Dealer's Cap	딜러의 캡
-The chance of generating a power token increases to 5% for 3-of-a-kind matches, 60% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	3개가 같은 조합에서는 파워 토큰 생성 확률이 5%로 올라가고,\n4개가 같은 조합에서는 60%,\n5개가 같은 조합에서는 100%야.
+The chance of generating a power token increases to 5% for 3-of-a-kind matches, 60% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	..3개가 같은 조합에서는 파워 토큰 생성 확률이 5%로 올라가고, 4개가 같은 조합에서는 60%,\n5개가 같은 조합에서는 100%야.
 Roulette Wheel	룰렛 휠
-The chance of generating a power token increases to 10% for 3-of-a-kind matches, 70% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	3개가 맞으면 파워 토큰 생성 확률이 10%로 올라가고,\n4개가 맞으면 70%, 5개가 맞으면 100%야.
+The chance of generating a power token increases to 10% for 3-of-a-kind matches, 70% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	..3개가 맞으면 파워 토큰 생성 확률이 10%로 올라가고, 4개가 맞으면 70%, 5개가 맞으면 100%야.
 Slot Machine	슬롯머신
-The chance of generating a power token increases to 20% for 3-of-a-kind matches, 80% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	"3개짜리 조합에선 파워 토큰이 생성될 확률이 20%로,
-4개짜리 조합에는 80%, 5개짜리 조합이면 무조건 100%로 올라가."
+The chance of generating a power token increases to 20% for 3-of-a-kind matches, 80% for 4-of-a-kind matches and 100% for 5-of-a-kind matches.	..3개짜리 조합에선 파워 토큰이 생성될 확률이 20%로, 4개짜리 조합에는 80%, 5개짜리 조합이면 무조건 100%로 올라가.
 Stuffed Bear	곰인형
-Convert all [[Broken Heart]broken] tokens into [[Passion]heart] tokens.	..모든 [[Broken Heart]broken] 토큰을 [[Passion]heart] 토큰으로 변환해.
+Convert all Broken Heart tokens into Passion tokens.	..모든 깨진 하트 토큰을 열정 토큰으로 변환하세요.
 Kyu Plushie	큐 인형
-Doubles the current [[Passion]heart] Level.	..현재 [[Passion]heart] 레벨을 두 배로 만듭니다.
+Doubles the current Passion Level.	..현재의 열정 레벨을 두 배로 만듭니다.
 Beer	맥주
 A classic light beer; just to get loosened up a little bit.	..가볍게 마시는 라이트 맥주 한 잔. 분위기 좀 풀려고.
 Sake	사케
@@ -1998,7 +2031,7 @@ Reading material that you only look at for the interesting articles.	..재밌는
 Weird Thing	이상한 거
 A strange device that appears to have sand stuck inside of it...	..안에 모래가 낀 것처럼 보이는 이상한 기계야...
 Love Potion	러브 포션
-Give this to a girl and you'll earn double Affection, [[Passion]heart], [[Moves]joy] and [[Sentiment]sentiment] during dates. In addition, matching [[Broken Hearts]broken] won't count against you.	이걸 여자한테 주면 데이트할 때 애정, [[Passion]heart], [[Moves]joy], [[Sentiment]sentiment]이 두 배로 올라가. 게다가 [[Broken Hearts]broken]을 맞춰도 페널티가 없어.
+Give this to a girl and you'll earn double Affection, Passion, Moves and Sentiment during dates. In addition, matching Broken Hearts won't count against you.	..이걸 여자한테 주면 데이트할 때 애정, 열정, 이동, 감정이 모두 두 배로 올라가. 게다가 깨진 하트 맞춰도 불이익이 없어.
 Tiffany's Panties	티파니의 팬티
 The panties that Tiffany was wearing the first night she stayed over.	..티파니가 첫날 밤에 우리 집에서 자면서 입고 있었던 팬티.
 Aiko's Panties	아이코의 팬티
@@ -2024,211 +2057,159 @@ The panties that Celeste was wearing the first night she stayed over.	..셀레�
 Venus' Panties	비너스의 팬티
 The panties that Venus was wearing the first night she stayed over.	..비너스가 첫날 밤에 우리 집에 묵으면서 입었던 팬티.
 Double Hair Bow	더블 헤어 리본
-A unique gift for a cheerleader. Earn an additional +50% [[Hunie]hunie] while talking with her.	..치어리더만을 위한 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 50% 더 받아!
+A unique gift for a cheerleader. Earn an additional +50% Hunie while talking with her.	..치어리더에게 딱 맞는 특별한 선물. 그녀와 대화할 때 헌니 추가 +50% 획득.
 Glitter Bottles	반짝이 병
-An exclusive gift for a cheerleader. Earn an additional +50% [[Hunie]hunie] while talking with her.	..치어리더 전용 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exclusive gift for a cheerleader. Earn an additional +50% Hunie while talking with her.	..치어리더만을 위한 특별한 선물. 그녀와 대화할 때 헌이를 추가로 +50% 더 획득합니다.
 Twirly Baton	휘도는 바통
-A special gift for a cheerleader. Earn an additional +50% [[Hunie]hunie] while talking with her.	..치어리더를 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A special gift for a cheerleader. Earn an additional +50% Hunie while talking with her.	..치어리더를 위한 특별한 선물. 그녀와 대화할 때 허니 추가 +50% 획득.
 Megaphone	메가폰
-An exceptional gift for a cheerleader. Earn an additional +50% [[Hunie]hunie] while talking with her.	..치어리더에게 딱 어울리는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exceptional gift for a cheerleader. Earn an additional +50% Hunie while talking with her.	..치어리더에게 딱 맞는 특별한 선물. 그녀와 대화할 때 헌이를 추가로 +50% 더 획득합니다.
 Pom-poms	폼폼
-A one-of-a-kind gift for a cheerleader. Earn an additional +50% [[Hunie]hunie] while talking with her.	..치어리더에게 딱 어울리는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A one-of-a-kind gift for a cheerleader. Earn an additional +50% Hunie while talking with her.	..치어리더만을 위한 특별한 선물이야. 그녀와 대화할 때 추가로 헌이 +50%를 더 얻을 수 있어.
 Cheerleading Uniform	치어리딩 유니폼
-The perfect gift for a cheerleader. Earn an additional +50% [[Hunie]hunie] while talking with her.	..치어리더에게 완벽한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+The perfect gift for a cheerleader. Earn an additional +50% Hunie while talking with her.	..치어리더에게 딱 맞는 선물이야. 그녀와 대화할 때 추가로 하니를 50% 더 받을 수 있어.
 Chopsticks	젓가락
-A unique gift for a japanese woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..일본 여성에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A unique gift for a japanese woman. Earn an additional +50% Hunie while talking with her.	..일본 여성에게 주는 특별한 선물이야. 그녀와 대화할 때 추가로 허니를 +50% 더 얻을 수 있어.
 Riceballs	주먹밥
-An exclusive gift for a japanese woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..일본 여성 전용 선물. 그녀와 대화할 때 [[Hunie]hunie]] 추가 +50% 획득.
+An exclusive gift for a japanese woman. Earn an additional +50% Hunie while talking with her.	..일본 여성 전용 선물. 그녀와 대화할 때 추가로 허니 +50% 획득.
 Bonsai Tree	분재 나무
-A special gift for a japanese woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..일본 여성에게 주는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 50% 더 획득.
+A special gift for a japanese woman. Earn an additional +50% Hunie while talking with her.	..일본 여성에게 주는 특별한 선물. 그녀와 대화할 때 Hunie를 추가로 +50% 더 획득할 수 있어.
 Wooden Sandals	나막신
-An exceptional gift for a japanese woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..일본 여자에게 주기에 딱 좋은 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 50% 더 획득해.
+An exceptional gift for a japanese woman. Earn an additional +50% Hunie while talking with her.	..일본 여성에게 딱 맞는 특별한 선물. 그녀와 대화할 때 추가로 헌이를 +50% 더 획득해요.
 Kimono	기모노
-A one-of-a-kind gift for a japanese woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..일본 여성에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 얻을 수 있어.
+A one-of-a-kind gift for a japanese woman. Earn an additional +50% Hunie while talking with her.	..일본 여성에게 주는 특별한 선물. 그녀와 대화할 때 얻는 허니가 추가로 +50% 증가해.
 Samurai Helmet	사무라이 투구
-The perfect gift for a japanese woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..일본 여성에게 딱 맞는 완벽한 선물. 그녀와 대화할 때 추가로 [[Hunie]hunie]를 50% 더 획득할 수 있어.
+The perfect gift for a japanese woman. Earn an additional +50% Hunie while talking with her.	..일본 여성에게 딱 맞는 완벽한 선물. 그녀와 대화할 때 헌이를 추가로 +50% 더 획득합니다.
 Maracas	마라카스
-A unique gift for a latina. Earn an additional +50% [[Hunie]hunie] while talking with her.	..라티나에게 딱 맞는 특별한 선물. 그녀와 대화할 때 추가로 [[Hunie]hunie] +50%를 더 획득합니다.
+A unique gift for a latina. Earn an additional +50% Hunie while talking with her.	..라티나에게 딱 어울리는 특별한 선물. 그녀와 대화할 때 Hunie를 추가로 +50% 더 획득해.
 Sombrero	솜브레로
-An exclusive gift for a latina. Earn an additional +50% [[Hunie]hunie] while talking with her.	..라티나 전용 특별 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exclusive gift for a latina. Earn an additional +50% Hunie while talking with her.	..라티나만을 위한 특별한 선물. 그녀와 대화할 때 Hunie를 추가로 50% 더 획득합니다.
 Poncho	판초
-A special gift for a latina. Earn an additional +50% [[Hunie]hunie] while talking with her.	..라티나에게 주는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 50% 더 획득해.
+A special gift for a latina. Earn an additional +50% Hunie while talking with her.	..라티나에게 주는 특별한 선물이야. 그녀와 대화할 때 Hunie를 추가로 50% 더 얻을 수 있어.
 Luchador Mask	루차도르 마스크
-An exceptional gift for a latina. Earn an additional +50% [[Hunie]hunie] while talking with her.	..라티나에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exceptional gift for a latina. Earn an additional +50% Hunie while talking with her.	..라티나에게 주는 특별한 선물. 그녀와 대화할 때 허니를 추가로 +50% 더 얻을 수 있어.
 Pinata	피냐타
-A one-of-a-kind gift for a latina. Earn an additional +50% [[Hunie]hunie] while talking with her.	..라티나에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 50% 더 얻을 수 있어.
+A one-of-a-kind gift for a latina. Earn an additional +50% Hunie while talking with her.	..라티나에게 딱 어울리는 특별한 선물이야. 그녀와 대화할 때 획득하는 후니가 추가로 +50% 늘어나.
 Vinuela	비누엘라
-The perfect gift for a latina. Earn an additional +50% [[Hunie]hunie] while talking with her.	..라티나에게 딱 맞는 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 얻을 수 있어.
+The perfect gift for a latina. Earn an additional +50% Hunie while talking with her.	..라티나에게 딱 맞는 선물이야. 그녀와 대화할 때 헌이를 추가로 +50% 더 얻을 수 있어.
 Cigarette Pack	담배 갑
-A unique gift for a party girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..파티걸에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A unique gift for a party girl. Earn an additional +50% Hunie while talking with her.	..파티걸에게 딱 어울리는 특별한 선물. 그녀와 대화할 때 헌이 수입이 추가로 +50% 증가합니다.
 Lighter	라이터
-An exclusive gift for a party girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..파티걸만을 위한 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 얻을 수 있어.
+An exclusive gift for a party girl. Earn an additional +50% Hunie while talking with her.	..파티걸만을 위한 특별한 선물. 그녀와 대화할 때 Hunie를 추가로 +50% 더 획득합니다.
 Glass Pipe	유리 파이프
-A special gift for a party girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..파티걸을 위한 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50%를 얻을 수 있어.
+A special gift for a party girl. Earn an additional +50% Hunie while talking with her.	..파티걸을 위한 특별한 선물이야. 그녀와 대화할 때 헌이를 추가로 +50% 더 얻을 수 있어.
 Glass Bong	글라스 봉
-An exceptional gift for a party girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..파티걸에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exceptional gift for a party girl. Earn an additional +50% Hunie while talking with her.	..파티걸에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 Hunie를 추가로 +50% 더 획득해.
 Blotter Tabs	블로터 탭
-A one-of-a-kind gift for a party girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..파티걸에게 딱 맞는 유일무이한 선물이야. 그녀와 대화하면 [[Hunie]hunie] 보너스 +50% 추가 획득.
+A one-of-a-kind gift for a party girl. Earn an additional +50% Hunie while talking with her.	..파티걸에게 딱 어울리는 유니크한 선물. 그녀와 대화할 때 헌이를 추가로 +50% 더 얻을 수 있어.
 Happy Pills	해피 필즈
-The perfect gift for a party girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..파티 걸에게 딱 어울리는 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+The perfect gift for a party girl. Earn an additional +50% Hunie while talking with her.	..파티걸에게 딱 맞는 선물이야. 그녀와 대화할 때 Hunie를 추가로 +50% 더 얻어.
 Wing Pin	윙 핀
-A unique gift for an independant woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..자립심 강한 여성에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득할 수 있어.
+A unique gift for an independant woman. Earn an additional +50% Hunie while talking with her.	..자립적인 여자에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 추가로 헌이 50% 더 얻을 수 있어.
 Compass	나침반
-An exclusive gift for an independant woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..자립심 강한 여성만을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 획득 +50%!
+An exclusive gift for an independant woman. Earn an additional +50% Hunie while talking with her.	..자립적인 여성만을 위한 특별 선물. 그녀와 대화할 때 추가로 Hunie를 +50% 더 획득합니다.
 Pilot's Cap	파일럿 모자
-A special gift for an independant woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..자립적인 여성을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득합니다.
+A special gift for an independant woman. Earn an additional +50% Hunie while talking with her.	..자립심 강한 여자에게 주는 특별한 선물이야. 그녀와 대화할 때 헌이를 추가로 +50% 더 얻을 수 있어.
 Travel Suitcase	여행용 캐리어
-An exceptional gift for an independant woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..자립적인 여성에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 50% 더 획득해.
+An exceptional gift for an independant woman. Earn an additional +50% Hunie while talking with her.	..자립심 강한 여성에게 딱 맞는 특별한 선물. 그녀와 대화할 때 얻는 허니가 추가로 +50% 상승합니다.
 Rolling Luggage	캐리어
-A one-of-a-kind gift for an independant woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..독립적인 여성을 위한 유니크한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A one-of-a-kind gift for an independant woman. Earn an additional +50% Hunie while talking with her.	..자립적인 여성만을 위한 특별한 선물이야. 그녀와 대화할 때 Hunie를 추가로 50% 더 얻을 수 있어.
 High Def Camera	고화질 카메라
-The perfect gift for an independant woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..독립적인 여성에게 딱 맞는 선물이야. 그녀와 대화할 때 [[Hunie]hunie]] 추가로 +50% 더 얻어.
+The perfect gift for an independant woman. Earn an additional +50% Hunie while talking with her.	..자립심 강한 여자에게 딱 맞는 선물이야. 그녀와 대화할 때 추가로 헌이를 50% 더 벌 수 있어.
 Retro Controller	레트로 컨트롤러
-A unique gift for a nerdy girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..너드한테 딱 맞는 특별한 선물. 그녀랑 대화할 때 [[Hunie]hunie] 추가 50% 더 획득.
+A unique gift for a nerdy girl. Earn an additional +50% Hunie while talking with her.	..너드 취향의 특별한 선물이야. 그녀와 대화할 때 Hunie를 추가로 +50% 더 얻어.
 Arcade Joystick	아케이드 조이스틱
-An exclusive gift for a nerdy girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..너드만을 위한 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 얻어.
+An exclusive gift for a nerdy girl. Earn an additional +50% Hunie while talking with her.	..너드 소녀를 위한 특별한 선물. 그녀와 대화할 때 획득하는 허니가 추가로 +50% 늘어나요.
 Zappy Gun	짜릿건
-A special gift for a nerdy girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..너드 여자애에게 주는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 벌 수 있어.
+A special gift for a nerdy girl. Earn an additional +50% Hunie while talking with her.	..너드 여자애에게 주는 특별한 선물이야. 그녀랑 대화할 때 헌이를 추가로 +50% 더 벌 수 있어.
 Gamer Glove	게이머 장갑
-An exceptional gift for a nerdy girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..너드 여자한테 딱 맞는 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 받아.
+An exceptional gift for a nerdy girl. Earn an additional +50% Hunie while talking with her.	..너드 여자에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 Hunie를 추가로 +50% 더 획득해.
 Handheld Game	휴대용 게임
-A one-of-a-kind gift for a nerdy girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..너드한 여자애에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 얻어.
+A one-of-a-kind gift for a nerdy girl. Earn an additional +50% Hunie while talking with her.	..너드 여자에게 딱 맞는 유일무이한 선물. 그녀와 대화할 때 Hunie를 추가로 +50% 더 획득해.
 Arcade Cabinet	아케이드 게임기
-The perfect gift for a nerdy girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..너드 여자에게 딱 맞는 완벽한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 50% 더 얻을 수 있어.
+The perfect gift for a nerdy girl. Earn an additional +50% Hunie while talking with her.	..너드 여자에게 딱 맞는 완벽한 선물이야. 그녀와 대화할 때 추가로 Hunie를 +50% 더 얻을 수 있어.
 Mistletoe	겨우살이
-A unique gift for a mature woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..성숙한 여성에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A unique gift for a mature woman. Earn an additional +50% Hunie while talking with her.	..성숙한 여성에게 어울리는 특별한 선물. 그녀와 대화할 때 획득하는 허니가 50% 추가돼.
 Gingerbread Man	진저브레드맨
-An exclusive gift for a mature woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..성숙한 여성만을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exclusive gift for a mature woman. Earn an additional +50% Hunie while talking with her.	..성숙한 여성만을 위한 특별한 선물이야. 그녀와 대화할 때 추가로 Hunie를 +50% 더 얻어.
 Round Ornament	둥근 장식
-A special gift for a mature woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..성숙한 여성을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득합니다.
+A special gift for a mature woman. Earn an additional +50% Hunie while talking with her.	..성숙한 여성에게 주는 특별한 선물. 그녀와 대화할 때 헌이를 추가로 +50% 더 얻어요.
 Ribbon Wreath	리본 화환
-An exceptional gift for a mature woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..성숙한 여성에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 얻어.
+An exceptional gift for a mature woman. Earn an additional +50% Hunie while talking with her.	..성숙한 여성에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 Hunie를 추가로 +50% 더 얻을 수 있어.
 Fuzzy Stocking	포근한 스타킹
-A one-of-a-kind gift for a mature woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..성숙한 여성에게 딱 맞는 유일무이한 선물. 그녀와 대화할 때 [[Hunie]hunie] 보상을 추가로 +50% 더 얻어요.
+A one-of-a-kind gift for a mature woman. Earn an additional +50% Hunie while talking with her.	..성숙한 여성을 위한 특별한 선물. 그녀와 대화할 때 추가로 Hunie +50% 획득.
 Jolly Old Cap	즐거운 올드 캡
-The perfect gift for a mature woman. Earn an additional +50% [[Hunie]hunie] while talking with her.	..성숙한 여성에게 딱 맞는 완벽한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+The perfect gift for a mature woman. Earn an additional +50% Hunie while talking with her.	..성숙한 여성에게 딱 맞는 선물. 그녀와 대화할 때 획득하는 허니가 50% 추가로 증가합니다.
 Acorns	도토리
-A unique gift for a spiritual girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..영적인 여자에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 50% 더 얻어.
+A unique gift for a spiritual girl. Earn an additional +50% Hunie while talking with her.	..영적인 여자에게 딱 맞는 특별한 선물. 그녀와 대화할 때 훈이를 추가로 +50% 더 획득할 수 있어.
 Maple Leaf	단풍잎
-An exclusive gift for a spiritual girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..영적인 여자에게만 주는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exclusive gift for a spiritual girl. Earn an additional +50% Hunie while talking with her.	..영적인 소녀를 위한 특별한 선물이야. 그녀와 얘기할 때 획득하는 허니가 +50% 추가돼.
 Pinecone	솔방울
-A special gift for a spiritual girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..영적인 여자에게 주는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 얻을 수 있어.
+A special gift for a spiritual girl. Earn an additional +50% Hunie while talking with her.	..영적인 여자에게 주는 특별한 선물이야. 대화할 때 Hunie를 추가로 50% 더 얻을 수 있어.
 Mushrooms	버섯
-An exceptional gift for a spiritual girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..영적인 여자에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exceptional gift for a spiritual girl. Earn an additional +50% Hunie while talking with her.	..영적으로 민감한 여자에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 Hunie 추가 50% 획득.
 Seashell	조개껍데기
-A one-of-a-kind gift for a spiritual girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..영적인 소녀에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 보상을 추가로 +50% 더 받을 수 있어.
+A one-of-a-kind gift for a spiritual girl. Earn an additional +50% Hunie while talking with her.	..영적인 여자에게 딱 맞는 특별한 선물. 그녀와 대화할 때 추가로 헌이 +50%를 더 얻을 수 있어.
 Four Leaf Clover	네잎클로버
-The perfect gift for a spiritual girl. Earn an additional +50% [[Hunie]hunie] while talking with her.	..영적인 여자에게 딱 맞는 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 보상 +50% 추가 획득.
+The perfect gift for a spiritual girl. Earn an additional +50% Hunie while talking with her.	..영적인 여자에게 완벽한 선물이야. 그녀와 대화할 때 헌이 보상이 추가로 50% 더 올라.
 Endurance Ring	인내의 반지
-A unique gift for a nymphomaniac. Earn an additional +50% [[Hunie]hunie] while talking with her.	..음란증 환자를 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A unique gift for a nymphomaniac. Earn an additional +50% Hunie while talking with her.	..음란한 여자에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 추가로 허니를 +50% 더 얻을 수 있어.
 Pocket Vibe	포켓 바이브
-An exclusive gift for a nymphomaniac. Earn an additional +50% [[Hunie]hunie] while talking with her.	..님포마니아를 위한 특별 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 얻어.
+An exclusive gift for a nymphomaniac. Earn an additional +50% Hunie while talking with her.	..음란한 여자 전용 특별 선물. 그녀와 대화할 때 추가로 Hunie +50%를 더 얻을 수 있어.
 Fairy's Tail	요정의 꼬리
-A special gift for a nymphomaniac. Earn an additional +50% [[Hunie]hunie] while talking with her.	..음란증 걸린 여자에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A special gift for a nymphomaniac. Earn an additional +50% Hunie while talking with her.	..음란한 그녀를 위한 특별한 선물. 대화할 때 추가로 Hunie를 50% 더 얻을 수 있어.
 Bliss Beads	블리스 비즈
-An exceptional gift for a nymphomaniac. Earn an additional +50% [[Hunie]hunie] while talking with her.	..음란한 그녀에게 딱 어울리는 최고의 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exceptional gift for a nymphomaniac. Earn an additional +50% Hunie while talking with her.	..음란한 여자에게 딱 맞는 특별한 선물. 그녀와 대화할 때 허니를 추가로 +50% 더 얻을 수 있어.
 Magic Wand	마법 지팡이
-A one-of-a-kind gift for a nymphomaniac. Earn an additional +50% [[Hunie]hunie] while talking with her.	..색욕 강한 그녀에게 딱 맞는 유일무이한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 보너스 +50% 획득.
+A one-of-a-kind gift for a nymphomaniac. Earn an additional +50% Hunie while talking with her.	..음란한 그녀만을 위한 특별한 선물. 대화할 때 Hunie를 추가로 +50% 더 얻을 수 있어.
 Royal Scepter	왕홀
-The perfect gift for a nymphomaniac. Earn an additional +50% [[Hunie]hunie] while talking with her.	..음란증인 그녀에게 딱 맞는 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 획득.
+The perfect gift for a nymphomaniac. Earn an additional +50% Hunie while talking with her.	..음란한 여자에게 딱 맞는 선물이야. 그녀와 대화할 때 허니 추가 +50% 획득.
 Ball of Yarn	실타래
-A unique gift for a cat lady. Earn an additional +50% [[Hunie]hunie] while talking with her.	..고양이 집사에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 획득.
+A unique gift for a cat lady. Earn an additional +50% Hunie while talking with her.	..고양이에게 딱 맞는 특별한 선물. 그녀와 대화할 때 허니를 추가로 +50% 더 획득할 수 있어.
 Lattice Ball	래티스볼
-An exclusive gift for a cat lady. Earn an additional +50% [[Hunie]hunie] while talking with her.	 ..고양이 집사만을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득합니다.
+An exclusive gift for a cat lady. Earn an additional +50% Hunie while talking with her.	..고양이를 위한 특별 선물. 그녀와 대화할 때 추가로 Hunie를 +50% 더 획득해요.
 Squeaky Mouse	삑삑이 마우스
-A special gift for a cat lady. Earn an additional +50% [[Hunie]hunie] while talking with her.	..고양이 집사에게 딱 맞는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A special gift for a cat lady. Earn an additional +50% Hunie while talking with her.	..고양이에게 주는 특별한 선물. 그녀랑 대화할 때 얻는 허니가 50% 더 늘어나.
 Feather Pole	깃털 막대
-An exceptional gift for a cat lady. Earn an additional +50% [[Hunie]hunie] while talking with her.	..고양이 집사에게 딱 맞는 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+An exceptional gift for a cat lady. Earn an additional +50% Hunie while talking with her.	..고양이에게 딱 맞는 특별한 선물이야. 그녀와 대화할 때 헌이가 추가로 +50% 더 쌓여.
 Laser Pointer	레이저 포인터
-A one-of-a-kind gift for a cat lady. Earn an additional +50% [[Hunie]hunie] while talking with her.	..고양이 집사에게 딱 맞는 유일무이한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 얻을 수 있어.
+A one-of-a-kind gift for a cat lady. Earn an additional +50% Hunie while talking with her.	..고양이에게 딱 맞는 선물이야. 그녀와 대화할 때마다 Hunie가 50% 더 추가로 쌓여.
 Scratch Post	스크래치 포스트
-The perfect gift for a cat lady. Earn an additional +50% [[Hunie]hunie] while talking with her.	..고양이 집사에게 딱 맞는 선물이야. 그녀와 대화할 때 추가로 [[Hunie]hunie] +50%를 더 얻어.
+The perfect gift for a cat lady. Earn an additional +50% Hunie while talking with her.	..고양이에게 딱 맞는 선물이야. 그녀와 대화할 때 Hunie를 추가로 +50% 더 얻어.
 Model Rocket	모형 로켓
-A unique gift for an extraterrestrial. Earn an additional +50% [[Hunie]hunie] while talking with her.	..외계인을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]가 추가로 +50% 더 획득돼.
+A unique gift for an extraterrestrial. Earn an additional +50% Hunie while talking with her.	..외계인에게 줄 독특한 선물. 그녀와 대화할 때 헌이 추가로 +50% 더 획득.
 Miniature UFO	미니어처 UFO
-An exclusive gift for an extraterrestrial. Earn an additional +50% [[Hunie]hunie] while talking with her.	..외계인을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득합니다.
+An exclusive gift for an extraterrestrial. Earn an additional +50% Hunie while talking with her.	..외계인에게만 주어지는 특별한 선물. 그녀와 대화할 때 훈이 추가 +50% 획득.
 Armillary Sphere	혼천의
-A special gift for an extraterrestrial. Earn an additional +50% [[Hunie]hunie] while talking with her.	..외계인을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득합니다.
+A special gift for an extraterrestrial. Earn an additional +50% Hunie while talking with her.	..외계인에게 주는 특별한 선물이야. 그녀와 대화할 때 허니를 추가로 +50% 더 얻어.
 Telescope	망원경
-An exceptional gift for an extraterrestrial. Earn an additional +50% [[Hunie]hunie] while talking with her.	..외계인에게 어울리는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 획득.
+An exceptional gift for an extraterrestrial. Earn an additional +50% Hunie while talking with her.	..외계인에게 주는 특별한 선물이야. 그녀와 대화할 때 추가로 허니 +50%를 얻어.
 Space Helmet	우주 헬멧
-A one-of-a-kind gift for an extraterrestrial. Earn an additional +50% [[Hunie]hunie] while talking with her.	..외계인에게 딱 맞는 유일무이한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 획득.
+A one-of-a-kind gift for an extraterrestrial. Earn an additional +50% Hunie while talking with her.	..외계인을 위한 유일무이한 선물. 그녀와 대화할 때 허니 추가 +50% 획득.
 Moonrock	문락
-The perfect gift for an extraterrestrial. Earn an additional +50% [[Hunie]hunie] while talking with her.	..외계인에게 딱 맞는 완벽한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 얻어.
+The perfect gift for an extraterrestrial. Earn an additional +50% Hunie while talking with her.	..외계인에게 딱 맞는 완벽한 선물. 그녀와 대화할 때 허니가 추가로 +50% 더 들어온다.
 Sapphire	사파이어
-A unique gift for a goddess. Earn an additional +50% [[Hunie]hunie] while talking with her.	..여신에게만 어울리는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie] 추가 +50% 획득.
+A unique gift for a goddess. Earn an additional +50% Hunie while talking with her.	..여신에게만 줄 수 있는 특별한 선물이야. 그녀와 대화할 때 헌이를 추가로 50% 더 얻을 수 있어.
 Ruby	루비
-An exclusive gift for a goddess. Earn an additional +50% [[Hunie]hunie] while talking with her.	..여신에게만 드리는 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득합니다.
+An exclusive gift for a goddess. Earn an additional +50% Hunie while talking with her.	..여신님 전용 선물. 그녀와 대화할 때 추가로 Hunie를 +50% 더 획득해.
 Emerald	에메랄드
-A special gift for a goddess. Earn an additional +50% [[Hunie]hunie] while talking with her.	..여신님을 위한 특별한 선물. 그녀와 대화할 때 [[Hunie]hunie]를 추가로 +50% 더 획득합니다.
+A special gift for a goddess. Earn an additional +50% Hunie while talking with her.	..여신님을 위한 특별한 선물. 그녀와 대화할 때 헌이를 추가로 +50% 더 얻을 수 있어.
 Topaz	토파즈
-An exceptional gift for a goddess. Earn an additional +50% [[Hunie]hunie] while talking with her.	..여신에게 주는 특별한 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 보상 +50% 추가 획득.
+An exceptional gift for a goddess. Earn an additional +50% Hunie while talking with her.	..여신에게 주는 특별한 선물. 그녀와 대화할 때 허니를 추가로 +50% 더 얻어.
 Amethyst	자수정
-A one-of-a-kind gift for a goddess. Earn an additional +50% [[Hunie]hunie] while talking with her.	..여신님을 위한 단 하나뿐인 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가 획득률 +50%.
+A one-of-a-kind gift for a goddess. Earn an additional +50% Hunie while talking with her.	..여신만을 위한 특별한 선물. 그녀와 대화할 때 추가로 허니를 +50% 더 얻어요.
 Diamond	다이아몬드
-The perfect gift for a goddess. Earn an additional +50% [[Hunie]hunie] while talking with her.	..여신에게 딱 맞는 선물이야. 그녀와 대화할 때 [[Hunie]hunie] 추가로 +50% 더 받는다.
-Garden	정원
-Carnival	카니발
-Casino	카지노
-Restaurant	레스토랑
-Market	마켓
-Trail	단서
-Rink	링크
-Lounge	라운지
-Overlook	간과하다
-Courts	코트
-Park	공원
-Bedroom	침실
-Bar	바
-Beach	해변
-Cafe	카페
-Campus	캠퍼스
-Gym	헬스장
-Mall	몰
-Nightclub	나이트클럽
-Broken Heart Token	깨진 하트 토큰
-Passion Token	열정 토큰
-Romance Token	로맨스 토큰
-Sentiment Token	감성 토큰
-Sexuality Token	성욕 토큰
-Flirtation	작업걸기
-Passion	열정
-Romance	로맨스
-Sensitivity	민감도
-Sexuality	성욕
-Talent	재능
-Sun	일
-Night	밤
-Kyu	큐
-Mon 01	월 01
-8,13	
-2,8,13	
-8,17	
-4,17	
-3,4	
-6,5	
-2,0	
-62	
-29	
-14	
-30%	
-20%	
-10%	
-Female	여자
-Male	남자
-Easy	쉬움
-Normal	보통
-Hard	어려움
+The perfect gift for a goddess. Earn an additional +50% Hunie while talking with her.	..여신에게 딱 맞는 선물이야. 그녀와 대화할 때 Hunie를 추가로 +50% 더 획득해.
 Hoop Earrings	후프 귀걸이
-+1 [[Move]joy] for every 2 [[Broken Heart]broken] tokens on the grid.	..그리드에 있는 [[Broken Heart]broken] 토큰 2개마다 [[Move]joy] 1개씩 추가.
++1 Move for every 2 Broken Heart tokens on the grid.	..그리드에 깨진 하트 토큰 2개마다 이동 +1.
 Gold Earrings	금 귀걸이
-+1 [[Move]joy] for every 2 [[Joy]joy] tokens on the grid.	..그리드에 [[Joy]joy] 토큰이 2개 있을 때마다 [[Move]joy]가 +1씩 증가합니다.
++1 Move for every 2 Joy tokens on the grid.	..그리드에 있는 즐거움 토큰 2개마다 한 번씩 추가로 이동할 수 있어.
 Heart Necklace	하트 목걸이
-Drops the [[Passion]heart] Level back to zero and gives +2% of total Affection goal for each [[Passion]heart] stage lost.	[[Passion]heart] 레벨을 0으로 초기화하고, 잃어버린 [[Passion]heart] 단계마다 총 호감도 목표의 +2%를 추가로 획득합니다.
+Drops the Passion Level back to zero and gives +2% of total Affection goal for each Passion stage lost.	..열정 단계가 0으로 떨어지면서, 잃은 열정 단계마다 전체 호감도 목표의 +2%를 추가로 얻어요.
 Pearl Necklace	진주 목걸이
-Drains your [[Sentiment]sentiment] and gives +1% of total Affection goal for each 1 [[Sentiment]sentiment] drained.	[[Sentiment]sentiment]을 소모하고, 소모된 [[Sentiment]sentiment] 1당 전체 호감도 목표의 +1%를 획득합니다.
+Drains your Sentiment and gives +1% of total Affection goal for each 1 Sentiment drained.	..감정 포인트를 소모해서 1 감정당 전체 호감도 목표의 +1%를 얻습니다.
 Silver Ring	은반지
-Consume 10 random tokens on the grid. [[Broken Heart]broken] and [[Joy]joy] tokens excluded.	..그리드에서 무작위 토큰 10개를 소모하세요. [[Broken Heart]broken]랑 [[Joy]joy] 토큰은 제외됩니다.
+Consume 10 random tokens on the grid. Broken Heart and Joy tokens excluded.	..그리드에서 무작위 토큰 10개를 소모합니다. 상심 토큰과 즐거움 토큰은 제외됩니다.
 Lovely Ring	러블리 링
 Consume all the power tokens on the grid.	..그리드에 있는 모든 파워 토큰을 소모해.
 Nail Polish	매니큐어
@@ -2236,59 +2217,59 @@ Upgrade 3 random Affection tokens to power tokens.	. .무작위 애정 토큰 3�
 Shiny Lipstick	반짝이는 립스틱
 Upgrade a select Affection token to a power token.	..선택한 호감 토큰 하나를 파워 토큰으로 업그레이드합니다.
 Hair Brush	헤어 브러시
-Consume a select row of tokens. [[Broken Heart]broken] tokens excluded.	..선택한 토큰 줄을 소모합니다. [[Broken Heart]broken] 토큰은 제외됩니다.
+Consume a select row of tokens. Broken Heart tokens excluded.	..선택한 한 줄의 토큰을 소모하세요. 깨어진 하트 토큰은 제외됩니다.
 Makeup Kit	메이크업 키트
-Consume a select 3x3 square of tokens. [[Broken Heart]broken] tokens excluded.	..선택한 3x3 구역의 토큰을 소모합니다. [[Broken Heart]broken] 토큰은 제외됩니다.
+Consume a select 3x3 square of tokens. Broken Heart tokens excluded.	..선택한 3x3 토큰 구역을 소모합니다. 깨진 하트 토큰은 제외됩니다.
 Eyelash Curler	뷰러
-Consume a select column of tokens. [[Broken Heart]broken] tokens excluded.	..특정 칼럼의 토큰을 소모합니다. [[Broken Heart]broken] 토큰은 제외됩니다.
+Consume a select column of tokens. Broken Heart tokens excluded.	..선택한 열의 토큰을 소모하세요. 깨진 하트 토큰은 제외됩니다.
 Compact Mirror	콤팩트 거울
-Select an Affection token and every token of that type will be replaced by either a [[Passion]heart] token, a [[Joy]joy] token, or a [[Sentiment]sentiment] token.	..애정 토큰을 선택하면 해당 타입의 모든 토큰이 [[Passion]하트] 토큰, [[Joy]기쁨] 토큰, 또는 [[Sentiment]감정] 토큰 중 하나로 변환됩니다.
+Select an Affection token and every token of that type will be replaced by either a Passion token, a Joy token, or a Sentiment token.	..애정 토큰 하나를 선택하면, 그 종류의 모든 토큰이 열정 토큰, 즐거움 토큰, 또는 감성 토큰 중 하나로 바뀝니다.
 Peep Toe Heels	앞코가 뚫린 하이힐
-The next [[Broken Heart]broken] token match will count as a [[Passion]heart] token match instead.	..다음 [[Broken Heart]broken] 토큰 매치는 [[Passion]heart] 토큰 매치로 처리돼.
+The next Broken Heart token match will count as a Passion token match instead.	..다음에 깨진 하트 토큰을 맞추면, 대신 열정 토큰을 맞춘 걸로 처리돼.
 Cork Wedge Sandals	코르크 웨지 샌들
 No tokens will be consumed as a result of a date gift being used for the remainder of the date. You'll still get the benefits, but the tokens will remain.	..데이트 선물 사용 시 데이트가 끝날 때까지 토큰이 소모되지 않습니다. 효과는 그대로지만, 토큰은 남아 있어요.
 Vintage Platforms	빈티지 게임기
 Select a token type and you will not lose any moves until a match is made that is of a different token type than the one you selected.	..토큰 종류를 하나 선택하면, 선택한 종류와 다른 토큰으로 매치를 만들 때까지 기회를 잃지 않아.
 Leopard Print Pumps	레오파드 프린트 펌프스
-+1 [[Move]joy] for every 4-of-a-kind (or more) Affection token match for the remainder of the date.	..데이트가 끝날 때까지 네 개 이상 애정 토큰을 맞출 때마다 [기쁨]이 +1씩 추가돼.
++1 Move for every 4-of-a-kind (or more) Affection token match for the remainder of the date.	..데이트가 끝날 때까지 애정 토큰 4개 이상을 한 번에 맞출 때마다 추가 턴 +1.
 Pink Mary Janes	분홍색 메리제인 슈즈
-+1 [[Sentiment]sentiment] for every [[Passion]heart] token match made for the remainder of the date.	..남은 데이트 동안 [[Passion]heart] 토큰을 매치할 때마다 +1 [[Sentiment]sentiment]를 얻어요.
++1 Sentiment for every Passion token match made for the remainder of the date.	..데이트가 끝날 때까지 패션 토큰을 매치할 때마다 호감도가 +1씩 올라가.
 Suede Ankle Booties	스웨이드 앵클 부티
-+3 [[Sentiment]sentiment] for every 4-of-a-kind (or more) Affection token match for the remainder of the date.	..데이트가 끝날 때까지 애정 토큰 4개 이상을 한 번에 매치할 때마다 감정치 +3.
++3 Sentiment for every 4-of-a-kind (or more) Affection token match for the remainder of the date.	..이 데이트 동안 애정 토큰 4개 이상을 한 번에 맞출 때마다 호감도가 +3씩 올라가.
 Blue Orchid	블루 오키드
-Consume all [[Talent]talent] tokens on the grid.	..그리드에 있는 모든 [[Talent]talent] 토큰을 소모해.
+Consume all Talent tokens on the grid.	..그리드에 있는 모든 재능 토큰을 소모합니다.
 White Pansy	화이트 팬지
-Consume all [[Flirtation]flirtation] tokens on the grid.	..그리드에 있는 모든 [[Flirtation]flirtation] 토큰을 소모해.
+Consume all Flirtation tokens on the grid.	..그리드에 있는 모든 유혹 토큰을 소모합니다.
 Orange Cosmos	오렌지 코스모스
-Consume all [[Romance]romance] tokens on the grid.	..그리드에 있는 [[Romance]romance] 토큰을 전부 소모하세요.
+Consume all Romance tokens on the grid.	..그리드에 있는 모든 로맨스 토큰을 소모해.
 Red Tulip	레드 튤립
-Consume all [[Sexuality]sexuality] tokens on the grid.	..그리드에 있는 [[Sexuality]sexuality] 토큰을 전부 소모해.
+Consume all Sexuality tokens on the grid.	..그리드에 있는 모든 섹슈얼리티 토큰을 소모해.
 Pink Lily	핑크 릴리
-Consume all [[Passion]heart] tokens on the grid.	..그리드에 있는 [[Passion]heart] 토큰을 모두 소모하세요.
+Consume all Passion tokens on the grid.	..그리드에 있는 모든 열정 토큰을 소모하세요.
 Sunflower	해바라기
-Consume all [[Joy]joy] tokens on the grid, earning +1 [[Move]joy] for every token consumed after the first 2.	..그리드에 있는 모든 [[Joy]joy] 토큰을 소모하고, 처음 두 개를 제외한 나머지 소모된 토큰마다 [[Move]joy] +1을 얻습니다.
+Consume all Joy tokens on the grid, earning +1 Move for every token consumed after the first 2.	..그리드에 있는 즐거움 토큰을 모두 소모하고, 처음 두 개 이후로 소모하는 토큰마다 이동 횟수를 +1 얻습니다.
 Stuffed Cat	봉제 고양이
-Remove all [[Broken Heart]broken] tokens from the grid.	..그리드에서 모든 [[Broken Heart]broken] 토큰을 제거하세요.
+Remove all Broken Heart tokens from the grid.	..그리드에서 모든 깨진 하트 토큰을 제거해.
 Stuffed Sheep	봉제 양
-+1 [[Passion]heart] Level for every 2 [[Broken Heart]broken] tokens on the grid.	..그리드에 [[Broken Heart]broken] 토큰이 2개 있을 때마다 [[Passion]heart] 레벨이 +1 증가합니다.
++1 Passion Level for every 2 Broken Heart tokens on the grid.	..그리드에 깨진 하트 토큰 2개마다 열정 레벨 +1.
 Stuffed Monkey	인형 원숭이
-+2% of total Affection goal for every [[Broken Heart]broken] token on the grid.	..그리드에 있는 [[Broken Heart]broken] 토큰마다 총 호감도 목표치의 2%가 추가돼.
++2% of total Affection goal for every Broken Heart token on the grid.	..그리드에 있는 깨진 하트 토큰마다 총 호감도 목표치의 +2% 획득.
 Stuffed Penguin	봉제 펭귄
-Convert all [[Broken Heart]broken] tokens into [[Joy]joy] tokens.	..모든 [[Broken Heart]broken] 토큰을 [[Joy]joy] 토큰으로 바꿔줘.
+Convert all Broken Heart tokens into Joy tokens.	..모든 깨진 하트 토큰을 즐거움 토큰으로 변경합니다.
 Stuffed Whale	봉제 고래
-Convert all [[Broken Heart]broken] tokens into [[Sentiment]sentiment] tokens.	..모든 [[Broken Heart]broken] 토큰을 [[Sentiment]sentiment] 토큰으로 바꿔.
+Convert all Broken Heart tokens into Sentiment tokens.	..모든 상심 토큰을 감성 토큰으로 변환하세요.
 Sea Breeze Perfume	바다 향수
-Increase the amount of [[Talent]talent] tokens that fall by 50% for the remainder of the date.	..남은 데이트 동안 [[Talent]talent] 토큰이 50% 더 많이 떨어집니다.
+Increase the amount of Talent tokens that fall by 50% for the remainder of the date.	..데이트가 끝날 때까지 재능 토큰이 50% 더 많이 떨어져.
 Green Tea Perfume	그린티 향수
-Increase the amount of [[Flirtation]flirtation] tokens that fall by 50% for the remainder of the date.	..이번 데이트가 끝날 때까지 [[Flirtation]플러터] 토큰이 50% 더 많이 떨어져.
+Increase the amount of Flirtation tokens that fall by 50% for the remainder of the date.	..남은 데이트 동안 유혹 토큰이 50% 더 많이 떨어지게 해.
 Peach Perfume	복숭아 향수
-Increase the amount of [[Romance]romance] tokens that fall by 50% for the remainder of the date.	..데이트가 끝날 때까지 [[Romance]romance] 토큰이 50% 더 많이 떨어집니다.
+Increase the amount of Romance tokens that fall by 50% for the remainder of the date.	..데이트가 끝날 때까지 로맨스 토큰이 50% 더 많이 떨어집니다.
 Cinnamon Perfume	시나몬 향수
-Increase the amount of [[Sexuality]sexuality] tokens that fall by 50% for the remainder of the date.	..이번 데이트가 끝날 때까지 [[Sexuality]sexuality] 토큰이 떨어지는 양이 50% 증가한다.
+Increase the amount of Sexuality tokens that fall by 50% for the remainder of the date.	..데이트가 끝날 때까지 섹슈얼리티 토큰이 50% 더 많이 떨어집니다.
 Rose Perfume	로즈 퍼퓸
-Increase the amount of [[Passion]heart] tokens that fall by 50% for the remainder of the date.	..데이트가 끝날 때까지 [[Passion]하트] 토큰이 50% 더 많이 떨어집니다.
+Increase the amount of Passion tokens that fall by 50% for the remainder of the date.	..데이트가 끝날 때까지 패션 토큰이 50% 더 많이 떨어집니다.
 Lilac Perfume	라일락 향수
-Increase the amount of [[Broken Heart]broken] tokens that fall by 50% for the remainder of the date.	..이 데이트가 끝날 때까지 [[Broken Heart]broken] 토큰이 50% 더 자주 떨어집니다.
+Increase the amount of Broken Heart tokens that fall by 50% for the remainder of the date.	..데이트가 끝날 때까지 깨진 하트 토큰이 50% 더 많이 떨어집니다.
 Coffee	커피
 Dark roasted with a dash of milk; the perfect morning pick-me-up.	..진하게 로스팅한 커피에 우유 한 방울, 아침을 깨우는 완벽한 한 잔.
 Orange Juice	오렌지 주스
@@ -2357,8 +2338,310 @@ Fancy Gift Box	화려한 선물 상자
 Regal Gift Box	고급스러운 선물 상자
 Lovely Gift Box	러블리 선물 상자
 Lucky Gift Box	럭키 기프트 박스
-Flirtation Token	플러테이션 토큰
-Joy Token	조이 토큰
-Talent Token	재능 토큰
-Charisma	카리스마
-Luck	운
+-Finished-	-완료-
+1 Available	1명 가능
+2 Available	2명 가능
+3 Available	3명 가능
+4 Available	4명 가능
+5 Available	5명 가능
+6 Available	6명 가능
+7 Available	7명 가능
+8 Available	8명 가능
+9 Available	9명 가능
+10 Available	10명 가능
+Sun	일
+Sun 01	일 01
+Sun 02	일 02
+Sun 03	일 03
+Sun 04	일 04
+Sun 05	일 05
+Sun 06	일 06
+Sun 07	일 07
+Sun 08	일 08
+Sun 09	일 09
+Sun 10	일 10
+Sun 11	일 11
+Sun 12	일 12
+Sun 13	일 13
+Sun 14	일 14
+Sun 15	일 15
+Sun 16	일 16
+Sun 17	일 17
+Sun 18	일 18
+Sun 19	일 19
+Sun 20	일 20
+Sun 21	일 21
+Sun 22	일 22
+Sun 23	일 23
+Sun 24	일 24
+Sun 25	일 25
+Sun 26	일 26
+Sun 27	일 27
+Sun 28	일 28
+Sun 29	일 29
+Sun 30	일 30
+Sun 31	일 31
+Mon	월
+Mon 01	월 01
+Mon 02	월 02
+Mon 03	월 03
+Mon 04	월 04
+Mon 05	월 05
+Mon 06	월 06
+Mon 07	월 07
+Mon 08	월 08
+Mon 09	월 09
+Mon 10	월 10
+Mon 11	월 11
+Mon 12	월 12
+Mon 13	월 13
+Mon 14	월 14
+Mon 15	월 15
+Mon 16	월 16
+Mon 17	월 17
+Mon 18	월 18
+Mon 19	월 19
+Mon 20	월 20
+Mon 21	월 21
+Mon 22	월 22
+Mon 23	월 23
+Mon 24	월 24
+Mon 25	월 25
+Mon 26	월 26
+Mon 27	월 27
+Mon 28	월 28
+Mon 29	월 29
+Mon 30	월 30
+Mon 31	월 31
+Fri	금
+Fri 01	금 01
+Fri 02	금 02
+Fri 03	금 03
+Fri 04	금 04
+Fri 05	금 05
+Fri 06	금 06
+Fri 07	금 07
+Fri 08	금 08
+Fri 09	금 09
+Fri 10	금 10
+Fri 11	금 11
+Fri 12	금 12
+Fri 13	금 13
+Fri 14	금 14
+Fri 15	금 15
+Fri 16	금 16
+Fri 17	금 17
+Fri 18	금 18
+Fri 19	금 19
+Fri 20	금 20
+Fri 21	금 21
+Fri 22	금 22
+Fri 23	금 23
+Fri 24	금 24
+Fri 25	금 25
+Fri 26	금 26
+Fri 27	금 27
+Fri 28	금 28
+Fri 29	금 29
+Fri 30	금 30
+Fri 31	금 31
+Sat	토
+Sat 01	토 01
+Sat 02	토 02
+Sat 03	토 03
+Sat 04	토 04
+Sat 05	토 05
+Sat 06	토 06
+Sat 07	토 07
+Sat 08	토 08
+Sat 09	토 09
+Sat 10	토 10
+Sat 11	토 11
+Sat 12	토 12
+Sat 13	토 13
+Sat 14	토 14
+Sat 15	토 15
+Sat 16	토 16
+Sat 17	토 17
+Sat 18	토 18
+Sat 19	토 19
+Sat 20	토 20
+Sat 21	토 21
+Sat 22	토 22
+Sat 23	토 23
+Sat 24	토 24
+Sat 25	토 25
+Sat 26	토 26
+Sat 27	토 27
+Sat 28	토 28
+Sat 29	토 29
+Sat 30	토 30
+Sat 31	토 31
+Sunday	일요일
+Sunday 01	일요일 01
+Sunday 02	일요일 02
+Sunday 03	일요일 03
+Sunday 04	일요일 04
+Sunday 05	일요일 05
+Sunday 06	일요일 06
+Sunday 07	일요일 07
+Sunday 08	일요일 08
+Sunday 09	일요일 09
+Sunday 10	일요일 10
+Sunday 11	일요일 11
+Sunday 12	일요일 12
+Sunday 13	일요일 13
+Sunday 14	일요일 14
+Sunday 15	일요일 15
+Sunday 16	일요일 16
+Sunday 17	일요일 17
+Sunday 18	일요일 18
+Sunday 19	일요일 19
+Sunday 20	일요일 20
+Sunday 21	일요일 21
+Sunday 22	일요일 22
+Sunday 23	일요일 23
+Sunday 24	일요일 24
+Sunday 25	일요일 25
+Sunday 26	일요일 26
+Sunday 27	일요일 27
+Sunday 28	일요일 28
+Sunday 29	일요일 29
+Sunday 30	일요일 30
+Sunday 31	일요일 31
+Monday	월요일
+Monday 01	월요일 01
+Monday 02	월요일 02
+Monday 03	월요일 03
+Monday 04	월요일 04
+Monday 05	월요일 05
+Monday 06	월요일 06
+Monday 07	월요일 07
+Monday 08	월요일 08
+Monday 09	월요일 09
+Monday 10	월요일 10
+Monday 11	월요일 11
+Monday 12	월요일 12
+Monday 13	월요일 13
+Monday 14	월요일 14
+Monday 15	월요일 15
+Monday 16	월요일 16
+Monday 17	월요일 17
+Monday 18	월요일 18
+Monday 19	월요일 19
+Monday 20	월요일 20
+Monday 21	월요일 21
+Monday 22	월요일 22
+Monday 23	월요일 23
+Monday 24	월요일 24
+Monday 25	월요일 25
+Monday 26	월요일 26
+Monday 27	월요일 27
+Monday 28	월요일 28
+Monday 29	월요일 29
+Monday 30	월요일 30
+Monday 31	월요일 31
+Tuesday	화요일
+Tuesday 01	화요일 01
+Tuesday 02	화요일 02
+Tuesday 03	화요일 03
+Tuesday 04	화요일 04
+Tuesday 05	화요일 05
+Tuesday 06	화요일 06
+Tuesday 07	화요일 07
+Tuesday 08	화요일 08
+Tuesday 09	화요일 09
+Tuesday 10	화요일 10
+Tuesday 11	화요일 11
+Tuesday 12	화요일 12
+Tuesday 13	화요일 13
+Tuesday 14	화요일 14
+Tuesday 15	화요일 15
+Tuesday 16	화요일 16
+Tuesday 17	화요일 17
+Tuesday 18	화요일 18
+Tuesday 19	화요일 19
+Tuesday 20	화요일 20
+Tuesday 21	화요일 21
+Tuesday 22	화요일 22
+Tuesday 23	화요일 23
+Tuesday 24	화요일 24
+Tuesday 25	화요일 25
+Tuesday 26	화요일 26
+Tuesday 27	화요일 27
+Tuesday 28	화요일 28
+Tuesday 29	화요일 29
+Tuesday 30	화요일 30
+Tuesday 31	화요일 31
+Friday	금요일
+Friday 01	금요일 01
+Friday 02	금요일 02
+Friday 03	금요일 03
+Friday 04	금요일 04
+Friday 05	금요일 05
+Friday 06	금요일 06
+Friday 07	금요일 07
+Friday 08	금요일 08
+Friday 09	금요일 09
+Friday 10	금요일 10
+Friday 11	금요일 11
+Friday 12	금요일 12
+Friday 13	금요일 13
+Friday 14	금요일 14
+Friday 15	금요일 15
+Friday 16	금요일 16
+Friday 17	금요일 17
+Friday 18	금요일 18
+Friday 19	금요일 19
+Friday 20	금요일 20
+Friday 21	금요일 21
+Friday 22	금요일 22
+Friday 23	금요일 23
+Friday 24	금요일 24
+Friday 25	금요일 25
+Friday 26	금요일 26
+Friday 27	금요일 27
+Friday 28	금요일 28
+Friday 29	금요일 29
+Friday 30	금요일 30
+Friday 31	금요일 31
+Saturday	토요일
+Saturday 01	토요일 01
+Saturday 02	토요일 02
+Saturday 03	토요일 03
+Saturday 04	토요일 04
+Saturday 05	토요일 05
+Saturday 06	토요일 06
+Saturday 07	토요일 07
+Saturday 08	토요일 08
+Saturday 09	토요일 09
+Saturday 10	토요일 10
+Saturday 11	토요일 11
+Saturday 12	토요일 12
+Saturday 13	토요일 13
+Saturday 14	토요일 14
+Saturday 15	토요일 15
+Saturday 16	토요일 16
+Saturday 17	토요일 17
+Saturday 18	토요일 18
+Saturday 19	토요일 19
+Saturday 20	토요일 20
+Saturday 21	토요일 21
+Saturday 22	토요일 22
+Saturday 23	토요일 23
+Saturday 24	토요일 24
+Saturday 25	토요일 25
+Saturday 26	토요일 26
+Saturday 27	토요일 27
+Saturday 28	토요일 28
+Saturday 29	토요일 29
+Saturday 30	토요일 30
+Saturday 31	토요일 31
+Audrey	오드리
+Kyanna	키아나
+Kyu	큐
+Celeste	세레스테
+Celeste's Info	세레스테의 정보
+Morning	아침
+Night	밤
+Your Bedroom	방
