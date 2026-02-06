@@ -3284,7 +3284,7 @@ Goodnight!	  잘 자!
 Try to keep those dreams about me under control, alright? ··········	  나에 대한 꿈은 적당히만 꾸라고, 알았지? ··········
 You're just leaving,····· like that?····· Fine.	  그냥 가버리는 거야,····· 그래?····· 좋아.
 Goodnight.	  잘 자.
-Night.	  밤.
+Night.	  잘자.
 Sweet dreams...	  좋은 꿈 꿔...
 Alright,····· rest easy!	  알았어,······ 푹 쉬어!
 Get some rest,····· you deserve it.	  좀 쉬어,····· 그럴 자격 있어.
@@ -4948,19 +4948,130 @@ You've learned Kyu's fav color!	  큐가 좋아하는 색 정보 획득
 You've learned Momo's fav color!	  모모가 좋아하는 색 정보 획득
 You've learned Venus's fav color!	  비너스가 좋아하는 색 정보 획득
 You've learned Beli's fav color!	  베리가 좋아하는 색 정보 획득
-You've learned Celestes cup size!	  셀레스테의 가슴 사이즈 획득
-You've learned Tiffanys cup size!	  티파니의 가슴 사이즈 획득
-You've learned Kyannas cup size!	  키아나의 가슴 사이즈 획득
-You've learned Aikos cup size!	  아이코의 가슴 사이즈 획득
-You've learned Lolas cup size!	  로라의 가슴 사이즈 획득
-You've learned Audreys cup size!	  오드리의 가슴 사이즈 획득
-You've learned Nikkis cup size!	  니키의 가슴 사이즈 획득
-You've learned Jessies cup size!	  제시의 가슴 사이즈 획득
-You've learned Kyus cup size!	  큐의 가슴 사이즈 획득
-You've learned Momos cup size!	  모모의 가슴 사이즈 획득
-You've learned Venuss cup size!	  비너스의 가슴 사이즈 획득
-You've learned Belis cup size!	  베리의 가슴 사이즈 획득
+You've learned Celeste's cup size!	  셀레스테의 가슴 사이즈 획득
+You've learned Tiffany's cup size!	  티파니의 가슴 사이즈 획득
+You've learned Kyanna's cup size!	  키아나의 가슴 사이즈 획득
+You've learned Aiko's cup size!	  아이코의 가슴 사이즈 획득
+You've learned Lola's cup size!	  로라의 가슴 사이즈 획득
+You've learned Audrey's cup size!	  오드리의 가슴 사이즈 획득
+You've learned Nikki's cup size!	  니키의 가슴 사이즈 획득
+You've learned Jessie's cup size!	  제시의 가슴 사이즈 획득
+You've learned Kyu's cup size!	  큐의 가슴 사이즈 획득
+You've learned Momo's cup size!	  모모의 가슴 사이즈 획득
+You've learned Venus's cup size!	  비너스의 가슴 사이즈 획득
+You've learned Beli's cup size!	  베리의 가슴 사이즈 획득
+You've learned Celeste's fav hangout!	  셀레스테가 좋아하는 장소 획득
+You've learned Tiffany's fav hangout!	  티파니가 좋아하는 장소 획득
+You've learned Kyanna's fav hangout!	  키아나가 좋아하는 장소 획득
+You've learned Aiko's fav hangout!	  아이코가 좋아하는 장소 획득
+You've learned Lola's fav hangout!	  로라가 좋아하는 장소 획득
+You've learned Audrey's fav hangout!	  오드리가 좋아하는 장소 획득
+You've learned Nikki's fav hangout!	  니키가 좋아하는 장소 획득
+You've learned Jessie's fav hangout!	  제시가 좋아하는 장소 획득
+You've learned Kyu's fav hangout!	  큐가 좋아하는 장소 획득
+You've learned Momo's fav hangout!	  모모가 좋아하는 장소 획득
+You've learned Venus's fav hangout!	  비너스가 좋아하는 장소 획득
+You've learned Beli's fav hangout!	  베리가 좋아하는 장소 획득
+You've learned Celeste's education!	  셀레스테의 학력 획득
+You've learned Tiffany's education!	  티파니의 학력 획득
+You've learned Kyanna's education!	  키아나의 학력 획득
+You've learned Aiko's education!	  아이코의 학력 획득
+You've learned Lola's education!	  로라의 학력 획득
+You've learned Audrey's education!	  오드리의 학력 획득
+You've learned Nikki's education!	  니키의 학력 획득
+You've learned Jessie's education!	  제시의 학력 획득
+You've learned Kyu's education!	  큐의 학력 획득
+You've learned Momo's education!	  모모의 학력 획득
+You've learned Venus's education!	  비너스의 학력 획득
+You've learned Beli's education!	  베리의 학력 획득
+You've learned Celeste's age!	  셀레스테의 나이 획득
+You've learned Tiffany's age!	  티파니의 나이 획득
+You've learned Kyanna's age!	  키아나의 나이 획득
+You've learned Aiko's age!	  아이코의 나이 획득
+You've learned Lola's age!	  로라의 나이 획득
+You've learned Audrey's age!	  오드리의 나이 획득
+You've learned Nikki's age!	  니키의 나이 획득
+You've learned Jessie's age!	  제시의 나이 획득
+You've learned Kyu's age!	  큐의 나이 획득
+You've learned Momo's age!	  모모의 나이 획득
+You've learned Venus's age!	  비너스의 나이 획득
+You've learned Beli's age!	  베리의 나이 획득
+You've learned Celeste's last name!	  셀레스테의 성 획득
+You've learned Tiffany's last name!	  티파니의 성 획득
+You've learned Kyanna's last name!	  키아나의 성 획득
+You've learned Aiko's last name!	  아이코의 성 획득
+You've learned Lola's last name!	  로라의 성 획득
+You've learned Audrey's last name!	  오드리의 성 획득
+You've learned Nikki's last name!	  니키의 성 획득
+You've learned Jessie's last name!	  제시의 성 획득
+You've learned Kyu's last name!	  큐의 성 획득
+You've learned Momo's last name!	  모모의 성 획득
+You've learned Venus's last name!	  비너스의 성 획득
+You've learned Beli's last name!	  베리의 성 획득
+You've learned Celeste's hobby!	  셀레스테의 취미 획득
+You've learned Tiffany's hobby!	  티파니의 취미 획득
+You've learned Kyanna's hobby!	  키아나의 취미 획득
+You've learned Aiko's hobby!	  아이코의 취미 획득
+You've learned Lola's hobby!	  로라의 취미 획득
+You've learned Audrey's hobby!	  오드리의 취미 획득
+You've learned Nikki's hobby!	  니키의 취미 획득
+You've learned Jessie's hobby!	  제시의 취미 획득
+You've learned Kyu's hobby!	  큐의 취미 획득
+You've learned Momo's hobby!	  모모의 취미 획득
+You've learned Venus's hobby!	  비너스의 취미 획득
+You've learned Beli's hobby!	  베리의 취미 획득
+You've learned Celeste's weight!	  셀레스테의 몸무게 획득
+You've learned Tiffany's weight!	  티파니의 몸무게 획득
+You've learned Kyanna's weight!	  키아나의 몸무게 획득
+You've learned Aiko's weight!	  아이코의 몸무게 획득
+You've learned Lola's weight!	  로라의 몸무게 획득
+You've learned Audrey's weight!	  오드리의 몸무게 획득
+You've learned Nikki's weight!	  니키의 몸무게 획득
+You've learned Jessie's weight!	  제시의 몸무게 획득
+You've learned Kyu's weight!	  큐의 몸무게 획득
+You've learned Momo's weight!	  모모의 몸무게 획득
+You've learned Venus's weight!	  비너스의 몸무게 획득
+You've learned Beli's weight!	  베리의 몸무게 획득
+You've learned Celeste's height!	  셀레스테의 키 획득
+You've learned Tiffany's height!	  티파니의 키 획득
+You've learned Kyanna's height!	  키아나의 키 획득
+You've learned Aiko's height!	  아이코의 키 획득
+You've learned Lola's height!	  로라의 키 획득
+You've learned Audrey's height!	  오드리의 키 획득
+You've learned Nikki's height!	  니키의 키 획득
+You've learned Jessie's height!	  제시의 키 획득
+You've learned Kyu's height!	  큐의 키 획득
+You've learned Momo's height!	  모모의 키 획득
+You've learned Venus's height!	  비너스의 키 획득
+You've learned Beli's height!	  베리의 키 획득
+You've learned Celeste's occupation!	  셀레스테의 직업 획득
+You've learned Tiffany's occupation!	  티파니의 직업 획득
+You've learned Kyanna's occupation!	  키아나의 직업 획득
+You've learned Aiko's occupation!	  아이코의 직업 획득
+You've learned Lola's occupation!	  로라의 직업 획득
+You've learned Audrey's occupation!	  오드리의 직업 획득
+You've learned Nikki's occupation!	  니키의 직업 획득
+You've learned Jessie's occupation!	  제시의 직업 획득
+You've learned Kyu's occupation!	  큐의 직업 획득
+You've learned Momo's occupation!	  모모의 직업 획득
+You've learned Venus's occupation!	  비너스의 직업 획득
+You've learned Beli's occupation!	  베리의 직업 획득
+You've learned Celeste's birthday!	  셀레스테의 생일 획득
+You've learned Tiffany's birthday!	  티파니의 생일 획득
+You've learned Kyanna's birthday!	  키아나의 생일 획득
+You've learned Aiko's birthday!	  아이코의 생일 획득
+You've learned Lola's birthday!	  로라의 생일 획득
+You've learned Audrey's birthday!	  오드리의 생일 획득
+You've learned Nikki's birthday!	  니키의 생일 획득
+You've learned Jessie's birthday!	  제시의 생일 획득
+You've learned Kyu's birthday!	  큐의 생일 획득
+You've learned Momo's birthday!	  모모의 생일 획득
+You've learned Venus's birthday!	  비너스의 생일 획득
+You've learned Beli's birthday!	  베리의 생일 획득
 
+You've unlocked Lola's "Lazy Sunday" outfit!	  로라의 의상 "나른한 일요일" 획득
+You've unlocked Nikki's "Independant" outfit!	  니키의 의상 "독립적" 획득
+You've unlocked Kyanna's "Lemon Cream" outfit!	  키아나의 의상 "레몬 크림" 획득
 Morning	  아침
 Night	  밤
 Your Bedroom	  방
@@ -5412,7 +5523,7 @@ If you can't tell my favorite color is red····· you must·· be··· fucki
 Lusties nightclub is my fucking shit.	  Lusties 나이트클럽은 내가 진짜 완전 좋아하는 데야.
 I'm twenty-one.····· I don't know why but people say I look younger.	  나 스물한 살이야.····· 왜인지는 모르겠는데, 사람들이 나보고 어려 보인대.
 Five-two.·········· What of it?······· I can still knock a bitch out.	  5-2.·········· 그래서 뭐?······· 나 아직도 누구든 한 방에 보내버릴 수 있어.
-Work?········································· Bitch I'm already going to school.····· What the fuck do you expect?	  일하라고?································································ 미친년아, 나 이미 학교 다니고 있잖아.····· 대체 뭘 더 바라는 거야?
+·····Work?········································· Bitch I'm already going to school.····· What the fuck do you expect?	  일하라고?································································ 미친년아, 나 이미 학교 다니고 있잖아.····· 대체 뭘 더 바라는 거야?
 April sixth.········ Actually,····· please do forget it.	  4월 6일.········ 사실,····· 그냥 잊어줘.
 I like to go shopping,····· especially if it's someone else's money.	  나는 쇼핑하는 거 좋아해,····· 특히 남 돈으로 할 때 더 좋지.
 Probably spring because it's not cold as shit or hot as fuck.	  아마 봄이 제일 나은 것 같아. 추워 죽겠지도, 더워 미치겠지도 않으니까.
