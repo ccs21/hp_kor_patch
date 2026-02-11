@@ -21,6 +21,6 @@ py hp2_extract_inject.py inject ^
 
 py hp2_inject_resolve_fixed.py ^
   --data "D:\PC Games\HuniePop 2 - Double Date\HuniePop 2 - Double Date_Data" ^
-  --csv "hp2_translations.retranslated.csv" ^
+  --csv "hp2_translations.retranslated.v3.csv" ^
   --outdir "patched_resolve" ^
   --field-paths "master_strings.tsv.field_paths.txt"
