@@ -1,0 +1,701 @@
+2026-02-01 03:54:37 [FontHook] InstallOnce ENTER
+2026-02-01 03:54:37 [GPU] SystemInfo.maxTextureSize=16384
+2026-02-01 03:54:37 [FontHook] Runner created.
+2026-02-01 03:54:37 [Runner] Start()
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoExtrabold20pxdata'#4566 used_by='Stage/TitleUI/TitleScreen(Clone)/LoadScreen/LoadScreenSettings/LoadScreenSettingsContainer/SettingsCellApp(Clone)/SettingsPanelsContainer/SettingsPanelVolume/SettingsPanelTitle' text='Volume Control'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoBold20pxdata'#9516 used_by='Stage/TitleUI/TitleScreen(Clone)/LoadScreen/LoadScreenSettings/LoadScreenSettingsContainer/SettingsCellApp(Clone)/SettingsPanelsContainer/SettingsPanelVoice/SettingsPanelSwitches/SettingsPanelSwitch1/SettingsPanelSwitchLabel' text='감탄사만'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoDemibold16pxFontdata'#3510 used_by='Stage/TitleUI/TitleScreen(Clone)/LoadScreen/LoadScreenNotes/LoadScreenNoteVersion' text='Version: 1.2.0 한글패치 : 레트로겜보이'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoDemibold24pxFontdata'#6408 used_by='Stage/TitleUI/TitleScreen(Clone)/LoadScreen/SaveFileContainer/SaveFile3/SaveFileData/SaveFileDataGirlLabel' text='오드리'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoExtrabold24pxdata'#10622 used_by='Stage/TitleUI/TitleScreen(Clone)/LoadScreen/SaveFileContainer/SaveFile3/SaveFilePercentLabel' text='1%'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoDemibold25pxFontdata'#27402 used_by='Stage/TopUI/MoneyLabel' text='90,000'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoExtrabold30pxStrokedata'#27406 used_by='Stage/PuzzleUI/PuzzleStatus/PuzzleStatusAffectionMeter/PuzzleStatusAffectionMeterLabel' text='100 / 100'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoBold18pxdata'#5918 used_by='Stage/PuzzleUI/PuzzleStatus/PuzzleStatusResources/PuzzleStatusResourceMoves/PuzzleStatusResourceMovesSubtitle' text='Moves'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoBlack34pxAquabluedata'#27394 used_by='Stage/CellPhone/CellPhoneCore/CellPhoneHeader/CellPhoneHeaderLabel' text='INVENTORY'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoExtrabold30pxAquadata'#27398 used_by='Stage/PuzzleUI/PuzzleStatus/PuzzleStatusResources/PuzzleStatusResourceSentiment/PuzzleStatusResourceSentimentLabel' text='000'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoExtrabold26pxPinkdata'#27396 used_by='Stage/PuzzleUI/PuzzleStatus/PuzzleStatusResources/PuzzleStatusResourcePassion/PuzzleStatusResourcePassionLabel' text='Lvl 0 ^CFFFFFF80(+0%)'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoExtrabold30pxYellowdata'#27400 used_by='Stage/PuzzleUI/PuzzleStatus/PuzzleStatusResources/PuzzleStatusResourceMoves/PuzzleStatusResourceMovesLabel' text='00'
+2026-02-01 03:54:37 [NEW_FONT] t=0.44 font='ExoDemibold22pxFontdata'#6534 used_by='Stage/CellNotifications/CellNotificationsLabel' text='Notification!'
+2026-02-01 03:54:38 [Dump] ===== DUMP#1 initial t=1.01 Begin =====
+2026-02-01 03:54:38 [Dump] tk2dFontData count=37
+2026-02-01 03:54:38   [0] tk2dFontData name='ExoDemibold16pxFontdata' id=3510
+2026-02-01 03:54:38      .material = Material('ExoDemibold16pxFontmaterial')#5076
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibold_16px')#5078 256x128
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=113
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [1] tk2dFontData name='ExoTokenJoy30pxFontdata' id=3658
+2026-02-01 03:54:38      .material = Material('ExoTokenJoy30pxFontmaterial')#6210
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_joy')#6212 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [2] tk2dFontData name='ExoTokenRomance30pxFontdata' id=3718
+2026-02-01 03:54:38      .material = Material('ExoTokenRomance30pxFontmaterial')#8658
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_romance')#8660 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [3] tk2dFontData name='ExoExtrabold16pxFontdata' id=4070
+2026-02-01 03:54:38      .material = Material('ExoExtrabold16pxFontmaterial')#4576
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_16px')#4578 256x128
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [4] tk2dFontData name='ExoTokenHeart30pxFontdata' id=4100
+2026-02-01 03:54:38      .material = Material('ExoTokenHeart30pxFontmaterial')#6194
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_heart')#6196 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [5] tk2dFontData name='ExoBold21pxdata' id=4222
+2026-02-01 03:54:38      .material = Material('ExoBold21pxmaterial')#9660
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_bold_21px')#9662 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [6] tk2dFontData name='ExoExtrabold20pxdata' id=4566
+2026-02-01 03:54:38      .material = Material('ExoExtrabold20pxmaterial')#8700
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_20px')#8702 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [7] tk2dFontData name='ExoPoptextMoney54pxFontdata' id=4798
+2026-02-01 03:54:38      .material = Material('ExoPoptextMoney54pxFontmaterial')#3526
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_bold_54px_poptext_money')#3528 1024x1024
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [8] tk2dFontData name='ExoDemibold20pxdata' id=4808
+2026-02-01 03:54:38      .material = Material('ExoDemibold20pxmaterial')#6184
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibold_20px')#6186 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [9] tk2dFontData name='ExoTokenBroken30pxFontdata' id=5656
+2026-02-01 03:54:38      .material = Material('ExoTokenBroken30pxFontmaterial')#5434
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_broken')#5436 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [10] tk2dFontData name='ExoPoptextGift30pxFontdata' id=5752
+2026-02-01 03:54:38      .material = Material('ExoPoptextGift30pxFontmaterial')#4800
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_poptext_gift')#4802 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [11] tk2dFontData name='ExoBold18pxdata' id=5918
+2026-02-01 03:54:38      .material = Material('ExoBold18pxmaterial')#4928
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_bold_18px')#4930 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [12] tk2dFontData name='ExoPoptextUnique30pxFontdata' id=5976
+2026-02-01 03:54:38      .material = Material('ExoPoptextUnique30pxFontmaterial')#5056
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_poptext_unique')#5058 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [13] tk2dFontData name='ExoTokenSexuality30pxFontdata' id=6000
+2026-02-01 03:54:38      .material = Material('ExoTokenSexuality30pxFontmaterial')#5418
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_sexual')#5420 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [14] tk2dFontData name='ExoBold32pxFontdata' id=6208
+2026-02-01 03:54:38      .material = Material('ExoBold32pxFontmaterial')#9432
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_bold_32px')#9434 512x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [15] tk2dFontData name='ExoDemibold24pxFontdata' id=6408
+2026-02-01 03:54:38      .material = Material('ExoDemibold24pxFontmaterial')#8670
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibold_24px')#8672 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=113
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [16] tk2dFontData name='ExoDemibold22pxFontdata' id=6534
+2026-02-01 03:54:38      .material = Material('ExoDemibold22pxFontmaterial')#6924
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibold_22px')#6926 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [17] tk2dFontData name='ExoExtrabold22pxdata' id=6786
+2026-02-01 03:54:38      .material = Material('ExoExtrabold22pxmaterial')#4250
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_22px')#4252 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [18] tk2dFontData name='ExoTokenTalent30pxFontdata' id=7652
+2026-02-01 03:54:38      .material = Material('ExoTokenTalent30pxFontmaterial')#8302
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_talent')#8304 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [19] tk2dFontData name='ExoTokenFlirtation30pxFontdata' id=8156
+2026-02-01 03:54:38      .material = Material('ExoTokenFlirtation30pxFontmaterial')#8294
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_flirtation')#8296 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [20] tk2dFontData name='ExoPoptextFood30pxFontdata' id=8196
+2026-02-01 03:54:38      .material = Material('ExoPoptextFood30pxFontmaterial')#9522
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_poptext_food')#9524 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [21] tk2dFontData name='ExoPoptextDrinks30pxFontdata' id=8412
+2026-02-01 03:54:38      .material = Material('ExoPoptextDrinks30pxFontmaterial')#4052
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_poptext_drink')#4054 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [22] tk2dFontData name='ExoDemibolditalic25pxShadowdata' id=8420
+2026-02-01 03:54:38      .material = Material('ExoDemibolditalic25pxShadowmaterial')#6014
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibolditalic_25px_shadow')#6016 512x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [23] tk2dFontData name='ExoMedium27pxFontdata' id=8432
+2026-02-01 03:54:38      .material = Material('ExoMedium27pxFontmaterial')#5050
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_medium_27px')#5052 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [24] tk2dFontData name='ExoTokenSentiment30pxFontdata' id=8606
+2026-02-01 03:54:38      .material = Material('ExoTokenSentiment30pxFontmaterial')#8524
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_token_sentiment')#8526 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [25] tk2dFontData name='ExoDemibold27pxFontdata' id=8632
+2026-02-01 03:54:38      .material = Material('ExoDemibold27pxFontmaterial')#8674
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibold_27px')#8676 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData = <null>
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [26] tk2dFontData name='ExoBold20pxdata' id=9516
+2026-02-01 03:54:38      .material = Material('ExoBold20pxmaterial')#2984
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_bold_20px')#2986 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [27] tk2dFontData name='ExoExtrabold24pxdata' id=10622
+2026-02-01 03:54:38      .material = Material('ExoExtrabold24pxmaterial')#10158
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_24px')#10160 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [28] tk2dFontData name='ExoBlack34pxAquabluedata' id=27394
+2026-02-01 03:54:38      .material = Material('ExoBlack34pxAquabluematerial')#27258
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_black_34px_aquablue')#27284 512x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [29] tk2dFontData name='ExoExtrabold26pxPinkdata' id=27396
+2026-02-01 03:54:38      .material = Material('ExoExtrabold26pxPinkmaterial')#27260
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_26px_pink')#27290 512x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [30] tk2dFontData name='ExoExtrabold30pxAquadata' id=27398
+2026-02-01 03:54:38      .material = Material('ExoExtrabold30pxAquamaterial')#27262
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_aqua')#27286 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [31] tk2dFontData name='ExoExtrabold30pxYellowdata' id=27400
+2026-02-01 03:54:38      .material = Material('ExoExtrabold30pxYellowmaterial')#27264
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_yellow')#27288 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [32] tk2dFontData name='ExoDemibold25pxFontdata' id=27402
+2026-02-01 03:54:38      .material = Material('ExoDemibold25pxFontmaterial')#27266
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibold_25px')#27278 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [33] tk2dFontData name='ExoDemibold48pxGlowdata' id=27404
+2026-02-01 03:54:38      .material = Material('ExoDemibold48pxGlowmaterial')#27268
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_demibold_48px_glow')#27280 1024x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [34] tk2dFontData name='ExoExtrabold30pxStrokedata' id=27406
+2026-02-01 03:54:38      .material = Material('ExoExtrabold30pxStrokematerial')#27270
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_extrabold_30px_stroke')#27282 512x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [35] tk2dFontData name='ExoMedium30pxFontdata' id=27408
+2026-02-01 03:54:38      .material = Material('ExoMedium30pxFontmaterial')#27272
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_medium_30px')#27292 256x256
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38   [36] tk2dFontData name='ExoRegular42pxGlowdata' id=27410
+2026-02-01 03:54:38      .material = Material('ExoRegular42pxGlowmaterial')#27274
+2026-02-01 03:54:38      .material.shader = Shader('tk2d/BlendVertexColor')
+2026-02-01 03:54:38      .material.mainTexture = Texture2D('font_exo_regular_42px_glow')#27276 1024x512
+2026-02-01 03:54:38        .tex2d.format=ARGB32 mipmap=1
+2026-02-01 03:54:38      [STRUCT] fields=26
+2026-02-01 03:54:38        - lineHeight : System.Single
+2026-02-01 03:54:38        - chars : tk2dFontChar[] len=127
+2026-02-01 03:54:38        - charDictKeys : System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]] count=0
+2026-02-01 03:54:38        - charDictValues : System.Collections.Generic.List`1[[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] count=0
+2026-02-01 03:54:38        - platformSpecificData : tk2dFontData
+2026-02-01 03:54:38        - hasPlatformData : System.Boolean
+2026-02-01 03:54:38        - charDict : System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[tk2dFontChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]] = <null>
+2026-02-01 03:54:38        - useDictionary : System.Boolean
+2026-02-01 03:54:38        - kerning : tk2dFontKerning[] len=0
+2026-02-01 03:54:38        - gradientTexture : UnityEngine.Texture2D = <null>
+2026-02-01 03:54:38        - textureGradients : System.Boolean
+2026-02-01 03:54:38        - texelSize : UnityEngine.Vector2
+2026-02-01 03:54:38 [Dump] tk2dTextMesh count=303
+2026-02-01 03:54:38 [Dump] tk2dTextMesh activeInHierarchy=60
+2026-02-01 03:54:38   [ActiveUsage] 24x  font='ExoDemibold24pxFontdata'
+2026-02-01 03:54:38   [ActiveUsage] 8x  font='ExoExtrabold20pxdata'
+2026-02-01 03:54:38   [ActiveUsage] 7x  font='ExoBold20pxdata'
+2026-02-01 03:54:38   [ActiveUsage] 4x  font='ExoDemibold25pxFontdata'
+2026-02-01 03:54:38   [ActiveUsage] 4x  font='ExoExtrabold24pxdata'
+2026-02-01 03:54:38   [ActiveUsage] 4x  font='ExoDemibold16pxFontdata'
+2026-02-01 03:54:38   [ActiveUsage] 3x  font='ExoBold18pxdata'
+2026-02-01 03:54:38   [ActiveUsage] 1x  font='ExoExtrabold26pxPinkdata'
+2026-02-01 03:54:38   [ActiveUsage] 1x  font='ExoExtrabold30pxYellowdata'
+2026-02-01 03:54:38   [ActiveUsage] 1x  font='ExoDemibold22pxFontdata'
+2026-02-01 03:54:38   [ActiveUsage] 1x  font='ExoExtrabold30pxStrokedata'
+2026-02-01 03:54:38   [ActiveUsage] 1x  font='ExoBlack34pxAquabluedata'
+2026-02-01 03:54:38   [ActiveUsage] 1x  font='ExoExtrabold30pxAquadata'
+2026-02-01 03:54:38 [Dump] ===== DUMP#1 initial t=1.01 End =====

@@ -1,0 +1,22 @@
+폰트 만들고 폰트 교체하는 후킹 프로그램 너가 만들어 줬는데 로그가 이런 상황이야.
+
+게임을 켜면 검은화면에 BGM만 나와.
+
+폰트는
+
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\b22.fnt"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\b22.png"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\b30.fnt"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\b30.png"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r16.fnt"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r16.png"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r18.fnt"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r18.png"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r20.fnt"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r20.png"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r26.fnt"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\r26.png"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\b20.fnt"
+"D:\SteamLibrary\steamapps\common\HuniePop\HuniePop_Data\Managed\fonts\b20.png"
+
+이렇게 들어있는 상태야.

@@ -1,0 +1,1 @@
+python hp2_translate_csv.py --in hp2_translations.csv --out hp2_translations.translated.csv

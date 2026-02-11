@@ -1,0 +1,26 @@
+추출
+
+py hp2_extract_inject.py extract ^
+  --game "D:\PC Games\HuniePop 2 - Double Date" ^
+  --data "D:\PC Games\HuniePop 2 - Double Date\HuniePop 2 - Double Date_Data" ^
+  --out "hp2_translations.csv" ^
+  --field-paths "master_strings.tsv.field_paths.txt"
+
+
+
+
+
+주입
+
+py hp2_extract_inject.py inject ^
+  --game "D:\PC Games\HuniePop 2 - Double Date" ^
+  --data "D:\PC Games\HuniePop 2 - Double Date\HuniePop 2 - Double Date_Data" ^
+  --csv "hp2_translations.csv" ^
+  --outdir "patched" ^
+  --field-paths "master_strings.tsv.field_paths.txt"
+
+py hp2_inject_resolve_fixed.py ^
+  --data "D:\PC Games\HuniePop 2 - Double Date\HuniePop 2 - Double Date_Data" ^
+  --csv "hp2_translations.retranslated.csv" ^
+  --outdir "patched_resolve" ^
+  --field-paths "master_strings.tsv.field_paths.txt"
